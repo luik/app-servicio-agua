@@ -1,0 +1,43 @@
+*.as text eol=lf
+*.txt text eol=lf
+*.js text eol=lf
+*.php text eol=lf
+*.css text eol=lf
+*.afm binary
+*.ttf binary
+*.fla binary
+*.jpg binary
+*.png binary
+*.bmp binary
+*.swf binary
+*.swc binary
+*.ai binary
+*.html text eol=lf
+*.test text eol=lf
+*.inc text eol=lf
+*.install text eol=lf
+*.module text eol=lf
+*.info text eol=lf
+*.script text eol=lf
+*.xml text eol=lf
+*.sh text eol=lf
+*.engine text eol=lf
+*.config text eol=lf
+*.profile text eol=lf
+*.po text eol=lf
+*.htaccess text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.phps text eol=lf
+*.md text eol=lf
+*.dist text eol=lf
+*.info text eol=lf
+*.module text eol=lf
+*.classpath text eol=lf
+*.project text eol=lf
+*.launch text eol=lf
+.gitignore text eol=lf
+*.java text eol=lf
+
+
