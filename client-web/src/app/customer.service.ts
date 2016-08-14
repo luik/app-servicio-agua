@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import {ICustomer} from "./customer-model/ICustomer";
 import {Http} from "@angular/http";
-import {Config} from "../config";
+import {ConfigApp} from "./configApp";
 
 @Injectable()
 export class CustomerService {
@@ -22,7 +22,7 @@ export class CustomerService {
   saveCustomer(_customer: ICustomer){
       if(_customer.id === 0)
       {
-          this.http.post(Config.WS_HOST + "/ws/add-customer", _customer).subscribe(response => {
+          this.http.post(ConfigApp.WS_HOST + "/ws/add-customer", _customer).subscribe(response => {
               console.log(response);
           });
       }
