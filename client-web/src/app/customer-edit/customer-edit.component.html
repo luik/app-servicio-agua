@@ -1,0 +1,64 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        {{pageTitle}}
+    </div>
+
+    <div class="panel-body" *ngIf="customer">
+        <form class="form-horizontal" (ngSubmit)="saveCustomer()">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputFirstName">Nombres</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="inputFirstName"
+                               type="text"
+                               placeholder="Nombres"
+                               [(ngModel)]="customer.firstName"
+                                name="firstName"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputLastName">Apellidos</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="inputLastName"
+                               type="text"
+                               placeholder="Apellidos"
+                               [(ngModel)]="customer.lastName"
+                               name="lastName"
+                        />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="inputDocumentID">DNI o RUC</label>
+
+                    <div class="col-md-8">
+                        <input class="form-control"
+                               id="inputDocumentID"
+                               type="text"
+                               placeholder="DNI o RUC"
+                               [(ngModel)]="customer.documentID"
+                            name="documentID"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4 col-md-offset-2">
+                        <span>
+                            <button class="btn btn-primary"
+                                    type="submit"
+                                    style="width:80px;margin-right:10px">
+                                Guardar
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</div>
