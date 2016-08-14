@@ -2,6 +2,7 @@ package com.milknekp.apps.utility.water;
 
 import com.milknekp.apps.utility.water.model.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,4 +15,5 @@ public class WaterUtilityManagmentApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WaterUtilityManagmentApplication.class, args);
 	}
+
 }

@@ -10,10 +10,13 @@ public class Customer {
 
     @Id
     @GeneratedValue
-    private long customerID;
+    private int customerID;
     private String firstName;
     private String lastName;
     private String documentID;
+
+    public Customer(){
+    }
 
     public Customer(String firstName, String lastName, String documentID) {
         this.firstName = firstName;
