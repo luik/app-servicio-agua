@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,15 +22,24 @@ public class CustomerController {
     private CustomerRepository customerRepository;
 
     @RequestMapping(value = "ws/add-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> addCustomer(@RequestBody Customer customer){
+    public ResponseEntity<Boolean> addCustomer(@RequestBody CustomerResponse customerResponse){
+        Customer customer = new Customer(customerResponse.getName(), customerResponse.getDocumentId());
+
         customerRepository.save(customer);
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @RequestMapping(value = "ws/get-customers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Customer>> getCustomers(){
-        return new ResponseEntity<List<Customer>>(customerRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<CustomerResponse>> getCustomers(){
+        List<CustomerResponse> customers = new ArrayList<>();
+
+        for (Customer customer :
+                customerRepository.findAll()) {
+            customers.add(new CustomerResponse(customer.getName(), customer.getDocumentId()));
+        }
+
+        return new ResponseEntity<List<CustomerResponse>>(customers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "ws/get-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

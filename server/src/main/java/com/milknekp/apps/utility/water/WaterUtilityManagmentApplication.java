@@ -152,6 +152,7 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
         }
         else
         {
+            /*
             System.out.println("try to get connections");
             for (Customer customer: customers) {
                 Collection<Connection> connections = customer.getConnections();
@@ -163,6 +164,7 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
                     }
                 }
             }
+            */
         }
 
     }

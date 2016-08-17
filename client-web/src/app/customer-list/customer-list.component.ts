@@ -15,6 +15,7 @@ import {Column} from 'primeng/primeng';
 export class CustomerListComponent implements OnInit {
 
     customers: ICustomer[];
+    selectedCustomer: ICustomer;
 
     constructor(private customerService: CustomerService) {
     }

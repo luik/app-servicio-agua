@@ -7,28 +7,15 @@
         <form class="form-horizontal" (ngSubmit)="saveCustomer()">
             <fieldset>
                 <div class="form-group">
-                    <label class="col-md-2 control-label" for="inputFirstName">Nombres</label>
+                    <label class="col-md-2 control-label" for="inputFirstName">Nombre</label>
 
                     <div class="col-md-8">
                         <input class="form-control"
                                id="inputFirstName"
                                type="text"
                                placeholder="Nombres"
-                               [(ngModel)]="customer.firstName"
+                               [(ngModel)]="customer.name"
                                 name="firstName"
-                        />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label" for="inputLastName">Apellidos</label>
-
-                    <div class="col-md-8">
-                        <input class="form-control"
-                               id="inputLastName"
-                               type="text"
-                               placeholder="Apellidos"
-                               [(ngModel)]="customer.lastName"
-                               name="lastName"
                         />
                     </div>
                 </div>
@@ -40,7 +27,7 @@
                                id="inputDocumentID"
                                type="text"
                                placeholder="DNI o RUC"
-                               [(ngModel)]="customer.documentID"
+                               [(ngModel)]="customer.documentId"
                             name="documentID"
                         />
                     </div>

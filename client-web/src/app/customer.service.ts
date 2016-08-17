@@ -13,7 +13,7 @@ export class CustomerService {
   getCustomer(_id){
       if(_id === 0)
       {
-          return {customerID: 0, firstName : '', lastName : '', documentID: ''} as ICustomer;
+          return {id: 0, name : '', documentId: ''} as ICustomer;
       }
 
       //TODO connect to web service
@@ -27,7 +27,9 @@ export class CustomerService {
   }
 
   saveCustomer(_customer: ICustomer){
-      if(_customer.customerID === 0)
+      console.log("save", _customer);
+
+      if(_customer.id === 0)
       {
           this.http.post(ConfigApp.WS_HOST + "/ws/add-customer", _customer).subscribe(response => {
               console.log(response);
