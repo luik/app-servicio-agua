@@ -15,7 +15,12 @@ module.exports = function(defaults) {
       'es6-shim/es6-shim.js',
       'reflect-metadata/**/*.+(ts|js|js.map)',
       'rxjs/**/*.+(js|js.map)',
-      '@angular/**/*.+(js|js.map)'
+      '@angular/**/*.+(js|js.map)',
+        'bootstrap/dist/css/**/*.+(js|css)',
+        'angular2-in-memory-web-api/**/*.+(js|css)',
+        'primeng/**/*.+(js|css)',
+        'primeui/**/*.*',
+        'font-awesome/+(css|fonts)/**/*.*'
     ]
   });
 };

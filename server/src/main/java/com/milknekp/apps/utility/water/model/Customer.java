@@ -24,6 +24,10 @@ public class Customer {
         this.documentID = documentID;
     }
 
+    public int getCustomerID(){
+        return this.customerID;
+    }
+
     public String getFirstName() {
         return firstName;
     }

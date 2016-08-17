@@ -1,3 +1,6 @@
-<p>
-  customer-list works!
-</p>
+<p-dataTable [value]="customers">
+    <p-column field="firstName" header="Nombres"></p-column>
+    <p-column field="lastName" header="Apellidos"></p-column>
+    <p-column field="documentID" header="ID documento identidad"></p-column>
+</p-dataTable>
+

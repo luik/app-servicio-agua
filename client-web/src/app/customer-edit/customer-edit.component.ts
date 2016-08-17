@@ -19,7 +19,7 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     }
 
     private onCustomerUpdated(){
-        if(this.customer.id === 0)
+        if(this.customer.customerID === 0)
         {
             this.pageTitle = 'Agregar beneficiario';
         }

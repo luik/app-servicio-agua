@@ -32,6 +32,8 @@ const barrels: string[] = [
 
   // Thirdparty barrels.
   'rxjs',
+  'primeng',
+    'angular2-in-memory-web-api',
 
   // App specific barrels.
   'app',
@@ -58,7 +60,9 @@ System.config({
   map: {
     '@angular': 'vendor/@angular',
     'rxjs': 'vendor/rxjs',
-    'main': 'main.js'
+    'primeng' : 'vendor/primeng',
+    'main': 'main.js',
+
   },
   packages: cliSystemConfigPackages
 });

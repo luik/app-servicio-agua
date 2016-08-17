@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class CustomerController {
@@ -24,4 +25,21 @@ public class CustomerController {
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "ws/get-customers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Customer>> getCustomers(){
+        return new ResponseEntity<List<Customer>>(customerRepository.findAll(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "ws/get-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Customer> getCustomer(@RequestBody Customer customer){
+        return new ResponseEntity<Customer>(customerRepository.findOne(customer.getCustomerID()), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "ws/delete-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> deleteCustomer(@RequestBody Customer customer){
+        customerRepository.delete(customer.getCustomerID());
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
 }
