@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
@@ -32,13 +33,9 @@ public class CustomerController {
 
     @RequestMapping(value = "ws/get-customers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CustomerResponse>> getCustomers(){
-        List<CustomerResponse> customers = new ArrayList<>();
-
-        for (Customer customer :
-                customerRepository.findAll()) {
-            customers.add(new CustomerResponse(customer.getName(), customer.getDocumentId()));
-        }
-
+        List<CustomerResponse> customers = customerRepository.findAll().
+                stream().map(customer ->
+                new CustomerResponse(customer.getId(), customer.getName(), customer.getDocumentId())).collect(Collectors.toList());
         return new ResponseEntity<List<CustomerResponse>>(customers, HttpStatus.OK);
     }
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerService} from "../customer.service";
-import {ICustomer} from "../customer-model/ICustomer";
+import {ICustomer} from "../model/ICustomer";
 import {DataTable} from 'primeng/primeng';
 import {Column} from 'primeng/primeng';
 
@@ -25,7 +25,6 @@ export class CustomerListComponent implements OnInit {
             customers =>
             {
                 this.customers = customers as Array<ICustomer>;
-                console.log(this.customers);
             }
         )
     }

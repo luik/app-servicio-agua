@@ -5,11 +5,13 @@ import { ROUTER_DIRECTIVES, provideRouter, RouterConfig } from '@angular/router'
 import {CustomerListComponent} from './customer-list';
 import {CustomerEditComponent} from './customer-edit'
 import {WelcomeComponent} from "./welcome";
+import {ConnectionListComponent} from "./connection-list/connection-list.component";
 
 export const appRoutes: RouterConfig = [
     { path: '', component: WelcomeComponent, terminal: true },
     { path: 'welcome', component: WelcomeComponent},
     { path: 'customers', component: CustomerListComponent },
+    { path: 'connections', component: ConnectionListComponent },
     { path: 'customer-edit/:id', component: CustomerEditComponent }
 ];
 

@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ICustomer} from "../customer-model/ICustomer";
+import {ICustomer} from "../model/ICustomer";
 import {CustomerService} from "../customer.service";
 
 @Component({

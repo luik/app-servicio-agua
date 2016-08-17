@@ -1,0 +1,14 @@
+<div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" style="float:left" placeholder="Filtro global">
+</div>
+<p-dataTable [value]="connections" [rows]="15" [paginator]="true"
+             [globalFilter]="gb" [(selection)]="selectedConnection" selectionMode="single"
+             emptyMessage="Registros no encontrados"
+>
+    <p-column field="id" header="ID"></p-column>
+    <p-column field="registerName" header="Medidor"></p-column>
+    <p-column field="customerName" header="Beneficiario"></p-column>
+    <p-column field="zoneName" header="Sector" [filter]="true" filterMatchMode="contains"></p-column>
+    <p-column field="address" header="Dirección"></p-column>
+</p-dataTable>

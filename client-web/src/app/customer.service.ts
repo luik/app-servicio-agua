@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import {ICustomer} from "./customer-model/ICustomer";
+import {ICustomer} from "./model/ICustomer";
 import {Http, Response} from "@angular/http";
 import {ConfigApp} from "./configApp";
 
@@ -7,7 +7,6 @@ import {ConfigApp} from "./configApp";
 export class CustomerService {
 
   constructor(@Inject(Http) private http: Http) {
-      console.log("Customer service initialized");
   }
 
   getCustomer(_id){
@@ -27,7 +26,6 @@ export class CustomerService {
   }
 
   saveCustomer(_customer: ICustomer){
-      console.log("save", _customer);
 
       if(_customer.id === 0)
       {

@@ -1,13 +1,15 @@
 package com.milknekp.apps.utility.water.controller;
 
 public class CustomerResponse {
+    private int id;
     private String name;
     private String documentId;
 
     public CustomerResponse() {
     }
 
-    public CustomerResponse(String name, String documentId) {
+    public CustomerResponse(int id, String name, String documentId) {
+        this.id = id;
         this.name = name;
         this.documentId = documentId;
     }
