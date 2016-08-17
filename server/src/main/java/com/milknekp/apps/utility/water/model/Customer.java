@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(indexes = {
+    @Index(name = "index_name", columnList = "name", unique = true),
+    @Index(name = "index_document_id", columnList = "documentId")
+})
 public class Customer {
 
     @Id
@@ -12,8 +16,7 @@ public class Customer {
     private String name;
     private String documentId;
 
-    @OneToMany
-    @PrimaryKeyJoinColumn
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private Collection<Connection> connections;
 
     public Customer(){

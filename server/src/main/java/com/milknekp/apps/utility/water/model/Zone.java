@@ -10,8 +10,7 @@ public class Zone {
     private int id;
     private String name;
 
-    @OneToMany
-    @PrimaryKeyJoinColumn
+    @OneToMany(mappedBy = "zone", fetch = FetchType.EAGER)
     private Collection<Connection> connections;
 
     public Zone() {

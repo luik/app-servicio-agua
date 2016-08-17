@@ -14,6 +14,8 @@ public class Connection {
     private Date startDate;
     private Date endDate;
     private boolean isActive;
+    @Column(length = 1000)
+    private String comment;
 
     @ManyToOne
     private Zone zone;
@@ -24,18 +26,18 @@ public class Connection {
     @OneToOne
     private Register register;
 
-    @OneToMany
-    @PrimaryKeyJoinColumn
+    @OneToMany(mappedBy = "connection", fetch = FetchType.EAGER)
     private Collection<MonthExpense> monthExpenses;
 
     public Connection() {
     }
 
-    public Connection(String address, Date startDate, Date endDate, boolean isActive) {
+    public Connection(String address, Date startDate, Date endDate, boolean isActive, String comment) {
         this.address = address;
         this.startDate = startDate;
         this.endDate = endDate;
         this.isActive = isActive;
+        this.comment = comment;
     }
 
     public int getId(){
@@ -104,5 +106,13 @@ public class Connection {
 
     public void setMonthExpenses(Collection<MonthExpense> monthExpenses) {
         this.monthExpenses = monthExpenses;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
