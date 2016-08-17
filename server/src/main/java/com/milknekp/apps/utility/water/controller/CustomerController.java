@@ -33,12 +33,12 @@ public class CustomerController {
 
     @RequestMapping(value = "ws/get-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> getCustomer(@RequestBody Customer customer){
-        return new ResponseEntity<Customer>(customerRepository.findOne(customer.getCustomerID()), HttpStatus.OK);
+        return new ResponseEntity<Customer>(customerRepository.findOne(customer.getId()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "ws/delete-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> deleteCustomer(@RequestBody Customer customer){
-        customerRepository.delete(customer.getCustomerID());
+        customerRepository.delete(customer.getId());
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 

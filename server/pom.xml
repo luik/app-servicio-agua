@@ -26,6 +26,18 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+            <version>RELEASE</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
@@ -54,6 +66,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

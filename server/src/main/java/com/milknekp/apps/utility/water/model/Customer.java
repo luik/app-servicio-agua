@@ -1,54 +1,54 @@
 package com.milknekp.apps.utility.water.model;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 public class Customer {
 
     @Id
     @GeneratedValue
-    private int customerID;
-    private String firstName;
-    private String lastName;
-    private String documentID;
+    private int id;
+    private String name;
+    private String documentId;
+
+    @OneToMany
+    @PrimaryKeyJoinColumn
+    private Collection<Connection> connections;
 
     public Customer(){
     }
 
-    public Customer(String firstName, String lastName, String documentID) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.documentID = documentID;
+    public Customer(String name, String documentId) {
+        this.name = name;
+        this.documentId = documentId;
     }
 
-    public int getCustomerID(){
-        return this.customerID;
+    public int getId(){
+        return this.id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String lastName) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getDocumentId() {
+        return documentId;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
-    public String getDocumentID() {
-        return documentID;
+    public Collection<Connection> getConnections() {
+        return connections;
     }
 
-    public void setDocumentID(String documentID) {
-        this.documentID = documentID;
+    public void setConnections(Collection<Connection> connections) {
+        this.connections = connections;
     }
 }
