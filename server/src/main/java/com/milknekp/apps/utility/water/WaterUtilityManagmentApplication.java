@@ -150,20 +150,21 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
             actaEntregaWorkbook.close();
             System.out.println(numberOfSheets);
         }
-        else
-        {
+        //else
+        //{
             System.out.println("try to get connections");
-            for (Customer customer: customers) {
-                Collection<Connection> connections = customer.getConnections();
-                if(connections.toArray().length > 1)
-                {
-                    System.out.println(customer.getName() + " " + connections.toArray().length);
-                    for (Connection connection: connections) {
-                        System.out.println(connection.getAddress() + " " + connection.getRegister().getRegisterId());
-                    }
+        customers = customerRepository.findAll();
+        for (Customer customer: customers) {
+            Collection<Connection> connections = customer.getConnections();
+            if(connections.toArray().length > 1)
+            {
+                System.out.println(customer.getName() + " " + connections.toArray().length);
+                for (Connection connection: connections) {
+                    System.out.println(connection.getAddress() + " " + connection.getRegister().getRegisterId());
                 }
             }
         }
+        //}
 
     }
 }
