@@ -2,7 +2,7 @@
     <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
     <input #gb type="text" pInputText size="50" style="float:left" placeholder="Filtro global">
 </div>
-<p-dataTable [value]="connections" [rows]="15" [paginator]="true"
+<p-dataTable [value]="connections" [paginator]="true" [rows]="15"
              [globalFilter]="gb" [(selection)]="selectedConnection" selectionMode="single"
              emptyMessage="Registros no encontrados"
 >

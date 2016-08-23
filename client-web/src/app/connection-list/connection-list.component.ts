@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ConnectionService} from "../connection.service";
-import {Column} from "primeng/components/column/column";
-import {DataTable} from "primeng/components/datatable/datatable";
+import {Column} from "primeng/primeng";
+import {DataTable} from "primeng/primeng";
 import {IConnection} from "../model/IConnection";
 
 @Component({
