@@ -1,29 +1,23 @@
-import { Component } from '@angular/core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ROUTER_DIRECTIVES, provideRouter, RouterConfig } from '@angular/router';
-
 import {CustomerListComponent} from './customer-list';
 import {WelcomeComponent} from "./welcome";
 import {ConnectionListComponent} from "./connection-list/connection-list.component";
+import {Routes, RouterModule} from "@angular/router";
+import {Component} from "@angular/core";
 
-export const appRoutes: RouterConfig = [
+export const appRoutes: Routes = [
     { path: '', component: WelcomeComponent, terminal: true },
     { path: 'welcome', component: WelcomeComponent},
     { path: 'customers', component: CustomerListComponent },
     { path: 'connections', component: ConnectionListComponent }
 ];
 
-export const APP_ROUTER_PROVIDER = provideRouter(appRoutes);
+export const routing = RouterModule.forRoot(appRoutes);
 
 @Component({
     moduleId: module.id,
     selector: 'app-root',
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.css'],
-    directives: [ROUTER_DIRECTIVES],
-    providers: [
-        HTTP_PROVIDERS
-    ]
+    styleUrls: ['app.component.css']
 })
 export class AppComponent {
   title = 'Aplicación control agua!';
