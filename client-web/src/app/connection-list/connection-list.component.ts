@@ -23,7 +23,6 @@ export class ConnectionListComponent implements OnInit {
     ngOnInit() {
         this.connectionService.getConnections().subscribe(
             connections => {
-                console.log(connections);
                 this.connections = connections as Array<IConnection>;
             }
         )
