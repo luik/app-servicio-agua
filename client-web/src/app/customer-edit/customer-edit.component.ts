@@ -26,13 +26,13 @@ export class CustomerEditComponent implements OnInit, OnDestroy {
     }
 
     saveCustomer(){
-        this.customerService.saveCustomer(this.customer);
+        ///this.customerService.saveCustomer(this.customer);
     }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let id = Number.parseInt(params["id"]);
-            this.customer = this.customerService.getCustomer(id);
+            ///this.customer = this.customerService.getCustomer(id);
             this.onCustomerUpdated();
         });
     }

@@ -14,6 +14,10 @@ public class CustomerResponse {
         this.documentId = documentId;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }

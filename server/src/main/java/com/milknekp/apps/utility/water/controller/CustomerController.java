@@ -25,9 +25,7 @@ public class CustomerController {
     @RequestMapping(value = "ws/add-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> addCustomer(@RequestBody CustomerResponse customerResponse){
         Customer customer = new Customer(customerResponse.getName(), customerResponse.getDocumentId());
-
         customerRepository.save(customer);
-
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
@@ -40,12 +38,27 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "ws/get-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomer(@RequestBody Customer customer){
-        return new ResponseEntity<Customer>(customerRepository.findOne(customer.getId()), HttpStatus.OK);
+    public ResponseEntity<CustomerResponse> getCustomer(@RequestBody CustomerResponse customer){
+        Customer customerDO = customerRepository.findOne(customer.getId());
+        CustomerResponse customerResponse = new CustomerResponse(customerDO.getId(), customerDO.getName(), customerDO.getDocumentId());
+        return new ResponseEntity<CustomerResponse>(customerResponse, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "ws/update-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> updateCustomer(@RequestBody CustomerResponse customerResponse){
+        System.out.println("update customer");
+
+        Customer customer = customerRepository.findOne(customerResponse.getId());
+        customer.setName(customerResponse.getName());
+        customer.setDocumentId(customerResponse.getDocumentId());
+
+        customerRepository.save(customer);
+
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
     @RequestMapping(value = "ws/delete-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> deleteCustomer(@RequestBody Customer customer){
+    public ResponseEntity<Boolean> deleteCustomer(@RequestBody CustomerResponse customer){
         customerRepository.delete(customer.getId());
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }

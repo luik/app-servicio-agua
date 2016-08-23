@@ -9,6 +9,7 @@ export class CustomerService {
   constructor(@Inject(Http) private http: Http) {
   }
 
+  /*
   getCustomer(_id){
       if(_id === 0)
       {
@@ -16,7 +17,7 @@ export class CustomerService {
       }
 
       //TODO connect to web service
-  }
+  }*/
 
   getCustomers(){
       return this.http.post(ConfigApp.WS_HOST + "/ws/get-customers", {}).map(
@@ -25,14 +26,17 @@ export class CustomerService {
           });
   }
 
-  saveCustomer(_customer: ICustomer){
-
-      if(_customer.id === 0)
-      {
-          this.http.post(ConfigApp.WS_HOST + "/ws/add-customer", _customer).subscribe(response => {
-              console.log(response);
-          });
-      }
+  addCustomer(_customer: ICustomer){
+      return this.http.post(ConfigApp.WS_HOST + "/ws/add-customer", _customer);
   }
+
+  updateCustomer(_customer: ICustomer){
+      return this.http.post(ConfigApp.WS_HOST + "/ws/update-customer", _customer);
+  }
+
+  deleteCustomer(_customer: ICustomer){
+      return this.http.post(ConfigApp.WS_HOST + "/ws/delete-customer", _customer);
+  }
+
 
 }

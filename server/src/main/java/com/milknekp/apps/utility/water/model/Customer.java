@@ -35,7 +35,7 @@ public class Customer {
         return name;
     }
 
-    public void setName(String lastName) {
+    public void setName(String name) {
         this.name = name;
     }
 

@@ -2,11 +2,32 @@
     <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
     <input #gb type="text" pInputText size="50" style="float:left" placeholder="Filtro global">
 </div>
-<p-dataTable [value]="customers" [rows]="15" [paginator]="true"
+<p-dataTable [value]="customers" rows="15" [paginator]="true"
              [globalFilter]="gb" [(selection)]="selectedCustomer" selectionMode="single"
-             emptyMessage="Registros no encontrados"
+             emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
+             [responsive]="true"
 >
+    <header>hhhhhh</header>
     <p-column field="name" header="Nombres"></p-column>
     <p-column field="documentId" header="ID documento identidad"></p-column>
+    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add">hhh</button></div></footer>
 </p-dataTable>
 
+<p-dialog header="Detalles beneficiario" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="500">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="customer" >
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="name">Nombre</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="customer.name" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="documentID">Documento</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="documentID" [(ngModel)]="customer.documentId" /></div>
+        </div>
+    </div>
+    <footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
+        </div>
+    </footer>
+</p-dialog>
