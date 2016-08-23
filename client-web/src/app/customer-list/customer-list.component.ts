@@ -1,19 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerService} from "../customer.service";
 import {ICustomer} from "../model/ICustomer";
-import {DataTable} from 'primeng/primeng';
-import {Column} from 'primeng/primeng';
-import {Dialog} from "primeng/primeng";
-import {Button} from "primeng/primeng";
-import {InputText} from "primeng/primeng";
 
 @Component({
     moduleId: module.id,
     selector: 'app-customer-list',
     templateUrl: 'customer-list.component.html',
     styleUrls: ['customer-list.component.css'],
-    providers: [CustomerService],
-    directives: [DataTable, Column, Dialog, Button, InputText]
 })
 export class CustomerListComponent implements OnInit {
 
