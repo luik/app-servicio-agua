@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import {ICustomer} from "./model/ICustomer";
+import {ICustomer} from "../model/ICustomer";
 import {Http, Response} from "@angular/http";
-import {ConfigApp} from "./configApp";
+import {ConfigApp} from "../configApp";
 
 @Injectable()
 export class CustomerService {

@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import {Http, Response} from "@angular/http";
-import {ConfigApp} from "./configApp";
-import {IConnection} from "./model/IConnection";
+import {ConfigApp} from "../configApp";
+import {IConnection} from "../model/IConnection";
 
 @Injectable()
 export class ConnectionService {

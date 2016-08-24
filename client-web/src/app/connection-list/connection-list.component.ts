@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {IConnection} from "../model/IConnection";
-import {ConnectionService} from "../connection.service";
+import {ConnectionService} from "../services/connection.service";
+import {ICustomer} from "../model/ICustomer";
+import {IRegister} from "../model/IRegister";
+import {IZone} from "../model/IZone";
+import {RegisterService} from "../services/register.service";
+import {ZoneService} from "../services/zone.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     moduleId: module.id,
@@ -12,11 +18,22 @@ export class ConnectionListComponent implements OnInit {
 
     isDisplayingDialog: boolean = false;
     connections: IConnection[];
+    registers: IRegister[];
+    filteredRegisters: IRegister[];
+    customers: ICustomer[];
+    zones: IZone[];
     selectedConnection: IConnection;
     connection: IConnection;
     isNewConnection: boolean;
 
-    constructor(private connectionService: ConnectionService) {
+    selectedRegister: IRegister;
+    selectedZone: IZone;
+
+    constructor(
+        private connectionService: ConnectionService,
+        private registerService: RegisterService,
+        private zoneService: ZoneService
+    ) {
     }
 
     ngOnInit() {
@@ -25,6 +42,30 @@ export class ConnectionListComponent implements OnInit {
                 this.connections = connections as Array<IConnection>;
             }
         )
+
+        this.registerService.getRegisters().subscribe(
+            registers => {
+                this.registers = registers as Array<IRegister>;
+
+            }
+        );
+
+        this.zoneService.getZones().subscribe(
+            zones => {
+                this.zones = zones as Array<IZone>;
+            }
+        );
+    }
+
+    search(event) {
+        this.filteredRegisters = [];
+        for(let register of this.registers)
+        {
+            if(register.registerID.indexOf(event.query) >= 0)
+            {
+                this.filteredRegisters.push(register);
+            }
+        }
     }
 
     showDialogToAdd(){
@@ -70,6 +111,15 @@ export class ConnectionListComponent implements OnInit {
         this.connection = event.data;
         this.isNewConnection = false;
         this.isDisplayingDialog = true;
+
+        for(let register of this.registers)
+        {
+            if(register.id === this.connection.registerID)
+            {
+                this.selectedRegister = register;
+                break;
+            }
+        }
     }
 
 }

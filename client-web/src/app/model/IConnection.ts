@@ -4,4 +4,7 @@ export interface IConnection{
     zoneName: string;
     registerName: string;
     address: string;
+    registerID: number;
+    customerID: number;
+    zoneID: number;
 }
