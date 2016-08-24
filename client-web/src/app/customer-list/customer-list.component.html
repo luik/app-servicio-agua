@@ -7,10 +7,9 @@
              emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
              [responsive]="true"
 >
-    <header>hhhhhh</header>
     <p-column field="name" header="Nombres"></p-column>
     <p-column field="documentId" header="ID documento identidad"></p-column>
-    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add">hhh</button></div></footer>
+    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></footer>
 </p-dataTable>
 
 <p-dialog header="Detalles beneficiario" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="500">

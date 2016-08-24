@@ -9,16 +9,6 @@ export class CustomerService {
   constructor(@Inject(Http) private http: Http) {
   }
 
-  /*
-  getCustomer(_id){
-      if(_id === 0)
-      {
-          return {id: 0, name : '', documentId: ''} as ICustomer;
-      }
-
-      //TODO connect to web service
-  }*/
-
   getCustomers(){
       return this.http.post(ConfigApp.WS_HOST + "/ws/get-customers", {}).map(
           function(response : Response) {
@@ -37,6 +27,4 @@ export class CustomerService {
   deleteCustomer(_customer: ICustomer){
       return this.http.post(ConfigApp.WS_HOST + "/ws/delete-customer", _customer);
   }
-
-
 }
