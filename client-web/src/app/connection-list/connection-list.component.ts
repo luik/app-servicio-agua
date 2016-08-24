@@ -41,7 +41,7 @@ export class ConnectionListComponent implements OnInit {
             connections => {
                 this.connections = connections as Array<IConnection>;
             }
-        )
+        );
 
         this.registerService.getRegisters().subscribe(
             registers => {
