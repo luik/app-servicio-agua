@@ -14,7 +14,6 @@ export const appRoutes: Routes = [
 export const routing = RouterModule.forRoot(appRoutes);
 
 @Component({
-    moduleId: module.id,
     selector: 'app-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.css']

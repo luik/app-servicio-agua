@@ -9,7 +9,6 @@ import {ZoneService} from "../services/zone.service";
 import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
-    moduleId: module.id,
     selector: 'app-connection-list',
     templateUrl: 'connection-list.component.html',
     styleUrls: ['connection-list.component.css']

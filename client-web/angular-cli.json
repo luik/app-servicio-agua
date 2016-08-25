@@ -1,13 +1,19 @@
 {
   "project": {
-    "version": "1.0.0-beta.10",
+    "version": "1.0.0-beta.11-webpack.2",
     "name": "client-web"
   },
   "apps": [
     {
       "main": "src/main.ts",
       "tsconfig": "src/tsconfig.json",
-      "mobile": false
+      "mobile": false,
+      "styles": [
+        "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
+        "../node_modules/primeui/primeui-ng-all.min.css",
+        "../node_modules/primeui/themes/omega/theme.css"
+      ]
     }
   ],
   "addons": [],

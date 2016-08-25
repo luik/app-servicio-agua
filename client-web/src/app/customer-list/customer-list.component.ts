@@ -3,7 +3,6 @@ import {CustomerService} from "../services/customer.service";
 import {ICustomer} from "../model/ICustomer";
 
 @Component({
-    moduleId: module.id,
     selector: 'app-customer-list',
     templateUrl: 'customer-list.component.html',
     styleUrls: ['customer-list.component.css'],
