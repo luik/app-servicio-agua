@@ -17,7 +17,7 @@ export class ConnectionListComponent implements OnInit {
 
     isDisplayingDialog: boolean = false;
     connections: IConnection[];
-    registers: IRegister[];
+    availableRegisters: IRegister[];
     filteredRegisters: IRegister[];
     customers: ICustomer[];
     zones: IZone[];
@@ -42,9 +42,9 @@ export class ConnectionListComponent implements OnInit {
             }
         );
 
-        this.registerService.getRegisters().subscribe(
+        this.registerService.getAvailableRegisters().subscribe(
             registers => {
-                this.registers = registers as Array<IRegister>;
+                this.availableRegisters = registers as Array<IRegister>;
 
             }
         );
@@ -58,7 +58,7 @@ export class ConnectionListComponent implements OnInit {
 
     search(event) {
         this.filteredRegisters = [];
-        for(let register of this.registers)
+        for(let register of this.availableRegisters)
         {
             if(register.registerID.indexOf(event.query) >= 0)
             {
@@ -111,7 +111,7 @@ export class ConnectionListComponent implements OnInit {
         this.isNewConnection = false;
         this.isDisplayingDialog = true;
 
-        for(let register of this.registers)
+        for(let register of this.availableRegisters)
         {
             if(register.id === this.connection.registerID)
             {

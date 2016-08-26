@@ -14,4 +14,11 @@ export class RegisterService {
               return response.json();
           });
   }
+
+  getAvailableRegisters(){
+      return this.http.post(ConfigApp.WS_HOST + "/ws/get-available-registers", {}).map(
+          function(response : Response) {
+              return response.json();
+          });
+  }
 }
