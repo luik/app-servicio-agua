@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,12 +61,16 @@ public class ConnectionController{
 
     @RequestMapping(value = "ws/get-connections", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ConnectionResponse>> getConnections(){
+    	System.out.println("get connecitons: " + new java.util.Date().getTime());
+    	
         List<ConnectionResponse> connections = connectionRepository.findAll().stream().map(
                 connection -> new ConnectionResponse(connection.getId(), connection.getCustomer().getId(), connection.getCustomer().getName(),
                 connection.getZone().getId(), connection.getZone().getName(),
                         connection.getRegister().getId(), connection.getRegister().getRegisterId(), connection.getAddress(),
                         connection.getStartDate(), connection.getEndDate(), connection.isActive(), connection.getComment())
         ).collect(Collectors.toList());
+        
+        System.out.println(new java.util.Date().getTime());
 
         return new ResponseEntity<List<ConnectionResponse>>(connections, HttpStatus.OK);
     }
