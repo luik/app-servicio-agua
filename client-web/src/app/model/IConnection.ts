@@ -9,6 +9,6 @@ export interface IConnection{
     zoneID: number;
     comment: string;
     active: boolean;
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
 }

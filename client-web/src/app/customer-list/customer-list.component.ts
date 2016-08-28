@@ -67,9 +67,17 @@ export class CustomerListComponent implements OnInit {
     }
 
     onRowSelect(event) {
-        this.customer = event.data;
+        this.customer = this.cloneCustomer(event.data);
         this.isNewCustomer = false;
         this.isDisplayingDialog = true;
+    }
+
+    cloneCustomer(customer: ICustomer): ICustomer {
+        let newCustomer = <ICustomer>{};
+        for(let prop in customer) {
+            newCustomer[prop] = customer[prop];
+        }
+        return newCustomer;
     }
 
 }

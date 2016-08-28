@@ -92,7 +92,7 @@ export class ConnectionListComponent implements OnInit {
 
     showDialogToAdd(){
         this.isNewConnection = true;
-        this.connection = <IConnection>{id: 0};
+        this.connection = <IConnection>{id: 0, active: true};
         this.selectedRegister = null;
         this.selectedCustomer = null;
         this.selectedZone = null;
@@ -100,6 +100,10 @@ export class ConnectionListComponent implements OnInit {
     }
 
     save(){
+        this.connection.registerID = this.selectedRegister.id;
+        this.connection.customerID = this.selectedCustomer.id;
+        this.connection.zoneID = this.selectedZone.id;
+
         if(this.isNewConnection)
         {
             this.connectionService.addConnection(this.connection).subscribe(
@@ -133,13 +137,17 @@ export class ConnectionListComponent implements OnInit {
     }
 
     onRowSelect(event) {
-        //selected connection
         this.connection = this.cloneConnection(event.data);
         this.isNewConnection = false;
         this.isDisplayingDialog = true;
-        this.selectedRegister = <IRegister>{registerID: this.connection.registerName};
-        this.selectedCustomer = <ICustomer>{name: this.connection.customerName};
-        this.selectedZone = <IZone>{name: this.connection.zoneName};
+        this.selectedRegister = <IRegister>{id: this.connection.registerID, registerID: this.connection.registerName};
+        this.selectedCustomer = <ICustomer>{id: this.connection.customerID, name: this.connection.customerName};
+        this.selectedZone = <IZone>{id: this.connection.zoneID, name: this.connection.zoneName};
+    }
+
+    onConnectionDeactivated(event){
+        let now = Date.now();
+        this.connection.endDate = new Date(now - new Date().getTimezoneOffset()*60000).toISOString().slice(0, 10);
     }
 
     cloneConnection(connection: IConnection): IConnection {

@@ -48,7 +48,7 @@ public class Connection {
         return address;
     }
 
-    public void setAddress(String lastName) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

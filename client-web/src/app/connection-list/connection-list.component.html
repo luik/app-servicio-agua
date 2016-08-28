@@ -7,7 +7,7 @@
              [globalFilter]="gb" [(selection)]="selectedConnection" selectionMode="single"
              emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
              [responsive]="true" >
-    <p-column field="id" header="ID"></p-column>
+    <p-column field="id" header="ID" [filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="active" header="Estado">
         <template let-col let-connection="rowData">
             <span>{{connection[col.field] ? "ACTIVO" : "INACTIVO"}}</span>
@@ -32,7 +32,6 @@
             <div class="ui-grid-col-4"><label for="registerID">Número medidor</label></div>
             <p-autoComplete id="registerID" [(ngModel)]="selectedRegister" [suggestions]="filteredRegisters"
                             (completeMethod)="searchRegisters($event)" field="registerID" placeholder="Número medidor"
-                            [disabled]="!isNewConnection"
                 >
             </p-autoComplete>
         </div>
@@ -63,7 +62,8 @@
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="active">Activo</label></div>
             <div class="ui-grid-col-4">
-                <p-toggleButton id="active" [(ngModel)]="connection.active" onLabel="Activo" offLabel="Inactivo" [disabled]="!connection.active">
+                <p-toggleButton id="active" [(ngModel)]="connection.active" onLabel="Activo" offLabel="Inactivo" [disabled]="!connection.active"
+                    (onChange)="onConnectionDeactivated($event)">
                 </p-toggleButton>
             </div>
         </div>
