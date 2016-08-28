@@ -7,4 +7,8 @@ export interface IConnection{
     registerID: number;
     customerID: number;
     zoneID: number;
+    comment: string;
+    active: boolean;
+    startDate: Date;
+    endDate: Date;
 }

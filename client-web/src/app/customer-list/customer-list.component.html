@@ -12,7 +12,7 @@
     <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></footer>
 </p-dataTable>
 
-<p-dialog header="Detalles beneficiario" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="500">
+<p-dialog header="Detalles beneficiario" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="500" [height]="250">
     <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="customer" >
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="name">Nombre</label></div>
@@ -25,7 +25,7 @@
     </div>
     <footer>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-            <button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>
+            <!--<button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>-->
             <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
         </div>
     </footer>

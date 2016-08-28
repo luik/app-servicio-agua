@@ -54,10 +54,12 @@ public class ConnectionController{
         return new ResponseEntity<ConnectionResponse>(connectionResponse, HttpStatus.OK);
     }
 
+    /*
     @RequestMapping(value = "ws/delete-connection", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> deleteConnection(@RequestBody ConnectionResponse connection){
         connectionRepository.delete(connection.getId());
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
+    */
 
 }

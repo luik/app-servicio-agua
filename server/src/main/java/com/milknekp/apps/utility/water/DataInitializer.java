@@ -8,11 +8,16 @@ import org.springframework.stereotype.Repository;
 
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
 @Component
 public class DataInitializer{
+
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -132,8 +137,8 @@ public class DataInitializer{
                     customerRepository.save(customer);
                 }
 
-                Connection connection = new Connection(connectionAddress, new Date(new java.util.Date().getTime()),
-                        new Date(new java.util.Date().getTime()), true, connectionComment);
+                Connection connection = new Connection(connectionAddress, new Date(this.dateFormat.parse("2016-01-15").getTime()),
+                        null, true, connectionComment);
                 connection.setRegister(register);
                 connection.setCustomer(customer);
                 connection.setZone(zone);

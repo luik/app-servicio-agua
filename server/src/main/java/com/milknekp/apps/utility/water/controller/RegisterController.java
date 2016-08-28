@@ -38,18 +38,4 @@ public class RegisterController {
 
         return new ResponseEntity<List<RegisterResponse>>(registers, HttpStatus.OK);
     }
-
-    /*
-    @RequestMapping(value = "ws/get-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomerResponse> getCustomer(@RequestBody CustomerResponse customer){
-        Customer customerDO = customerRepository.findOne(customer.getId());
-        CustomerResponse customerResponse = new CustomerResponse(customerDO.getId(), customerDO.getName(), customerDO.getDocumentId());
-        return new ResponseEntity<CustomerResponse>(customerResponse, HttpStatus.OK);
-    }
-    * */
-
-    public ResponseEntity<RegisterResponse> getRegister(){
-        return null;
-    }
-
 }

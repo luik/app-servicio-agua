@@ -57,10 +57,12 @@ public class CustomerController {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
+    /*
     @RequestMapping(value = "ws/delete-customer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> deleteCustomer(@RequestBody CustomerResponse customer){
         customerRepository.delete(customer.getId());
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
+    */
 
 }

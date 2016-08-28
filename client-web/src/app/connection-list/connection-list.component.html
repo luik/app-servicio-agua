@@ -6,42 +6,92 @@
 <p-dataTable [value]="connections" [paginator]="true" [rows]="15"
              [globalFilter]="gb" [(selection)]="selectedConnection" selectionMode="single"
              emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
-             [responsive]="true"
->
+             [responsive]="true" >
     <p-column field="id" header="ID"></p-column>
+    <p-column field="active" header="Estado">
+        <template let-col let-connection="rowData">
+            <span>{{connection[col.field] ? "ACTIVO" : "INACTIVO"}}</span>
+        </template>
+    </p-column>
     <p-column field="registerName" header="Medidor"></p-column>
     <p-column field="customerName" header="Beneficiario"></p-column>
     <p-column field="zoneName" header="Sector" [filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="address" header="Dirección"></p-column>
+    <p-column field="comment" header="Observación"></p-column>
+    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></footer>
 </p-dataTable>
 
-<p-dialog header="Detalles conexión" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="500">
-    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="connection"  style="height: 250px">
+<p-dialog header="Detalles conexión" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="520">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="connection"  style="height: 340px">
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="connectionID">Número conexión</label></div>
             <div class="ui-grid-col-8"><input pInputText id="connectionID" [(ngModel)]="connection.id" disabled="true"/></div>
         </div>
+
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="registerID">Número medidor</label></div>
-            <p-autoComplete id="registerID" [(ngModel)]="selectedRegister" [suggestions]="filteredRegisters" (completeMethod)="search($event)" field="registerID" placeholder="Registros">
+            <p-autoComplete id="registerID" [(ngModel)]="selectedRegister" [suggestions]="filteredRegisters"
+                            (completeMethod)="searchRegisters($event)" field="registerID" placeholder="Número medidor"
+                            [disabled]="!isNewConnection"
+                >
             </p-autoComplete>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="customerName">Beneficiario</label></div>
-            <div class="ui-grid-col-8"><input pInputText id="customerName" [(ngModel)]="connection.customerName" /></div>
+            <div class="ui-grid-col-8">
+                <p-autoComplete id="customerName" [(ngModel)]="selectedCustomer" [suggestions]="filteredCustomers"
+                                (completeMethod)="searchCustomers($event)" field="name" placeholder="Nombre beneficiario"
+                                [disabled]="!isNewConnection"
+                >
+                </p-autoComplete>
+            </div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="zoneName">Zona</label></div>
-            <div class="ui-grid-col-8"><input pInputText id="zoneName" [(ngModel)]="connection.zoneName" /></div>
+            <div class="ui-grid-col-8">
+                <p-autoComplete id="zoneName" [(ngModel)]="selectedZone" [suggestions]="filteredZones"
+                                (completeMethod)="searchZones($event)" field="name" placeholder="Sector"
+                                [disabled]="!isNewConnection"
+                >
+                </p-autoComplete>
+            </div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="address">Dirección</label></div>
-            <div class="ui-grid-col-8"><input pInputText id="address" [(ngModel)]="connection.address" /></div>
+            <div class="ui-grid-col-8"><input pInputText id="address" [(ngModel)]="connection.address" [disabled]="!isNewConnection"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="active">Activo</label></div>
+            <div class="ui-grid-col-4">
+                <p-toggleButton id="active" [(ngModel)]="connection.active" onLabel="Activo" offLabel="Inactivo" [disabled]="!connection.active">
+                </p-toggleButton>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="startDate">Fecha activación</label></div>
+            <div class="ui-grid-col-4">
+                <p-calendar id="startDate" [(ngModel)]="connection.startDate" [locale]="es" dateFormat="yy-mm-dd" [disabled]="!isNewConnection" >
+                </p-calendar>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="endDate">Fecha desactivación</label></div>
+            <div class="ui-grid-col-4">
+                <p-calendar id="endDate" [(ngModel)]="connection.endDate" [locale]="es" dateFormat="yy-mm-dd" [disabled]="true">
+                </p-calendar>
+            </div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="address">Observaciones</label></div>
+            <div class="ui-grid-col-8">
+                <textarea pInputTextArea id="comment" [(ngModel)]="connection.comment" cols="49" rows="5">
+                </textarea>
+            </div>
         </div>
     </div>
     <footer>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-            <button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>
+            <!--<button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>-->
             <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
         </div>
     </footer>
