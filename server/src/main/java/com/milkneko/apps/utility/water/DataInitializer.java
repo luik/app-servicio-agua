@@ -26,9 +26,9 @@ public class DataInitializer{
     @Autowired
     private ConnectionRepository connectionRepository;
     @Autowired
-    private MonthExpenseRepository monthExpenseRepository;
+    private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
     @Autowired
-    private PaymentRepository paymentRepository;
+    private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
 
 
     public void initialize()throws Exception{

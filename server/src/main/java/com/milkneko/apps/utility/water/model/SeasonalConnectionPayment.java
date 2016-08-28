@@ -7,19 +7,19 @@ import javax.persistence.OneToOne;
 import java.sql.Date;
 
 @Entity
-public class Payment {
+public class SeasonalConnectionPayment {
     @Id
     @GeneratedValue
     private int id;
     private Date date;
 
     @OneToOne
-    private MonthExpense monthExpense;
+    private SeasonalConnectionDebt seasonalConnectionDebt;
 
-    public Payment() {
+    public SeasonalConnectionPayment() {
     }
 
-    public Payment(Date date) {
+    public SeasonalConnectionPayment(Date date) {
         this.date = date;
     }
 
@@ -35,11 +35,11 @@ public class Payment {
         this.date = date;
     }
 
-    public MonthExpense getMonthExpense() {
-        return monthExpense;
+    public SeasonalConnectionDebt getSeasonalConnectionDebt() {
+        return seasonalConnectionDebt;
     }
 
-    public void setMonthExpense(MonthExpense monthExpense) {
-        this.monthExpense = monthExpense;
+    public void setSeasonalConnectionDebt(SeasonalConnectionDebt seasonalConnectionDebt) {
+        this.seasonalConnectionDebt = seasonalConnectionDebt;
     }
 }

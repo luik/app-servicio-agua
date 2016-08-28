@@ -2,6 +2,7 @@ package com.milkneko.apps.utility.water.model;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import java.util.Collection;
 
 @Entity
 public class Register {
@@ -15,6 +16,9 @@ public class Register {
     @OneToOne
     @PrimaryKeyJoinColumn
     private Connection connection;
+
+    @OneToMany(mappedBy = "register", fetch = FetchType.EAGER)
+    private Collection<MeasureStamp> measureStamps;
 
     public Register(){
     }

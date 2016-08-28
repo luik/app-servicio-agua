@@ -27,7 +27,10 @@ public class Connection {
     private Register register;
 
     @OneToMany(mappedBy = "connection", fetch = FetchType.EAGER)
-    private Collection<MonthExpense> monthExpenses;
+    private Collection<MeasureStamp> measureStamps;
+
+    @OneToMany(mappedBy = "connection", fetch = FetchType.EAGER)
+    private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
 
     public Connection() {
     }
@@ -100,19 +103,27 @@ public class Connection {
         this.register = register;
     }
 
-    public Collection<MonthExpense> getMonthExpenses() {
-        return monthExpenses;
-    }
-
-    public void setMonthExpenses(Collection<MonthExpense> monthExpenses) {
-        this.monthExpenses = monthExpenses;
-    }
-
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Collection<SeasonalConnectionDebt> getSeasonalConnectionDebts() {
+        return seasonalConnectionDebts;
+    }
+
+    public void setSeasonalConnectionDebts(Collection<SeasonalConnectionDebt> seasonalConnectionDebts) {
+        this.seasonalConnectionDebts = seasonalConnectionDebts;
+    }
+
+    public Collection<MeasureStamp> getMeasureStamps() {
+        return measureStamps;
+    }
+
+    public void setMeasureStamps(Collection<MeasureStamp> measureStamps) {
+        this.measureStamps = measureStamps;
     }
 }
