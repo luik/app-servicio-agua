@@ -6,7 +6,6 @@ import {IRegister} from "../model/IRegister";
 import {IZone} from "../model/IZone";
 import {RegisterService} from "../services/register.service";
 import {ZoneService} from "../services/zone.service";
-import {forEach} from "@angular/router/src/utils/collection";
 import {CustomerService} from "../services/customer.service";
 
 @Component({

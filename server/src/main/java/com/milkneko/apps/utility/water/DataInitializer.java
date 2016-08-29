@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Component
@@ -26,6 +28,10 @@ public class DataInitializer{
     @Autowired
     private ConnectionRepository connectionRepository;
     @Autowired
+    private SeasonEntryRepository seasonEntryRepository;
+    @Autowired
+    private MeasureStampRepository measureStampRepository;
+    @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
     @Autowired
     private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
@@ -39,14 +45,36 @@ public class DataInitializer{
             initializeExcelData();
         }
 
-        System.out.println("try to get connections");
         testData();
-
         initializeTestRegisters();
+        initializeSeasonEntries();
+    }
+
+    private void initializeSeasonEntries(){
+        SeasonEntry[] seasonEntries = new SeasonEntry[100];
+
+        for(int i = 0; i < 100; i++){
+            SeasonEntry seasonEntry = new SeasonEntry(i/12 + 2016, i%12 + 1, 5.4f);
+            seasonEntries[i] = seasonEntry;
+            seasonEntryRepository.save(seasonEntry);
+        }
+
+        List<Connection> connections = connectionRepository.findAll();
+
+        Calendar calendar = new GregorianCalendar();
+        for (Connection connection : connections) {
+            for(int i = 0; i < 8; i++){
+                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth(), (int)(Math.random()*18 + 1));
+                MeasureStamp measureStamp = new MeasureStamp(new Date(calendar.getTime().getTime()), (int)(Math.random()*50 + 20));
+                measureStamp.setConnection(connection);
+                measureStamp.setRegister(connection.getRegister());
+                measureStampRepository.save(measureStamp);
+            }
+        }
     }
 
     private void initializeTestRegisters(){
-        for(int i=0; i<100; i++)
+        for(int i = 0; i < 100; i++)
         {
             String registerName = Integer.toString((int)(Math.random()*100000 + 7000000));
             Register register = new Register(registerName, 0f, 0f);

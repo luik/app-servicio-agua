@@ -1,4 +1,4 @@
-package com.milkneko.apps.utility.water.controller;
+package com.milkneko.apps.utility.water.response;
 
 import java.sql.Date;
 

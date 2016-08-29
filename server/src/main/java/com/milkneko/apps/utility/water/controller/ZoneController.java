@@ -1,6 +1,7 @@
 package com.milkneko.apps.utility.water.controller;
 
 import com.milkneko.apps.utility.water.model.ZoneRepository;
+import com.milkneko.apps.utility.water.response.ZoneResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

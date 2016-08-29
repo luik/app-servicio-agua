@@ -21,6 +21,10 @@ public class SeasonEntry implements Serializable{
         this.priceM3 = priceM3;
     }
 
+    public SeasonEntryKey getId() {
+        return id;
+    }
+
     public int getYear() {
         return this.id.getYear();
     }
@@ -51,6 +55,9 @@ class SeasonEntryKey implements Serializable
 {
     private int year;
     private int month;
+
+    public SeasonEntryKey() {
+    }
 
     public SeasonEntryKey(int year, int month) {
         this.year = year;
