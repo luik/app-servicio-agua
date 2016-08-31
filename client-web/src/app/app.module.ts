@@ -8,7 +8,7 @@ import {CustomerService} from './services/customer.service';
 import {ConnectionService} from './services/connection.service';
 import {InputTextModule,DataTableModule,ButtonModule,DialogModule,
     DropdownModule, AutoCompleteModule, CheckboxModule, InputSwitchModule,
-    ToggleButtonModule, CalendarModule} from 'primeng/primeng';
+    ToggleButtonModule, CalendarModule, MenuModule, MenubarModule} from 'primeng/primeng';
 import {CustomerListComponent} from "./customer-list/customer-list.component";
 import {ConnectionListComponent} from "./connection-list/connection-list.component";
 import {WelcomeComponent} from "./welcome/welcome.component";
@@ -22,7 +22,7 @@ import {MeasureStampListComponent} from "./measure-stamp-list/measure-stamp-list
 @NgModule({
     imports:      [routing, HttpModule, BrowserModule, FormsModule, HttpModule,
         InputTextModule, DataTableModule, ButtonModule, DialogModule, DropdownModule, AutoCompleteModule,
-        CheckboxModule, InputSwitchModule, ToggleButtonModule, CalendarModule
+        CheckboxModule, InputSwitchModule, ToggleButtonModule, CalendarModule, MenuModule, MenubarModule
     ],
     declarations: [AppComponent, CustomerListComponent, ConnectionListComponent, WelcomeComponent,
         SeasonEntryListComponent, MeasureStampListComponent

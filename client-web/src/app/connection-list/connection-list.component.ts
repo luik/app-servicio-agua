@@ -7,6 +7,7 @@ import {IZone} from "../model/IZone";
 import {RegisterService} from "../services/register.service";
 import {ZoneService} from "../services/zone.service";
 import {CustomerService} from "../services/customer.service";
+import {MenuItem} from "primeng/primeng";
 
 @Component({
     selector: 'app-connection-list',
@@ -30,6 +31,8 @@ export class ConnectionListComponent implements OnInit {
     selectedRegister: IRegister;
     selectedCustomer: ICustomer;
     selectedZone: IZone;
+
+    items: MenuItem[];
 
     constructor(
         private connectionService: ConnectionService,
@@ -64,6 +67,8 @@ export class ConnectionListComponent implements OnInit {
                 this.zones = zones as Array<IZone>;
             }
         );
+
+        this.items = [{label: "Medidas medidor", icon: "fa-search"}];
     }
 
     searchRegisters(event) {
@@ -142,6 +147,7 @@ export class ConnectionListComponent implements OnInit {
         this.selectedRegister = <IRegister>{id: this.connection.registerID, registerID: this.connection.registerName};
         this.selectedCustomer = <ICustomer>{id: this.connection.customerID, name: this.connection.customerName};
         this.selectedZone = <IZone>{id: this.connection.zoneID, name: this.connection.zoneName};
+        this.items[0].url = "measure-stamps/" + this.connection.id;
     }
 
     onConnectionDeactivated(event){
