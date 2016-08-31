@@ -16,7 +16,7 @@ public class Customer {
     private String name;
     private String documentId;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "customer")
     private Collection<Connection> connections;
 
     public Customer(){

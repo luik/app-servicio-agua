@@ -26,10 +26,10 @@ public class Connection {
     @OneToOne
     private Register register;
 
-    @OneToMany(mappedBy = "connection", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "connection")
     private Collection<MeasureStamp> measureStamps;
 
-    @OneToMany(mappedBy = "connection", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "connection")
     private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
 
     public Connection() {

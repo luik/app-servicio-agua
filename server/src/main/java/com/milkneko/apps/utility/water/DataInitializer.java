@@ -4,6 +4,7 @@ import com.milkneko.apps.utility.water.model.*;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.sql.Date;
@@ -82,8 +83,9 @@ public class DataInitializer{
         }
     }
 
+
     private void testData(){
-        List<Customer> customers = customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAllAndFetchConnectionsEagerly();
         for (Customer customer: customers) {
             Collection<Connection> connections = customer.getConnections();
             if(connections.toArray().length > 1)

@@ -17,7 +17,7 @@ public class Register {
     @PrimaryKeyJoinColumn
     private Connection connection;
 
-    @OneToMany(mappedBy = "register", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "register")
     private Collection<MeasureStamp> measureStamps;
 
     public Register(){

@@ -17,9 +17,9 @@ public class MeasureStamp {
     @ManyToOne
     private Connection connection;
 
-    @OneToOne(mappedBy = "initialMeasureStamp", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "initialMeasureStamp")
     private SeasonalConnectionDebt prevSeasonalConnectionDebt;
-    @OneToOne(mappedBy = "finalMeasureStamp", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "finalMeasureStamp")
     private SeasonalConnectionDebt currentSeasonalConnectionDebt;
 
     public MeasureStamp() {
