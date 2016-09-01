@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface SeasonEntryRepository extends JpaRepository<SeasonEntry, Integer> {
+public interface SeasonEntryRepository extends JpaRepository<SeasonEntry, SeasonEntryKey> {
     @Query("SELECT s FROM SeasonEntry s ORDER BY year, month")
     List<SeasonEntry> findAllOrderByYearMonth();
 }

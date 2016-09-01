@@ -147,7 +147,7 @@ export class ConnectionListComponent implements OnInit {
         this.selectedRegister = <IRegister>{id: this.connection.registerID, registerID: this.connection.registerName};
         this.selectedCustomer = <ICustomer>{id: this.connection.customerID, name: this.connection.customerName};
         this.selectedZone = <IZone>{id: this.connection.zoneID, name: this.connection.zoneName};
-        this.items[0].url = "measure-stamps/" + this.connection.id;
+        this.items[0].routerLink = ["/measure-stamps/" + this.connection.id];
     }
 
     onConnectionDeactivated(event){

@@ -1,12 +1,5 @@
 package com.milkneko.apps.utility.water;
 
-import com.milkneko.apps.utility.water.model.*;
-import org.apache.poi.ss.usermodel.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +7,27 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.milkneko.apps.utility.water.model.Connection;
+import com.milkneko.apps.utility.water.model.ConnectionRepository;
+import com.milkneko.apps.utility.water.model.Customer;
+import com.milkneko.apps.utility.water.model.CustomerRepository;
+import com.milkneko.apps.utility.water.model.MeasureStamp;
+import com.milkneko.apps.utility.water.model.MeasureStampRepository;
+import com.milkneko.apps.utility.water.model.Register;
+import com.milkneko.apps.utility.water.model.RegisterRepository;
+import com.milkneko.apps.utility.water.model.SeasonEntry;
+import com.milkneko.apps.utility.water.model.SeasonEntryRepository;
+import com.milkneko.apps.utility.water.model.Zone;
+import com.milkneko.apps.utility.water.model.ZoneRepository;
 
 @Component
 public class DataInitializer{
@@ -32,11 +46,12 @@ public class DataInitializer{
     private SeasonEntryRepository seasonEntryRepository;
     @Autowired
     private MeasureStampRepository measureStampRepository;
+    /*
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
     @Autowired
     private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
-
+     */
 
     public void initialize()throws Exception{
         List<Customer> customers = customerRepository.findAll();
