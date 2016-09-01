@@ -2,7 +2,7 @@
     <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
     <input #gb type="text" pInputText size="50" style="float:left" placeholder="Filtro global">
 </div>
-<p-dataTable [value]="customers" rows="15" [paginator]="true"
+<p-dataTable [value]="customers" [rows]="15" [paginator]="true"
              [globalFilter]="gb" [(selection)]="selectedCustomer" selectionMode="single"
              emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
              [responsive]="true"

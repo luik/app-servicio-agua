@@ -1,6 +1,7 @@
 package com.milkneko.apps.utility.water.response;
 
 public class SeasonEntryResponse {
+    private int id;
     private int year;
     private int month;
     private float priceM3;
@@ -12,6 +13,7 @@ public class SeasonEntryResponse {
         this.year = year;
         this.month = month;
         this.priceM3 = priceM3;
+        this.id = (year - 2016)*12 + month;
     }
 
     public int getYear() {
@@ -28,5 +30,9 @@ public class SeasonEntryResponse {
 
     public void setPriceM3(float priceM3) {
         this.priceM3 = priceM3;
+    }
+
+    public int getId(){
+        return id;
     }
 }

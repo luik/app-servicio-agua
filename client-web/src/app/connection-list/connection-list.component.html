@@ -9,8 +9,8 @@
              [responsive]="true" >
     <p-column field="id" header="ID" [filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="active" header="Estado">
-        <template let-col let-connection="rowData">
-            <span>{{connection[col.field] ? "ACTIVO" : "INACTIVO"}}</span>
+        <template pTemplate let-col let-connection="rowData">
+            <span>{{connection[col.field]? "ACTIVO" : "INACTIVO" }}</span>
         </template>
     </p-column>
     <p-column field="registerName" header="Medidor"></p-column>
