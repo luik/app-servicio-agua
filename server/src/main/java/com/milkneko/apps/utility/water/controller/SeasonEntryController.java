@@ -37,7 +37,6 @@ public class SeasonEntryController {
     	seasonEntryRepository.save(seasonEntry);
     	
     	return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    	
     }
 
 }

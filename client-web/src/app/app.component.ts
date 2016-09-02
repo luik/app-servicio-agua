@@ -12,7 +12,7 @@ export const appRoutes: Routes = [
     { path: 'customers', component: CustomerListComponent },
     { path: 'connections', component: ConnectionListComponent },
     { path: 'season-entries', component: SeasonEntryListComponent},
-    { path: 'measure-stamps/:id', component: MeasureStampListComponent}
+    { path: 'measure-stamps/:by/:id', component: MeasureStampListComponent}
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

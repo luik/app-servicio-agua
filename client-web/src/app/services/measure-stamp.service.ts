@@ -9,8 +9,8 @@ export class MeasureStampService {
   constructor(@Inject(Http) private http: Http) {
   }
 
-  getMeasureStamps(_connection: IConnection){
-      return this.http.post(ConfigApp.WS_HOST + "/ws/get-measure-stamps", _connection).map(
+  getMeasureStamps(_byCriteria: string,  _entity: any){
+      return this.http.post(ConfigApp.WS_HOST + "/ws/" + _byCriteria + "/get-measure-stamps", _entity).map(
           function(response : Response) {
               return response.json();
           });

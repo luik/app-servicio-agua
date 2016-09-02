@@ -1,10 +1,19 @@
 package com.milkneko.apps.utility.water.model;
 
-import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(indexes = {
+        @Index(name = "index_date", columnList = "date")
+})
 public class MeasureStamp {
     @Id
     @GeneratedValue

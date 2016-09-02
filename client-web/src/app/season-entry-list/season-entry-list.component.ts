@@ -29,16 +29,16 @@ export class SeasonEntryListComponent implements OnInit {
         )
 
         this.items = [
-            {label: "Medidas no facturadas", icon: "fa-search"},
-            {label: "Medidas facturadas", icon: "fa-search"}
+            {label: "Medidas", icon: "fa-search"},
+            {label: "Cobros", icon: "fa-search"}
         ];
     }
 
     onRowSelect(event) {
         this.seasonEntry = this.cloneSeasonEntry(event.data);
         this.isDisplayingDialog = true;
-        this.items[0].routerLink = ["/measure-stamps-season/" + this.seasonEntry.id];
-        this.items[1].routerLink = ["/concurrent-debt-season/" + this.seasonEntry.id];
+        this.items[0].routerLink = ["/measure-stamps/season/" + this.seasonEntry.id];
+        this.items[1].routerLink = ["/get-seasonal-connection-debt-by-season/" + this.seasonEntry.id];
     }
 
     cloneSeasonEntry(seasonEntry: ISeasonEntry): ISeasonEntry {

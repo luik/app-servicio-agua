@@ -1,8 +1,8 @@
 <div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
     <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
-    <input #gb type="text" pInputText size="50" style="float:left" placeholder="Filtro global">
+    <input #gb type="text" pInputText size="40" style="float:left" placeholder="Filtro global">
 </div>
-<p-dataTable [value]="measureStamps" rows="15" [paginator]="true"
+<p-dataTable [value]="measureStamps" [rows]="30" [paginator]="true"
              [globalFilter]="gb" [(selection)]="selectedMeasureStamp" selectionMode="single"
              emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
              [responsive]="true"

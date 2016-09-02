@@ -78,10 +78,17 @@ public class DataInitializer{
         List<Connection> connections = connectionRepository.findAll();
 
         Calendar calendar = new GregorianCalendar();
+
+        int[] connection2lastMeasureStampMap = new int[connections.size() + 1];
+
         for (Connection connection : connections) {
             for(int i = 0; i < 8; i++){
-                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth(), (int)(Math.random()*18 + 1));
-                MeasureStamp measureStamp = new MeasureStamp(new Date(calendar.getTime().getTime()), (int)(Math.random()*50 + 20));
+            	int newMeasureStamp = connection2lastMeasureStampMap[connection.getId()] + (int)(Math.random()*50 + 20);
+                connection2lastMeasureStampMap[connection.getId()] = newMeasureStamp;
+            	
+                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth() - 1, (int)(Math.random()*18 + 1));
+
+                MeasureStamp measureStamp = new MeasureStamp(new Date(calendar.getTime().getTime()), newMeasureStamp);
                 measureStamp.setConnection(connection);
                 measureStamp.setRegister(connection.getRegister());
                 measureStampRepository.save(measureStamp);

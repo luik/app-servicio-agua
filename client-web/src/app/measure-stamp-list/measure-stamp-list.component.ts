@@ -20,12 +20,13 @@ export class MeasureStampListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.measureStampService.getMeasureStamps(<IConnection>{id: parseInt(this.route.snapshot.params["id"])}).subscribe(
+        this.measureStampService.getMeasureStamps(this.route.snapshot.params["by"], {id: parseInt(this.route.snapshot.params["id"])}).subscribe(
             measureStamps =>
             {
                 this.measureStamps = measureStamps as Array<IMeasureStamp>;
             }
         )
+
     }
 
     onRowSelect(event) {
