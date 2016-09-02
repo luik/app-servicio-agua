@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.milkneko.apps.utility.water.model.MeasureStamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,7 +31,10 @@ public class MeasureStampController {
 
         List<MeasureStampResponse> measureStampResponses = measureStampRepository.findAllByConnectionId(connectionResponse.getId()).stream().map(
                 measureStamp -> new MeasureStampResponse(measureStamp.getDate(), measureStamp.getValue(),
-                        measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId())
+                        measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId(),
+                        measureStamp.getPrevSeasonalConnectionDebt() == null ? 0 : measureStamp.getPrevSeasonalConnectionDebt().getId(),
+                        measureStamp.getCurrentSeasonalConnectionDebt() == null ? 0 : measureStamp.getCurrentSeasonalConnectionDebt().getId()		
+                        )
         ).collect(Collectors.toList());
 
         return new ResponseEntity<List<MeasureStampResponse>>(measureStampResponses, HttpStatus.OK);
@@ -49,7 +51,10 @@ public class MeasureStampController {
         List<MeasureStampResponse> measureStampResponses = measureStampRepository.findByDateBetween(new Date(new GregorianCalendar(year, month, 1).getTime().getTime()),
                 new Date(new GregorianCalendar(year, month, lastDay).getTime().getTime())).stream().map(
                 measureStamp -> new MeasureStampResponse(measureStamp.getDate(), measureStamp.getValue(),
-                        measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId())
+                        measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId(),
+                        measureStamp.getPrevSeasonalConnectionDebt() == null ? 0 : measureStamp.getPrevSeasonalConnectionDebt().getId(),
+                        measureStamp.getCurrentSeasonalConnectionDebt() == null ? 0 : measureStamp.getCurrentSeasonalConnectionDebt().getId()
+                        )
         ).collect(Collectors.toList());
 
         return new ResponseEntity<List<MeasureStampResponse>>(measureStampResponses, HttpStatus.OK);

@@ -10,5 +10,10 @@
     <p-column field="date" header="Fecha"></p-column>
     <p-column field="connectionID" header="Conexión ID"></p-column>
     <p-column field="registerID" header="Registro ID"></p-column>
+    <p-column field="currentSeasonalConnectionDebtId" header="Recibo ID">
+        <template pTemplate let-col let-measurestamp="rowData">
+            <span>{{measurestamp[col.field] == 0? "N/C" : measurestamp[col.field] }}</span>
+        </template>
+    </p-column>
     <p-column field="value" header="Medida"></p-column>
 </p-dataTable>

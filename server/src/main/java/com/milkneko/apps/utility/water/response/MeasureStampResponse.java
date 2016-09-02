@@ -8,15 +8,20 @@ public class MeasureStampResponse {
     private float value;
     private int connectionID;
     private String registerID;
+    private int previousSeasonalConnectionDebtId;
+    private int currentSeasonalConnectionDebtId;
 
     public MeasureStampResponse() {
     }
 
-    public MeasureStampResponse(Date date, float value, int connectionID, String registerID) {
+    public MeasureStampResponse(Date date, float value, int connectionID, String registerID, 
+    		int previousSeasonalConnectionDebtId, int currentSeasonalConnectionDebtId) {
         this.date = date;
         this.value = value;
         this.connectionID = connectionID;
         this.registerID = registerID;
+        this.previousSeasonalConnectionDebtId = previousSeasonalConnectionDebtId;
+        this.currentSeasonalConnectionDebtId = currentSeasonalConnectionDebtId;
     }
 
     public int getId() {
@@ -53,5 +58,13 @@ public class MeasureStampResponse {
 
     public void setRegisterID(String registerID) {
         this.registerID = registerID;
+    }
+
+    public int getPreviousSeasonalConnectionDebtId() {
+        return previousSeasonalConnectionDebtId;
+    }
+
+    public int getCurrentSeasonalConnectionDebtId() {
+        return currentSeasonalConnectionDebtId;
     }
 }
