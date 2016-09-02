@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SeasonEntryService} from "../services/season-entry.service";
 import {ISeasonEntry} from "../model/ISeasonEntry";
 import {MenuItem} from "primeng/primeng";
+import {SeasonalConnectionDebtService} from "../services/seasonal-connection-debt.service";
 
 @Component({
     selector: 'app-season-entry-list',
@@ -17,7 +18,10 @@ export class SeasonEntryListComponent implements OnInit {
 
     items: MenuItem[];
 
-    constructor(private seasonEntryService: SeasonEntryService) {
+    constructor(
+        private seasonEntryService: SeasonEntryService,
+        private seasonalConnectionDebtService: SeasonalConnectionDebtService
+        ) {
     }
 
     ngOnInit(): void {
@@ -30,7 +34,8 @@ export class SeasonEntryListComponent implements OnInit {
 
         this.items = [
             {label: "Medidas", icon: "fa-search"},
-            {label: "Cobros", icon: "fa-search"}
+            {label: "Cobros", icon: "fa-search"},
+            {label: "Generar cobros", icon: "fa-gear"}
         ];
     }
 
@@ -38,7 +43,15 @@ export class SeasonEntryListComponent implements OnInit {
         this.seasonEntry = this.cloneSeasonEntry(event.data);
         this.isDisplayingDialog = true;
         this.items[0].routerLink = ["/measure-stamps/season/" + this.seasonEntry.id];
-        this.items[1].routerLink = ["/get-seasonal-connection-debt-by-season/" + this.seasonEntry.id];
+        this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
+        this.items[2].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
+    }
+
+    onGenerateSeasonalConnectionDebts(event){
+        this.seasonalConnectionDebtService.generateSeasonalConnectionDebts("season", this.seasonEntry).subscribe(
+            result => console.log(result)
+
+        );
     }
 
     cloneSeasonEntry(seasonEntry: ISeasonEntry): ISeasonEntry {

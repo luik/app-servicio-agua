@@ -27,7 +27,7 @@ public class MeasureStampController {
     private MeasureStampRepository measureStampRepository;
 
     @RequestMapping(value = "ws/connection/get-measure-stamps", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<MeasureStampResponse>> getMeasureStamps(@RequestBody ConnectionResponse connectionResponse){
+    public ResponseEntity<List<MeasureStampResponse>> getMeasureStampsByConnection(@RequestBody ConnectionResponse connectionResponse){
 
         List<MeasureStampResponse> measureStampResponses = measureStampRepository.findAllByConnectionId(connectionResponse.getId()).stream().map(
                 measureStamp -> new MeasureStampResponse(measureStamp.getDate(), measureStamp.getValue(),

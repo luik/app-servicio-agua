@@ -19,6 +19,8 @@ import {SeasonEntryService} from "./services/season-entry.service";
 import {MeasureStampService} from "./services/measure-stamp.service";
 import {SeasonEntryListComponent} from "./season-entry-list/season-entry-list.component";
 import {MeasureStampListComponent} from "./measure-stamp-list/measure-stamp-list.component";
+import {SeasonalConnectionDebtList} from "./seasonal-connection-debt-list/seasonal-connection-debt-list.component";
+import {SeasonalConnectionDebtService} from "./services/seasonal-connection-debt.service";
 
 @NgModule({
     imports:      [routing, HttpModule, BrowserModule, FormsModule, HttpModule,
@@ -26,11 +28,11 @@ import {MeasureStampListComponent} from "./measure-stamp-list/measure-stamp-list
         CheckboxModule, InputSwitchModule, ToggleButtonModule, CalendarModule, MenuModule, MenubarModule
     ],
     declarations: [AppComponent, CustomerListComponent, ConnectionListComponent, WelcomeComponent,
-        SeasonEntryListComponent, MeasureStampListComponent
+        SeasonEntryListComponent, MeasureStampListComponent, SeasonalConnectionDebtList
     ],
     bootstrap:    [AppComponent],
     providers:    [CustomerService, ConnectionService, RegisterService, ZoneService,
-        SeasonEntryService, MeasureStampService
+        SeasonEntryService, MeasureStampService, SeasonalConnectionDebtService
     ]
 })
 export class AppModule { }

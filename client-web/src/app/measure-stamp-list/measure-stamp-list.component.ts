@@ -16,7 +16,7 @@ export class MeasureStampListComponent implements OnInit {
 
     constructor(
         private measureStampService: MeasureStampService,
-        private route: ActivatedRoute,) {
+        private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
