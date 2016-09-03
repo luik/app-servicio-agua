@@ -14,8 +14,9 @@ public class SeasonalConnectionDebtResponse {
     public SeasonalConnectionDebtResponse() {
     }
 
-    public SeasonalConnectionDebtResponse(int connectionId, Date issuedDate, float initialMeasurementValue, float finalMeasurementValue, int seasonYear, int seasonMonth) {
-        this.connectionId = connectionId;
+    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue, float finalMeasurementValue, int seasonYear, int seasonMonth) {
+        this.id = id;
+    	this.connectionId = connectionId;
         this.issuedDate = issuedDate;
         this.initialMeasurementValue = initialMeasurementValue;
         this.finalMeasurementValue = finalMeasurementValue;
