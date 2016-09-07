@@ -10,11 +10,12 @@ public class SeasonalConnectionDebtResponse {
     private float finalMeasurementValue;
     private int seasonYear;
     private int seasonMonth;
+    private float priceM3;
 
     public SeasonalConnectionDebtResponse() {
     }
 
-    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue, float finalMeasurementValue, int seasonYear, int seasonMonth) {
+    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue, float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3) {
         this.id = id;
     	this.connectionId = connectionId;
         this.issuedDate = issuedDate;
@@ -22,6 +23,7 @@ public class SeasonalConnectionDebtResponse {
         this.finalMeasurementValue = finalMeasurementValue;
         this.seasonYear = seasonYear;
         this.seasonMonth = seasonMonth;
+        this.priceM3 = priceM3;
     }
 
     public int getId() {
@@ -75,4 +77,27 @@ public class SeasonalConnectionDebtResponse {
     public void setSeasonMonth(int seasonMonth) {
         this.seasonMonth = seasonMonth;
     }
+
+    public float getPriceM3() {
+        return priceM3;
+    }
+
+    public void setPriceM3(float priceM3) {
+        this.priceM3 = priceM3;
+    }
+
+    /*
+         //derived
+    private float deltaMeasurements;
+    private float debtValue;
+      * */
+    public float getDeltaMeasurements(){
+        return finalMeasurementValue - initialMeasurementValue;
+    }
+
+    public float getDebtValue(){
+        return getDeltaMeasurements()*this.priceM3;
+    }
+
+
 }

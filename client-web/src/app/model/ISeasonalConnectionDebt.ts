@@ -6,4 +6,7 @@ export interface ISeasonalConnectionDebt{
     finalMeasurementValue: number;
     seasonYear: number;
     seasonMonth: number;
+    priceM3: number;
+    debtValue: number;
+    deltaMeasurements: number;
 }

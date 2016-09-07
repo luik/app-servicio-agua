@@ -18,6 +18,8 @@ export class SeasonEntryListComponent implements OnInit {
 
     items: MenuItem[];
 
+    isGeneratingSeasonalConnectionDebts: boolean = false;
+
     constructor(
         private seasonEntryService: SeasonEntryService,
         private seasonalConnectionDebtService: SeasonalConnectionDebtService
@@ -32,25 +34,39 @@ export class SeasonEntryListComponent implements OnInit {
             }
         )
 
-        this.items = [
-            {label: "Medidas", icon: "fa-search"},
-            {label: "Cobros", icon: "fa-search"},
-            {label: "Generar cobros", icon: "fa-gear"}
-        ];
+
     }
 
     onRowSelect(event) {
         this.seasonEntry = this.cloneSeasonEntry(event.data);
         this.isDisplayingDialog = true;
+
+        if(this.seasonEntry.id <= 1){
+            this.items = [
+                {label: "Medidas", icon: "fa-search"}];
+        }
+        else{
+            this.items = [
+                {label: "Medidas", icon: "fa-search"},
+                {label: "Cobros", icon: "fa-search"},
+                {label: "Generar cobros", icon: "fa-gear"}
+            ];
+
+            this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
+            this.items[2].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
+        }
+
         this.items[0].routerLink = ["/measure-stamps/season/" + this.seasonEntry.id];
-        this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
-        this.items[2].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
     }
 
     onGenerateSeasonalConnectionDebts(event){
-        this.seasonalConnectionDebtService.generateSeasonalConnectionDebts("season", this.seasonEntry).subscribe(
-            result => console.log(result)
+        this.isGeneratingSeasonalConnectionDebts = true;
 
+        this.seasonalConnectionDebtService.generateSeasonalConnectionDebts("season", this.seasonEntry).subscribe(
+            result => {
+                this.isGeneratingSeasonalConnectionDebts = false;
+                this.isDisplayingDialog = false;
+            }
         );
     }
 

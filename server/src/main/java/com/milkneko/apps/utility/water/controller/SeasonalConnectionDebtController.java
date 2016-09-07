@@ -36,7 +36,8 @@ public class SeasonalConnectionDebtController {
         List<SeasonalConnectionDebtResponse> seasonalConnectionDebts = seasonalConnectionDebtRepository.findAllByConnectionId(connectionResponse.getId()).stream().map(
                 seasonalConnectionDebt -> new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
                         seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
-                        seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth()
+                        seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
+                        seasonalConnectionDebt.getSeasonEntry().getPriceM3()
                 )
         ).collect(Collectors.toList());
 
@@ -52,7 +53,8 @@ public class SeasonalConnectionDebtController {
         List<SeasonalConnectionDebtResponse> seasonalConnectionDebts = seasonalConnectionDebtRepository.findAllBySeasonEntryIdYearAndSeasonEntryIdMonth(year, month + 1).stream().map(
                 seasonalConnectionDebt -> new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
                         seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
-                        seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth()
+                        seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
+                        seasonalConnectionDebt.getSeasonEntry().getPriceM3()
                 )
         ).collect(Collectors.toList());
 
@@ -61,7 +63,9 @@ public class SeasonalConnectionDebtController {
 
     @RequestMapping(value = "/ws/season/generate-seasonal-connection-debts", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> generateSeasonalConnectionDebtsBySeason(@RequestBody SeasonEntryResponse seasonEntryResponse) {
-        int index = seasonEntryResponse.getId();
+    	long initialTime = new java.util.Date().getTime();
+    	
+    	int index = seasonEntryResponse.getId();
         int year = index/12 + 2016;
         int month = index%12 - 1;
         int lastDay = new GregorianCalendar(year, month, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -79,6 +83,11 @@ public class SeasonalConnectionDebtController {
         List<MeasureStamp> measureStamps = measureStampRepository.findByDateBetween(startDate, endDate);
 
         for (MeasureStamp measureStamp : measureStamps) {
+        	if(measureStamp.getCurrentSeasonalConnectionDebt() != null)
+        	{
+        		continue;
+        	}
+        	
             SeasonEntry seasonEntry = seasonEntryRepository.findOne(new SeasonEntryKey(year, month + 1));
 
             MeasureStamp prevMeasureStamp = measureStampRepository.findOneByConnectionIdAndDateBetweenOrderByDate(measureStamp.getConnection().getId(), prevStartDate, prevEndDate);
@@ -91,6 +100,10 @@ public class SeasonalConnectionDebtController {
 
             seasonalConnectionDebtRepository.save(seasonalConnectionDebt);
         }
+        
+        long finalTime = new java.util.Date().getTime();
+        
+        System.out.println("generate seasonal connection debts time: " + (finalTime - initialTime));
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }

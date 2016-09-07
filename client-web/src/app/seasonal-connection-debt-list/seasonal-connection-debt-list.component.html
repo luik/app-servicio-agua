@@ -10,9 +10,32 @@
     <p-column field="id" header="ID"></p-column>
     <p-column field="connectionId" header="Conexión ID"></p-column>
     <p-column field="issuedDate" header="Emitido"></p-column>
-    <p-column field="initialMeasurementValue" header="Medida inicial"></p-column>
-    <p-column field="finalMeasurementValue" header="Medida final"></p-column>
     <p-column field="seasonYear" header="Año"></p-column>
     <p-column field="seasonMonth" header="Mes"></p-column>
+    <p-column field="priceM3" header="Precio M3">
+        <template pTemplate let-col let-seasonalconnectiondebt="rowData">
+            <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
+        </template>
+    </p-column>
+    <p-column field="initialMeasurementValue" header="Medida inicial">
+        <template pTemplate let-col let-seasonalconnectiondebt="rowData">
+            <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
+        </template>
+    </p-column>
+    <p-column field="finalMeasurementValue" header="Medida final">
+        <template pTemplate let-col let-seasonalconnectiondebt="rowData">
+            <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
+        </template>
+    </p-column>
+    <p-column field="deltaMeasurements" header="Diferencia medidas">
+        <template pTemplate let-col let-seasonalconnectiondebt="rowData">
+            <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
+        </template>
+    </p-column>
+    <p-column field="debtValue" header="Deuda">
+        <template pTemplate let-col let-seasonalconnectiondebt="rowData">
+            <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
+        </template>
+    </p-column>
 </p-dataTable>
 
