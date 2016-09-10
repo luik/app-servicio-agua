@@ -4,6 +4,7 @@ import {MenuItem} from "primeng/primeng";
 import {ISeasonalConnectionDebt} from "../model/ISeasonalConnectionDebt";
 import {SeasonalConnectionDebtService} from "../services/seasonal-connection-debt.service";
 import {ActivatedRoute} from "@angular/router";
+import {ConfigApp} from "../configApp";
 
 @Component({
     selector: 'seasonal-connection-debt-list',
@@ -33,8 +34,10 @@ export class SeasonalConnectionDebtList implements OnInit {
         )
 
         this.items = [
-            {label: "Medidas", icon: "fa-search"},
-            {label: "Cobros", icon: "fa-search"}
+            {label: "Recibos PDF", icon: "fa-file-excel-o", command: event => {
+                    window.open(ConfigApp.WS_HOST + "/ws/" + this.route.snapshot.params["by"] + "/get-seasonal-connection-debts/pdf/" + this.route.snapshot.params["id"]);
+                }},
+            {label: "Reporte Excel", icon: "fa-file-word-o"}
         ];
     }
 

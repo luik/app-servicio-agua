@@ -70,7 +70,7 @@ public class DataInitializer{
         SeasonEntry[] seasonEntries = new SeasonEntry[100];
 
         for(int i = 0; i < 100; i++){
-            SeasonEntry seasonEntry = new SeasonEntry(i/12 + 2016, i%12 + 1, 5.4f);
+            SeasonEntry seasonEntry = new SeasonEntry(i/12 + 2016, i%12 + 1, 5.31f);
             seasonEntries[i] = seasonEntry;
             seasonEntryRepository.save(seasonEntry);
         }

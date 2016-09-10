@@ -1,23 +1,43 @@
 package com.milkneko.apps.utility.water.controller;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.io.image.PngImageData;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
 import com.milkneko.apps.utility.water.model.*;
 import com.milkneko.apps.utility.water.response.ConnectionResponse;
 import com.milkneko.apps.utility.water.response.MeasureStampResponse;
 import com.milkneko.apps.utility.water.response.SeasonEntryResponse;
 import com.milkneko.apps.utility.water.response.SeasonalConnectionDebtResponse;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -64,7 +84,7 @@ public class SeasonalConnectionDebtController {
     @RequestMapping(value = "/ws/season/generate-seasonal-connection-debts", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> generateSeasonalConnectionDebtsBySeason(@RequestBody SeasonEntryResponse seasonEntryResponse) {
     	long initialTime = new java.util.Date().getTime();
-    	
+
     	int index = seasonEntryResponse.getId();
         int year = index/12 + 2016;
         int month = index%12 - 1;
@@ -87,7 +107,7 @@ public class SeasonalConnectionDebtController {
         	{
         		continue;
         	}
-        	
+
             SeasonEntry seasonEntry = seasonEntryRepository.findOne(new SeasonEntryKey(year, month + 1));
 
             MeasureStamp prevMeasureStamp = measureStampRepository.findOneByConnectionIdAndDateBetweenOrderByDate(measureStamp.getConnection().getId(), prevStartDate, prevEndDate);
@@ -100,12 +120,164 @@ public class SeasonalConnectionDebtController {
 
             seasonalConnectionDebtRepository.save(seasonalConnectionDebt);
         }
-        
+
         long finalTime = new java.util.Date().getTime();
-        
+
         System.out.println("generate seasonal connection debts time: " + (finalTime - initialTime));
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "ws/season/get-seasonal-connection-debts/pdf/{seasonEntryId}", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getSeasonalConnectionDebtsBySeasonInPdf(@PathVariable("seasonEntryId") int seasonEntryId) {
+
+    	DateFormat dateFormat = new SimpleDateFormat("dd - MM - yyyy");
+
+        int year = seasonEntryId/12 + 2016;
+        int month = seasonEntryId%12;
+        List<SeasonalConnectionDebt> seasonalConnectionDebts = seasonalConnectionDebtRepository.findAllBySeasonEntryIdYearAndSeasonEntryIdMonth(year, month);
+
+
+        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(new byte[]{}, HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            PdfFont font = PdfFontFactory.createFont(IOUtils.toByteArray(classloader.getResourceAsStream("static/NotoSansCJKtc-Light.otf")), "Identity-H" , true);
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            PdfWriter pdfWriter = new PdfWriter(byteArrayOutputStream);
+
+            PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+            ImageData background = ImageDataFactory.create(IOUtils.toByteArray(classloader.getResourceAsStream("static/recibo.png")));
+
+            int i = 0;
+
+            for (SeasonalConnectionDebt seasonalConnectionDebt: seasonalConnectionDebts) {
+                if(i > 10) break;
+
+                SeasonalConnectionDebtResponse seasonalConnectionDebtResponse =
+                		new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(),
+                				seasonalConnectionDebt.getIssuedDay(), seasonalConnectionDebt.getInitialMeasureStamp().getValue(),
+                				seasonalConnectionDebt.getFinalMeasureStamp().getValue(), seasonalConnectionDebt.getSeasonEntry().getYear(),
+                				seasonalConnectionDebt.getSeasonEntry().getMonth(), seasonalConnectionDebt.getSeasonEntry().getPriceM3()
+                        );
+
+                String name = seasonalConnectionDebt.getConnection().getCustomer().getName();
+                String recibo = String.format("%09d", seasonalConnectionDebt.getId());
+                String connection = String.format("%09d", seasonalConnectionDebtResponse.getConnectionId());
+                String issueDate = dateFormat.format(seasonalConnectionDebtResponse.getIssuedDate());
+                String serviceDebt = String.format("%.2f", seasonalConnectionDebtResponse.getDebtValue());
+                String address = seasonalConnectionDebt.getConnection().getAddress();
+                String zone = seasonalConnectionDebt.getConnection().getZone().getName();
+                String documentId = seasonalConnectionDebt.getConnection().getCustomer().getDocumentId();
+                String registerId = seasonalConnectionDebt.getConnection().getRegister().getRegisterId();
+
+                String prevMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getInitialMeasureStamp().getValue());
+                String prevMeasurementDate = dateFormat.format(seasonalConnectionDebt.getInitialMeasureStamp().getDate());
+                String finalMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getFinalMeasureStamp().getValue());
+                String finalMeasurementDate = dateFormat.format(seasonalConnectionDebt.getFinalMeasureStamp().getDate());
+
+                String measuresDelta = String.format("%.2f", seasonalConnectionDebtResponse.getDeltaMeasurements());
+                String codeService = "001";
+                String descriptionService = "SERVICIO DE AGUA";
+                float igvDebt = 0.18f*seasonalConnectionDebtResponse.getDebtValue();
+                float totalDebt = 1.18f*seasonalConnectionDebtResponse.getDebtValue();
+                float round = ((Math.round(totalDebt*100))%5)*-1/100f;
+                totalDebt += round;
+
+                String igvDebtStr = String.format("%.2f", igvDebt);
+                String roundStr = String.format("%.2f", round);
+                String totalDebtStr = String.format("%.2f", totalDebt);
+
+                int monthsToDraw = 6;
+                
+                LocalDate endDateSearch = LocalDate.of(year, month, LocalDate.of(year, month, 1).lengthOfMonth());
+                LocalDate startDateSearch = endDateSearch.minusMonths(monthsToDraw + 1);
+
+                List<MeasureStamp> measureStampList = this.measureStampRepository.findAllByConnectionIdAndDateBetweenOrderByDate(seasonalConnectionDebtResponse.getConnectionId(),
+                        Date.valueOf(startDateSearch), Date.valueOf(endDateSearch));
+
+                float[] previouseMeasurements = new float[monthsToDraw];
+                int initialIdx = previouseMeasurements.length + 1 - measureStampList.size();    
+                for(int j = initialIdx; j < monthsToDraw; j++){
+                	previouseMeasurements[j] = measureStampList.get(j + 1 - initialIdx).getValue() - measureStampList.get(j - initialIdx).getValue();
+                }
+                
+                /*
+                for (int j = 0; j < measureStampList.size(); j++) {
+                	MeasureStamp measureStamp = measureStampList.get(j);
+                    System.out.println(dateFormat.format(measureStamp.getDate()) + " " + measureStamp.getValue());
+                }
+                for (int j = 0; j < monthsToDraw; j++) {
+                    System.out.println(previouseMeasurements[j]);
+                }
+                System.out.println("---------------");
+                */
+                
+                
+                
+                PdfPage pdfPage = pdfDocument.addNewPage(PageSize.A5);
+
+                PdfCanvas pdfCanvas = new PdfCanvas(pdfPage);
+                Canvas canvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
+                pdfCanvas.addImage(background, pdfPage.getPageSize(), true);
+                pdfCanvas.saveState().beginText().moveText(50, 486).setFontAndSize(font, 7).showText(name).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(62, 511).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(337, 465).setFontAndSize(font, 12).showText(connection).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(93, 501).setFontAndSize(font, 7).showText(issueDate).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(278, 501).setFontAndSize(font, 8).showText(serviceDebt).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(53, 474).setFontAndSize(font, 7).showText(address).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(48, 458).setFontAndSize(font, 7).showText(zone).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(52, 449).setFontAndSize(font, 7).showText(documentId).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(27, 394).setFontAndSize(font, 7).showText(registerId).endText().restoreState();
+
+                pdfCanvas.saveState().beginText().moveText(80, 394).setFontAndSize(font, 7).showText(prevMeasurementValue).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(125, 394).setFontAndSize(font, 7).showText(prevMeasurementDate).endText().restoreState();
+
+                pdfCanvas.saveState().beginText().moveText(188, 394).setFontAndSize(font, 7).showText(finalMeasurementValue).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(226, 394).setFontAndSize(font, 7).showText(finalMeasurementDate).endText().restoreState();
+
+                pdfCanvas.saveState().beginText().moveText(285, 394).setFontAndSize(font, 7).showText(measuresDelta).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(373, 394).setFontAndSize(font, 7).showText(measuresDelta).endText().restoreState();
+
+                pdfCanvas.saveState().beginText().moveText(80, 384).setFontAndSize(font, 7).showText(prevMeasurementDate).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(136, 384).setFontAndSize(font, 7).showText(finalMeasurementDate).endText().restoreState();
+
+                pdfCanvas.saveState().beginText().moveText(22, 356).setFontAndSize(font, 8).showText(codeService).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(50, 356).setFontAndSize(font, 8).showText(descriptionService).endText().restoreState();
+
+                canvas.setFont(font).setFontSize(7).showTextAligned(serviceDebt, 403, 356, TextAlignment.RIGHT);
+                canvas.setFont(font).setFontSize(7).showTextAligned(serviceDebt, 403, 253, TextAlignment.RIGHT);
+                canvas.setFont(font).setFontSize(7).showTextAligned(igvDebtStr, 403, 243, TextAlignment.RIGHT);
+                canvas.setFont(font).setFontSize(7).showTextAligned(roundStr, 403, 233, TextAlignment.RIGHT);
+                canvas.setFont(font).setFontSize(7).showTextAligned(totalDebtStr, 403, 223, TextAlignment.RIGHT);
+
+                canvas.setFont(font).setFontSize(10).showTextAligned(totalDebtStr, 403, 205, TextAlignment.RIGHT);
+                
+                for (int j = 0; j < monthsToDraw; j++) {
+                    System.out.println(previouseMeasurements[j]);
+                    
+                    pdfCanvas.saveState().setLineWidth(7f).moveTo(110 + 14*j, 192).lineTo(110 + 14*j, 192 + 1.5*previouseMeasurements[j]).stroke().restoreState();
+                }
+
+                i++;
+            }
+
+            pdfDocument.close();
+
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+            //String filename = "recibos.pdf";
+            //headers.setContentDispositionFormData(filename, filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            response = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return response;
+        }
+
+        return response;
     }
 
 }
