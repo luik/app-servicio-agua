@@ -1,8 +1,30 @@
 package com.milkneko.apps.utility.water.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.io.image.PngImageData;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -11,34 +33,17 @@ import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Canvas;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.property.TextAlignment;
-import com.milkneko.apps.utility.water.model.*;
+import com.milkneko.apps.utility.water.model.MeasureStamp;
+import com.milkneko.apps.utility.water.model.MeasureStampRepository;
+import com.milkneko.apps.utility.water.model.SeasonEntry;
+import com.milkneko.apps.utility.water.model.SeasonEntryKey;
+import com.milkneko.apps.utility.water.model.SeasonEntryRepository;
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebtRepository;
 import com.milkneko.apps.utility.water.response.ConnectionResponse;
-import com.milkneko.apps.utility.water.response.MeasureStampResponse;
 import com.milkneko.apps.utility.water.response.SeasonEntryResponse;
 import com.milkneko.apps.utility.water.response.SeasonalConnectionDebtResponse;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 public class SeasonalConnectionDebtController {
