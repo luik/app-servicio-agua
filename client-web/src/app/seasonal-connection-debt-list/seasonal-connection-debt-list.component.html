@@ -42,3 +42,36 @@
     </p-column>
 </p-dataTable>
 
+<p-dialog header="Detalles conexión" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="580">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="seasonalConnectionDebt" style="height: 340px;margin-top: 20px">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="seasonalConnectionDebtId">Código recibo</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="seasonalConnectionDebtId" [(ngModel)]="seasonalConnectionDebt.id" disabled="true"/></div>
+        </div>
+
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="connectionId">Código conexión</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="connectionId" [(ngModel)]="seasonalConnectionDebt.connectionId" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="issuedDate">Dirección</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="issuedDate" [(ngModel)]="seasonalConnectionDebt.issuedDate" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="paidUp">Cancelado</label></div>
+            <div class="ui-grid-col-4">
+                <p-toggleButton id="paidUp" [(ngModel)]="seasonalConnectionDebt.isPaidOut" onLabel="Cancelado" offLabel="Adeudado"
+                                [disabled]="seasonalConnectionDebt.isPaidOut"
+                                (onChange)="onSeasonalConnectionDebtPaidOut($event)">
+                </p-toggleButton>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <!--<button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>-->
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
+        </div>
+    </footer>
+</p-dialog>
+

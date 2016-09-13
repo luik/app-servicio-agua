@@ -194,6 +194,17 @@ public class SeasonalConnectionDebtController {
     	return response;
     }
 
+	@RequestMapping(value = "ws/update-seasonal-connection-debt", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> updateSeasonalConnectionDebt(@RequestBody SeasonEntryResponse seasonEntryResponse){
+		/*
+		SeasonEntry seasonEntry = seasonEntryRepository.findOne(new SeasonEntryKey(seasonEntryResponse.getYear(), seasonEntryResponse.getMonth()));
+		seasonEntry.setPriceM3(seasonEntryResponse.getPriceM3());
+		seasonEntryRepository.save(seasonEntry);
+*/
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	}
+
+
 	private ByteArrayOutputStream getPDFOfSeasonalConnectionDebts(List<SeasonalConnectionDebt> seasonalConnectionDebts)
 			throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

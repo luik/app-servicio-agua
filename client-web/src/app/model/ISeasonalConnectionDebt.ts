@@ -1,5 +1,8 @@
 export interface ISeasonalConnectionDebt{
     id: number;
+    seasonalConnectionPaymentId: number;
+    seasonalConnectionPaymentDate: string;
+    isPaidOut: boolean;
     connectionId: number;
     issuedDate: string;
     initialMeasurementValue: number;

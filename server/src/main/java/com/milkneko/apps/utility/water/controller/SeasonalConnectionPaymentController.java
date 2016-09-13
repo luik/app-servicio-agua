@@ -40,6 +40,7 @@ public class SeasonalConnectionPaymentController {
         return new ResponseEntity<List<SeasonalConnectionPaymentResponse>>(seasonalConnectionPayments, HttpStatus.OK);
     }
 
+    /*
     @RequestMapping(value = "ws/add-seasonal-connection-payment", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> addCustomer(@RequestBody SeasonalConnectionPaymentResponse seasonalConnectionPaymentResponse){
         SeasonalConnectionPayment seasonalConnectionPayment = new SeasonalConnectionPayment(seasonalConnectionPaymentResponse.getPaymentDate());
@@ -48,5 +49,5 @@ public class SeasonalConnectionPaymentController {
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
-
+    */
 }

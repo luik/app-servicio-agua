@@ -42,8 +42,8 @@ export class SeasonalConnectionDebtList implements OnInit {
     }
 
     onRowSelect(event) {
-        //this.seasonEntry = this.cloneSeasonEntry(event.data);
-        //this.isDisplayingDialog = true;
+        this.seasonalConnectionDebt = this.cloneSeasonalConnectionDebt(event.data);
+        this.isDisplayingDialog = true;
         //this.items[0].routerLink = ["/measure-stamps/season/" + this.seasonEntry.id];
         //this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
     }
@@ -57,4 +57,18 @@ export class SeasonalConnectionDebtList implements OnInit {
         //    }
         //);
     }
+
+    onSeasonalConnectionDebtPaidOut(event){
+        let now = Date.now();
+        this.seasonalConnectionDebt.seasonalConnectionPaymentDate = new Date(now - new Date().getTimezoneOffset()*60000).toISOString().slice(0, 10);
+    }
+
+    cloneSeasonalConnectionDebt(seasonalConnectionDebt: ISeasonalConnectionDebt): ISeasonalConnectionDebt {
+        let newSeasonalConnectionDebt = <ISeasonalConnectionDebt>{};
+        for(let prop in seasonalConnectionDebt) {
+            newSeasonalConnectionDebt[prop] = seasonalConnectionDebt[prop];
+        }
+        return newSeasonalConnectionDebt;
+    }
+
 }
