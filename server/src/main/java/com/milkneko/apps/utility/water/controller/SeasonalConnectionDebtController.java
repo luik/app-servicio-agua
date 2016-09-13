@@ -213,8 +213,6 @@ public class SeasonalConnectionDebtController {
                 System.out.println("---------------");
                 */
                 
-                
-                
                 PdfPage pdfPage = pdfDocument.addNewPage(PageSize.A5);
 
                 PdfCanvas pdfCanvas = new PdfCanvas(pdfPage);
@@ -256,9 +254,32 @@ public class SeasonalConnectionDebtController {
                 for (int j = 0; j < monthsToDraw; j++) {
                     System.out.println(previouseMeasurements[j]);
                     
-                    pdfCanvas.saveState().setLineWidth(7f).moveTo(110 + 14*j, 192).lineTo(110 + 14*j, 192 + 1.5*previouseMeasurements[j]).stroke().restoreState();
+                    pdfCanvas.saveState().setLineWidth(7f).moveTo(110 + 14*j, 205).lineTo(110 + 14*j, 205 + 0.8*previouseMeasurements[j]).stroke().restoreState();
                 }
-
+                
+                pdfCanvas.saveState().setLineWidth(0.5f).moveTo(110 - 14 - 5, 205).lineTo(110 + 14*6, 205).stroke().restoreState();
+                canvas.setFont(font).setFontSize(7).showTextAligned("0", 100f - 14f, (float) (205f + 0.*25f - 5), TextAlignment.RIGHT);
+                pdfCanvas.saveState().setLineWidth(0.25f).setLineDash(1f, 1f).moveTo(110 - 14 - 5, 205 + 0.8*25).lineTo(110 + 14*6, 205 + 0.8*25).stroke().restoreState();
+                canvas.setFont(font).setFontSize(7).showTextAligned("25", 100f - 14f, (float) (205f + 0.8*25f - 5), TextAlignment.RIGHT);
+                pdfCanvas.saveState().setLineWidth(0.25f).setLineDash(1f, 1f).moveTo(110 - 14 - 5, 205 + 0.8*50).lineTo(110 + 14*6, 205 + 0.8*50).stroke().restoreState();
+                canvas.setFont(font).setFontSize(7).showTextAligned("50", 100f - 14f, (float) (205f + 0.8*50f - 5), TextAlignment.RIGHT);
+                pdfCanvas.saveState().setLineWidth(0.25f).setLineDash(1f, 1f).moveTo(110 - 14 - 5, 205 + 0.8*75).lineTo(110 + 14*6, 205 + 0.8*75).stroke().restoreState();
+                canvas.setFont(font).setFontSize(7).showTextAligned("75", 100f - 14f, (float) (205f + 0.8*75f - 5), TextAlignment.RIGHT);
+                pdfCanvas.saveState().setLineWidth(0.5f).moveTo(110 - 14 - 5, 205 + 0.8*100).lineTo(110 + 14*6, 205 + 0.8*100).stroke().restoreState();
+                canvas.setFont(font).setFontSize(7).showTextAligned("100", 100f - 14f, (float) (205f + 0.8*100f - 5), TextAlignment.RIGHT);
+                
+                pdfCanvas.saveState().setLineWidth(0.5f).moveTo(110 - 14, 205).lineTo(110 - 14, 205 + 0.8*100).stroke().restoreState();
+                pdfCanvas.saveState().setLineWidth(0.5f).moveTo(110 + 14*6, 205).lineTo(110 + 14*6, 205 + 0.8*100).stroke().restoreState();
+                
+                pdfCanvas.saveState().beginText().moveText(141, 101).setFontAndSize(font, 7).showText(connection).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(141, 93).setFontAndSize(font, 7).showText(name).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(141, 85).setFontAndSize(font, 7).showText("GRUPO IV").endText().restoreState();
+                
+                canvas.setFont(font).setFontSize(10).showTextAligned(totalDebtStr, 236, 64, TextAlignment.LEFT);
+                
+                pdfCanvas.saveState().beginText().moveText(58, 41).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
+                pdfCanvas.saveState().beginText().moveText(58, 33).setFontAndSize(font, 7).showText(issueDate).endText().restoreState();
+                
                 i++;
             }
 
