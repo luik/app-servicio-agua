@@ -1,5 +1,6 @@
-export interface ISeasonalConnectionDebt{
+export interface ISeasonalConnectionPayment{
     id: number;
+    seasonalConnectionDebtId: number;
     connectionId: number;
     issuedDate: string;
     initialMeasurementValue: number;

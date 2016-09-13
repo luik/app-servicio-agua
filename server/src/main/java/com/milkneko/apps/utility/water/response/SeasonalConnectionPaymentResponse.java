@@ -2,23 +2,28 @@ package com.milkneko.apps.utility.water.response;
 
 import java.sql.Date;
 
-public class SeasonalConnectionDebtResponse {
+public class SeasonalConnectionPaymentResponse {
     private int id;
+    private int seasonalConnectionDebtId;
     private int connectionId;
     private Date issuedDate;
+    private Date paymentDate;
     private float initialMeasurementValue;
     private float finalMeasurementValue;
     private int seasonYear;
     private int seasonMonth;
     private float priceM3;
 
-    public SeasonalConnectionDebtResponse() {
+    public SeasonalConnectionPaymentResponse() {
     }
 
-    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue, float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3) {
+    public SeasonalConnectionPaymentResponse(int id, int seasonalConnectionDebtId, int connectionId, Date issuedDate, float initialMeasurementValue,
+                                             float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3, Date paymentDate) {
         this.id = id;
+        this.seasonalConnectionDebtId = seasonalConnectionDebtId;
     	this.connectionId = connectionId;
         this.issuedDate = issuedDate;
+        this.paymentDate = paymentDate;
         this.initialMeasurementValue = initialMeasurementValue;
         this.finalMeasurementValue = finalMeasurementValue;
         this.seasonYear = seasonYear;
@@ -28,6 +33,14 @@ public class SeasonalConnectionDebtResponse {
 
     public int getId() {
         return id;
+    }
+
+    public int getSeasonalConnectionDebtId() {
+        return seasonalConnectionDebtId;
+    }
+
+    public void setSeasonalConnectionDebtId(int seasonalConnectionDebtId) {
+        this.seasonalConnectionDebtId = seasonalConnectionDebtId;
     }
 
     public int getConnectionId() {
@@ -44,6 +57,14 @@ public class SeasonalConnectionDebtResponse {
 
     public void setIssuedDate(Date issuedDate) {
         this.issuedDate = issuedDate;
+    }
+
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
     public float getInitialMeasurementValue() {
