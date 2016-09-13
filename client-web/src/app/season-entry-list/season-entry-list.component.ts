@@ -33,8 +33,6 @@ export class SeasonEntryListComponent implements OnInit {
                 this.seasonEntries = seasonEntries as Array<ISeasonEntry>;
             }
         )
-
-
     }
 
     onRowSelect(event) {

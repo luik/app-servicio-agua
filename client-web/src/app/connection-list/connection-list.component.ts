@@ -68,7 +68,9 @@ export class ConnectionListComponent implements OnInit {
             }
         );
 
-        this.items = [{label: "Medidas medidor", icon: "fa-search"}];
+        this.items = [{label: "Medidas", icon: "fa-search"},
+            {label: "Cobros", icon: "fa-search"},
+            {label: "Pagos", icon: "fa-search"}];
     }
 
     searchRegisters(event) {
@@ -147,7 +149,9 @@ export class ConnectionListComponent implements OnInit {
         this.selectedRegister = <IRegister>{id: this.connection.registerID, registerID: this.connection.registerName};
         this.selectedCustomer = <ICustomer>{id: this.connection.customerID, name: this.connection.customerName};
         this.selectedZone = <IZone>{id: this.connection.zoneID, name: this.connection.zoneName};
+
         this.items[0].routerLink = ["/measure-stamps/connection/" + this.connection.id];
+        this.items[1].routerLink = ["/seasonal-connection-debts/connection/" + this.connection.id];
     }
 
     onConnectionDeactivated(event){

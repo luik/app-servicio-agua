@@ -18,11 +18,10 @@ export class SeasonalConnectionDebtService {
     }
 
     generateSeasonalConnectionDebts(_byCriteria, _entity: any){
-        console.log("generate", _byCriteria, _entity, ConfigApp.WS_HOST + "/ws/" + _byCriteria + "/generate-seasonal-connection-debts");
+        //console.log("generate", _byCriteria, _entity, ConfigApp.WS_HOST + "/ws/" + _byCriteria + "/generate-seasonal-connection-debts");
         return this.http.post(ConfigApp.WS_HOST + "/ws/" + _byCriteria + "/generate-seasonal-connection-debts", _entity).map(
             function (response: Response) {
                 return response.json();
             });
     }
-
 }
