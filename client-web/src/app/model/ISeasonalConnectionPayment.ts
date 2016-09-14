@@ -1,6 +1,7 @@
 export interface ISeasonalConnectionPayment{
     id: number;
     seasonalConnectionDebtId: number;
+    paymentDate: number;
     connectionId: number;
     issuedDate: string;
     initialMeasurementValue: number;

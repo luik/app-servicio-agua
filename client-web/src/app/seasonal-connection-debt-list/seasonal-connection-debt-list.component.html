@@ -42,8 +42,8 @@
     </p-column>
 </p-dataTable>
 
-<p-dialog header="Detalles conexión" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="580">
-    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="seasonalConnectionDebt" style="height: 340px;margin-top: 20px">
+<p-dialog header="Detalles cobro por servicio mensual" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="590">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="seasonalConnectionDebt" style="height: 370px;margin-top: 20px">
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="seasonalConnectionDebtId">Código recibo</label></div>
             <div class="ui-grid-col-8"><input pInputText id="seasonalConnectionDebtId" [(ngModel)]="seasonalConnectionDebt.id" disabled="true"/></div>
@@ -54,19 +54,64 @@
             <div class="ui-grid-col-8"><input pInputText id="connectionId" [(ngModel)]="seasonalConnectionDebt.connectionId" disabled="true"/></div>
         </div>
         <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="issuedDate">Dirección</label></div>
+            <div class="ui-grid-col-4"><label for="issuedDate">Fecha emisión</label></div>
             <div class="ui-grid-col-8"><input pInputText id="issuedDate" [(ngModel)]="seasonalConnectionDebt.issuedDate" disabled="true"/></div>
         </div>
         <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="initialMeasurement">Medida inicial</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="initialMeasurement" [(ngModel)]="seasonalConnectionDebt.initialMeasurementValue" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="finalMeasurement">Medida final</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="finalMeasurement" [(ngModel)]="seasonalConnectionDebt.finalMeasurementValue" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="deltaMeasurement">Diferencia medidas</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="deltaMeasurement" [(ngModel)]="seasonalConnectionDebt.deltaMeasurements" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="seasonYear">Año</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="seasonYear" [(ngModel)]="seasonalConnectionDebt.seasonYear" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="seasonMonth">Mes</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="seasonMonth" [(ngModel)]="seasonalConnectionDebt.seasonMonth" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="priceM3">Precio m3</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="priceM3" [(ngModel)]="seasonalConnectionDebt.priceM3" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="totalDebt">Deuda total</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="totalDebt" [value]="seasonalConnectionDebt.totalDebtValue.toFixed(2)" disabled="true" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="paymentId">Código de pago</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="paymentId" [(ngModel)]="seasonalConnectionDebt.seasonalConnectionPaymentId" disabled="true" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="paymentDate">Fecha pago</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="paymentDate" [(ngModel)]="seasonalConnectionDebt.seasonalConnectionPaymentDate" disabled="true" /></div>
+        </div>
+
+        <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="paidUp">Cancelado</label></div>
             <div class="ui-grid-col-4">
-                <p-toggleButton id="paidUp" [(ngModel)]="seasonalConnectionDebt.isPaidOut" onLabel="Cancelado" offLabel="Adeudado"
-                                [disabled]="seasonalConnectionDebt.isPaidOut"
+                <p-toggleButton id="paidUp" [(ngModel)]="seasonalConnectionDebt.paidOut" onLabel="Cancelado" offLabel="Adeudado"
+                                [disabled]="seasonalConnectionDebt.paidOut"
                                 (onChange)="onSeasonalConnectionDebtPaidOut($event)">
                 </p-toggleButton>
             </div>
         </div>
     </div>
+
+    <!--
+{"id":1298,"seasonalConnectionPaymentId":-1,"seasonalConnectionPaymentDate":null,"connectionId":3,"issuedDate":"2016-09-14","initialMeasurementValue":23.0,
+"finalMeasurementValue":63.0,"seasonYear":2016,"seasonMonth":2,"priceM3":5.31,"deltaMeasurements":40.0,"debtValue":212.4,"totalDebtValue":250.60199,"paidOut":false}
+
+{"seasonalConnectionPaymentId":-1,"seasonalConnectionPaymentDate":null,
+"debtValue":212.4,"totalDebtValue":250.60199,"paidOut":false}
+-->
     <footer>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
             <!--<button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>-->

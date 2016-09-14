@@ -34,10 +34,10 @@ export class SeasonalConnectionDebtList implements OnInit {
         )
 
         this.items = [
-            {label: "Recibos PDF", icon: "fa-file-excel-o", command: event => {
+            {label: "Recibos PDF", icon: "fa-file-pdf-o", command: event => {
                     window.open(ConfigApp.WS_HOST + "/ws/" + this.route.snapshot.params["by"] + "/get-seasonal-connection-debts/pdf/" + this.route.snapshot.params["id"]);
                 }},
-            {label: "Reporte Excel", icon: "fa-file-word-o"}
+            {label: "Reporte Excel", icon: "fa-file-excel-o"}
         ];
     }
 
@@ -49,17 +49,18 @@ export class SeasonalConnectionDebtList implements OnInit {
     }
 
     save(){
-        //this.seasonEntryService.updateSeasonEntry(this.seasonEntry).subscribe(
-        //    response =>
-        //    {
-        //        this.ngOnInit();
-        //        this.isDisplayingDialog = false;
-        //    }
-        //);
+        this.seasonalConnectionDebtService.updateSeasonalConnectionDebts(this.seasonalConnectionDebt).subscribe(
+            response =>
+            {
+                this.ngOnInit();
+                this.isDisplayingDialog = false;
+            }
+        );
     }
 
     onSeasonalConnectionDebtPaidOut(event){
         let now = Date.now();
+        this.seasonalConnectionDebt.paidOut = true;
         this.seasonalConnectionDebt.seasonalConnectionPaymentDate = new Date(now - new Date().getTimezoneOffset()*60000).toISOString().slice(0, 10);
     }
 

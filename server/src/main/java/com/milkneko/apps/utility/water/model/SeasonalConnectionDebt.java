@@ -13,8 +13,7 @@ public class SeasonalConnectionDebt {
     @ManyToOne
     private Connection connection;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "seasonalConnectionDebt")
     private SeasonalConnectionPayment seasonalConnectionPayment;
 
     @OneToOne

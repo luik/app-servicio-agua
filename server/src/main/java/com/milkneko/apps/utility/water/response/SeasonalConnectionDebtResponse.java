@@ -3,7 +3,10 @@ package com.milkneko.apps.utility.water.response;
 import java.sql.Date;
 
 public class SeasonalConnectionDebtResponse {
+
     private int id;
+    private int seasonalConnectionPaymentId;
+    private Date seasonalConnectionPaymentDate;
     private int connectionId;
     private Date issuedDate;
     private float initialMeasurementValue;
@@ -15,7 +18,9 @@ public class SeasonalConnectionDebtResponse {
     public SeasonalConnectionDebtResponse() {
     }
 
-    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue, float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3) {
+    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue,
+                                          float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3,
+                                          int seasonalConnectionPaymentId, Date seasonalConnectionPaymentDate) {
         this.id = id;
     	this.connectionId = connectionId;
         this.issuedDate = issuedDate;
@@ -24,6 +29,8 @@ public class SeasonalConnectionDebtResponse {
         this.seasonYear = seasonYear;
         this.seasonMonth = seasonMonth;
         this.priceM3 = priceM3;
+        this.seasonalConnectionPaymentId = seasonalConnectionPaymentId;
+        this.seasonalConnectionPaymentDate = seasonalConnectionPaymentDate;
     }
 
     public int getId() {
@@ -86,11 +93,29 @@ public class SeasonalConnectionDebtResponse {
         this.priceM3 = priceM3;
     }
 
+    public int getSeasonalConnectionPaymentId() {
+        return seasonalConnectionPaymentId;
+    }
+
+    public void setSeasonalConnectionPaymentId(int seasonalConnectionPaymentId) {
+        this.seasonalConnectionPaymentId = seasonalConnectionPaymentId;
+    }
+
+    public Date getSeasonalConnectionPaymentDate() {
+        return seasonalConnectionPaymentDate;
+    }
+
+    public void setSeasonalConnectionPaymentDate(Date seasonalConnectionPaymentDate) {
+        this.seasonalConnectionPaymentDate = seasonalConnectionPaymentDate;
+    }
+
     /*
-         //derived
-    private float deltaMeasurements;
-    private float debtValue;
-      * */
+        //derived
+        private float deltaMeasurements;
+        private float debtValue;
+        private float totalDebtValue
+        private boolean paidOut
+    */
     public float getDeltaMeasurements(){
         return finalMeasurementValue - initialMeasurementValue;
     }
@@ -104,6 +129,10 @@ public class SeasonalConnectionDebtResponse {
         float round = ((Math.round(totalDebt*100))%5)*-1/100f;
         totalDebt += round;
         return totalDebt;
+    }
+
+    public boolean isPaidOut(){
+        return this.seasonalConnectionPaymentId != -1;
     }
 
 

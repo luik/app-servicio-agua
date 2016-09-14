@@ -27,6 +27,15 @@ public class SeasonalConnectionPaymentController {
     @RequestMapping(value = "ws/connection/get-seasonal-connection-payments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SeasonalConnectionPaymentResponse>> getSeasonalConnectionDebtsByConnection(@RequestBody ConnectionResponse connectionResponse){
 
+        List<SeasonalConnectionDebt> seasonalConnectionDebts = seasonalConnectionDebtRepository.findAllByConnectionId(connectionResponse.getId());
+        for (SeasonalConnectionDebt seasonalConnectionDebt: seasonalConnectionDebts
+             ) {
+            if(seasonalConnectionDebt.getSeasonalConnectionPayment() != null)
+                System.out.println("->" + seasonalConnectionDebt.getSeasonalConnectionPayment().getId());
+            else
+                System.out.println("-x");
+        }
+
         List<SeasonalConnectionPaymentResponse> seasonalConnectionPayments = seasonalConnectionDebtRepository.findAllByConnectionId(connectionResponse.getId()).
                 stream().filter(seasonalConnectionDebt -> seasonalConnectionDebt.getSeasonalConnectionPayment() != null).map(
                 seasonalConnectionDebt -> new SeasonalConnectionPaymentResponse(seasonalConnectionDebt.getSeasonalConnectionPayment().getId(),

@@ -1,9 +1,6 @@
 package com.milkneko.apps.utility.water.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
