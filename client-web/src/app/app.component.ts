@@ -9,7 +9,7 @@ import {SeasonalConnectionDebtList} from "./seasonal-connection-debt-list/season
 import {SeasonalConnectionPaymentList} from "./seasonal-connection-payment-list/seasonal-connection-payment-list.component";
 
 export const appRoutes: Routes = [
-    { path: '', component: WelcomeComponent, terminal: true },
+    { path: '', component: WelcomeComponent},
     { path: 'welcome', component: WelcomeComponent},
     { path: 'customers', component: CustomerListComponent },
     { path: 'connections', component: ConnectionListComponent },
