@@ -1,0 +1,11 @@
+package com.example.model;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface SeasonEntryRepository extends JpaRepository<SeasonEntry, SeasonEntryKey> {
+    @Query("SELECT s FROM SeasonEntry s ORDER BY year, month")
+    List<SeasonEntry> findAllOrderByYearMonth();
+}
