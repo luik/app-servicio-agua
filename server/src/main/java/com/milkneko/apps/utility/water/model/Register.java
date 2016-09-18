@@ -13,8 +13,7 @@ public class Register {
     private float value;
     private float prevValue;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "register")
     private Connection connection;
 
     @OneToMany(mappedBy = "register")
