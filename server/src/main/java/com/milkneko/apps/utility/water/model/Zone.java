@@ -10,7 +10,7 @@ public class Zone {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "zone", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "zone", fetch = FetchType.LAZY)
     private Collection<Connection> connections;
 
     public Zone() {

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +26,14 @@ public class SeasonEntryController {
 
     @RequestMapping(value = "ws/get-season-entries", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SeasonEntryResponse>> getSeasonEntries(){
+        Instant startTime = Instant.now();
+
         List<SeasonEntryResponse> seasonEntries = seasonEntryRepository.findAllOrderByYearMonth().stream().map(
                 seasonEntry -> new SeasonEntryResponse(seasonEntry.getYear(), seasonEntry.getMonth(), seasonEntry.getPriceM3())
         ).collect(Collectors.toList());
+
+        System.out.println("get seasons : " + Duration.between(startTime, Instant.now()));
+
         return new ResponseEntity<List<SeasonEntryResponse>>(seasonEntries, HttpStatus.OK);
     }
     

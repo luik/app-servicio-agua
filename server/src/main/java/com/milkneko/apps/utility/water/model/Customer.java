@@ -16,7 +16,7 @@ public class Customer {
     private String name;
     private String documentId;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Collection<Connection> connections;
 
     public Customer(){

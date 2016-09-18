@@ -2,13 +2,7 @@ package com.milkneko.apps.utility.water.model;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(indexes = {
@@ -21,14 +15,14 @@ public class MeasureStamp {
     private Date date;
     private float value;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Register register;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Connection connection;
 
-    @OneToOne(mappedBy = "initialMeasureStamp")
+    @OneToOne(mappedBy = "initialMeasureStamp", fetch = FetchType.LAZY)
     private SeasonalConnectionDebt prevSeasonalConnectionDebt;
-    @OneToOne(mappedBy = "finalMeasureStamp")
+    @OneToOne(mappedBy = "finalMeasureStamp", fetch = FetchType.LAZY)
     private SeasonalConnectionDebt currentSeasonalConnectionDebt;
 
     public MeasureStamp() {

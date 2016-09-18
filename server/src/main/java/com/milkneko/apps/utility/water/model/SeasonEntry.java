@@ -14,7 +14,7 @@ public class SeasonEntry implements Serializable{
     private SeasonEntryKey id;
     private float priceM3;
 
-    @OneToMany(mappedBy = "seasonEntry", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "seasonEntry", fetch = FetchType.LAZY)
     private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
 
     public SeasonEntry() {

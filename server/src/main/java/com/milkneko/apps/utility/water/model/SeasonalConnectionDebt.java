@@ -10,18 +10,18 @@ public class SeasonalConnectionDebt {
     private int id;
     private Date issuedDay;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Connection connection;
 
-    @OneToOne(mappedBy = "seasonalConnectionDebt")
+    @OneToOne(mappedBy = "seasonalConnectionDebt", fetch = FetchType.LAZY)
     private SeasonalConnectionPayment seasonalConnectionPayment;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private MeasureStamp initialMeasureStamp;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private MeasureStamp finalMeasureStamp;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private SeasonEntry seasonEntry;
 
     public SeasonalConnectionDebt() {

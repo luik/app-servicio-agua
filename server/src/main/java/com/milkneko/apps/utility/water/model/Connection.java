@@ -17,19 +17,19 @@ public class Connection {
     @Column(length = 1000)
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Zone zone;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Register register;
 
-    @OneToMany(mappedBy = "connection")
+    @OneToMany(mappedBy = "connection", fetch = FetchType.LAZY)
     private Collection<MeasureStamp> measureStamps;
 
-    @OneToMany(mappedBy = "connection")
+    @OneToMany(mappedBy = "connection", fetch = FetchType.LAZY)
     private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
 
     public Connection() {

@@ -10,7 +10,7 @@ public class SeasonalConnectionPayment {
     private int id;
     private Date date;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private SeasonalConnectionDebt seasonalConnectionDebt;
 
     public SeasonalConnectionPayment() {

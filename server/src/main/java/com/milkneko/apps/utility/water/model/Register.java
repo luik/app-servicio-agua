@@ -13,10 +13,10 @@ public class Register {
     private float value;
     private float prevValue;
 
-    @OneToOne(mappedBy = "register")
+    @OneToOne(mappedBy = "register", fetch = FetchType.LAZY)
     private Connection connection;
 
-    @OneToMany(mappedBy = "register")
+    @OneToMany(mappedBy = "register", fetch = FetchType.LAZY)
     private Collection<MeasureStamp> measureStamps;
 
     public Register(){

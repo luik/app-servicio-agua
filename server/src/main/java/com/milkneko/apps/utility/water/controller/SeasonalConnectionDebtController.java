@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,7 +91,7 @@ public class SeasonalConnectionDebtController {
 
     @RequestMapping(value = "/ws/season/generate-seasonal-connection-debts", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> generateSeasonalConnectionDebtsBySeason(@RequestBody SeasonEntryResponse seasonEntryResponse) {
-    	long initialTime = new java.util.Date().getTime();
+		Instant startTime = Instant.now();
 
     	int index = seasonEntryResponse.getId();
         int year = index/12 + 2016;
@@ -129,7 +131,7 @@ public class SeasonalConnectionDebtController {
 
         long finalTime = new java.util.Date().getTime();
 
-        System.out.println("generate seasonal connection debts time: " + (finalTime - initialTime));
+		System.out.println("generate seasons debts: " + Duration.between(startTime, Instant.now()));
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }

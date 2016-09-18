@@ -114,7 +114,7 @@ public class DataInitializer{
             {
                 System.out.println(customer.getName() + " " + connections.toArray().length);
                 for (Connection connection: connections) {
-                    System.out.println(connection.getAddress() + " " + connection.getRegister().getRegisterId());
+                    ///System.out.println(connection.getAddress() + " " + connection.getRegister().getRegisterId());
                 }
             }
         }
