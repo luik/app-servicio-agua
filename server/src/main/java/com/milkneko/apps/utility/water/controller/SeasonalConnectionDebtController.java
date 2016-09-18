@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.itextpdf.layout.element.Image;
 import com.milkneko.apps.utility.water.model.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -220,6 +221,7 @@ public class SeasonalConnectionDebtController {
 
 		PdfDocument pdfDocument = new PdfDocument(pdfWriter);
 		ImageData background = ImageDataFactory.create(IOUtils.toByteArray(classloader.getResourceAsStream("static/recibo.png")));
+		Image backgroundImage = new Image(background);
 
 		///int i = 0;
 
@@ -291,7 +293,8 @@ public class SeasonalConnectionDebtController {
 
 		    PdfCanvas pdfCanvas = new PdfCanvas(pdfPage);
 		    Canvas canvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
-		    pdfCanvas.addImage(background, pdfPage.getPageSize(), true);
+		    //pdfCanvas.addImage(background, pdfPage.getPageSize(), true);
+		    canvas.add(backgroundImage);
 		    pdfCanvas.saveState().beginText().moveText(50, 486).setFontAndSize(font, 7).showText(name).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(62, 511).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(337, 465).setFontAndSize(font, 12).showText(connection).endText().restoreState();
