@@ -35,7 +35,7 @@
             <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
         </template>
     </p-column>
-    <p-column field="totalDebtValue" header="Deuda">
+    <p-column field="totalDebtRoundedValue" header="Deuda">
         <template pTemplate let-col let-seasonalconnectiondebt="rowData">
             <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
         </template>
@@ -83,7 +83,7 @@
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="totalDebt">Deuda total</label></div>
-            <div class="ui-grid-col-8"><input pInputText id="totalDebt" [value]="seasonalConnectionDebt.totalDebtValue.toFixed(2)" disabled="true" /></div>
+            <div class="ui-grid-col-8"><input pInputText id="totalDebt" [value]="seasonalConnectionDebt.totalDebtRoundedValue.toFixed(2)" disabled="true" /></div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="paymentId">Código de pago</label></div>

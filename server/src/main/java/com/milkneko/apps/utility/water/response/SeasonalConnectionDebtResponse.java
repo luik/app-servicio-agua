@@ -125,10 +125,22 @@ public class SeasonalConnectionDebtResponse {
     }
 
     public float getTotalDebtValue(){
-        float totalDebt = 1.18f*getDebtValue();
-        float round = ((Math.round(totalDebt*100))%5)*-1/100f;
-        totalDebt += round;
-        return totalDebt;
+        return getDebtValue() + getIGVDebtValue();
+    }
+
+    public float getTotalDebtRoundedValue(){
+        return getTotalDebtValue() + getRoundValue();
+    }
+
+    public float getRoundValue(){
+    	if(Math.IEEEremainder(getTotalDebtValue(), 0.05) > 0){
+    		return -(float) Math.IEEEremainder(getTotalDebtValue(), 0.05);
+    	}
+        return -(float) Math.IEEEremainder(getTotalDebtValue(), 0.05) - 0.05f;
+    }
+
+    public float getIGVDebtValue(){
+        return 0.18f*getDebtValue();
     }
 
     public boolean isPaidOut(){

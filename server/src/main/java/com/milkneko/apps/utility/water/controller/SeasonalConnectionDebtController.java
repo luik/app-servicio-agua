@@ -254,10 +254,10 @@ public class SeasonalConnectionDebtController {
 		    String measuresDelta = String.format("%.2f", seasonalConnectionDebtResponse.getDeltaMeasurements());
 		    String codeService = "001";
 		    String descriptionService = "SERVICIO DE AGUA";
-		    float igvDebt = 0.18f*seasonalConnectionDebtResponse.getDebtValue();
-		    float totalDebt = 1.18f*seasonalConnectionDebtResponse.getDebtValue();
-		    float round = ((Math.round(totalDebt*100))%5)*-1/100f;
-		    totalDebt += round;
+		    
+		    float igvDebt = seasonalConnectionDebtResponse.getIGVDebtValue();
+		    float totalDebt = seasonalConnectionDebtResponse.getTotalDebtRoundedValue();
+		    float round = seasonalConnectionDebtResponse.getRoundValue();
 
 		    String igvDebtStr = String.format("%.2f", igvDebt);
 		    String roundStr = String.format("%.2f", round);
@@ -293,8 +293,9 @@ public class SeasonalConnectionDebtController {
 
 		    PdfCanvas pdfCanvas = new PdfCanvas(pdfPage);
 		    Canvas canvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
+		    Canvas backgroundCanvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
 		    //pdfCanvas.addImage(background, pdfPage.getPageSize(), true);
-		    canvas.add(backgroundImage);
+		    backgroundCanvas.add(backgroundImage);
 		    pdfCanvas.saveState().beginText().moveText(50, 486).setFontAndSize(font, 7).showText(name).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(62, 511).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(337, 465).setFontAndSize(font, 12).showText(connection).endText().restoreState();
@@ -329,7 +330,7 @@ public class SeasonalConnectionDebtController {
 		    canvas.setFont(font).setFontSize(10).showTextAligned(totalDebtStr, 403, 205, TextAlignment.RIGHT);
 		    
 		    for (int j = 0; j < monthsToDraw; j++) {
-		        System.out.println(previouseMeasurements[j]);
+		        //System.out.println(previouseMeasurements[j]);
 		        
 		        pdfCanvas.saveState().setLineWidth(7f).moveTo(110 + 14*j, 205).lineTo(110 + 14*j, 205 + 0.8*previouseMeasurements[j]).stroke().restoreState();
 		    }

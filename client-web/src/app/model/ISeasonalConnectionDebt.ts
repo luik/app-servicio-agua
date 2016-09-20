@@ -12,5 +12,6 @@ export interface ISeasonalConnectionDebt{
     priceM3: number;
     debtValue: number;
     totalDebtValue: number;
+    totalDebtRoundedValue: number;
     deltaMeasurements: number;
 }
