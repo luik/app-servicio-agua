@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {IMeasureStamp} from "../model/IMeasureStamp";
 import {MeasureStampService} from "../services/measure-stamp.service";
-import {IConnection} from "../model/IConnection";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({
@@ -32,7 +31,6 @@ export class MeasureStampListComponent implements OnInit {
         this.measureStampService.saveMeasureStamps(this.measureStamps.filter(measureStamp => measureStamp.value != measureStamp.modifiedValue)).subscribe(
             measureStamps =>
             {
-                //this.measureStamps = measureStamps as Array<IMeasureStamp>;
                 this.ngOnInit();
             }
         )
