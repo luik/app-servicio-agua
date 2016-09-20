@@ -2,6 +2,7 @@ import {Injectable, Inject} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {ConfigApp} from "../configApp";
 import {IConnection} from "../model/IConnection";
+import {IMeasureStamp} from "../model/IMeasureStamp";
 
 @Injectable()
 export class MeasureStampService {
@@ -15,4 +16,8 @@ export class MeasureStampService {
               return response.json();
           });
   }
+
+    saveMeasureStamps(_measureStamps: IMeasureStamp[]){
+        return this.http.post(ConfigApp.WS_HOST + "/ws/save-measure-stamps", _measureStamps);
+    }
 }

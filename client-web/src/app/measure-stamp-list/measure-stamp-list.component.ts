@@ -26,9 +26,15 @@ export class MeasureStampListComponent implements OnInit {
                 this.measureStamps = measureStamps as Array<IMeasureStamp>;
             }
         )
-
     }
 
-    onRowSelect(event) {
+    save(){
+        this.measureStampService.saveMeasureStamps(this.measureStamps.filter(measureStamp => measureStamp.value != measureStamp.modifiedValue)).subscribe(
+            measureStamps =>
+            {
+                //this.measureStamps = measureStamps as Array<IMeasureStamp>;
+                this.ngOnInit();
+            }
+        )
     }
 }

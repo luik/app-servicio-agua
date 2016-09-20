@@ -2,18 +2,34 @@
     <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
     <input #gb type="text" pInputText size="40" style="float:left" placeholder="Filtro global">
 </div>
-<p-dataTable [value]="measureStamps" [rows]="30" [paginator]="true"
-             [globalFilter]="gb" [(selection)]="selectedMeasureStamp" selectionMode="single"
-             emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
-             [responsive]="true"
+<p-dataTable [value]="measureStamps" [rows]="100" [paginator]="true"
+             [globalFilter]="gb"
+             emptyMessage="Registros no encontrados"
+             [responsive]="true" [editable]="true"
 >
-    <p-column field="date" header="Fecha"></p-column>
-    <p-column field="connectionID" header="Conexión ID"></p-column>
-    <p-column field="registerID" header="Registro ID"></p-column>
-    <p-column field="currentSeasonalConnectionDebtId" header="Recibo ID">
+    <p-column field="date" header="Fecha" [editable]="true" [sortable]="true"></p-column>
+    <p-column field="connectionID" header="Conexión" [filter]="true" filterMatchMode="startsWith" [sortable]="true"></p-column>
+    <p-column field="registerID" header="Medidor"></p-column>
+    <p-column field="customerName" header="Beneficiario"></p-column>
+    <p-column field="zoneName" header="Sector"></p-column>
+    <p-column field="address" header="Dirección"></p-column>
+    <p-column field="currentSeasonalConnectionDebtId" header="Recibo">
         <template pTemplate let-col let-measurestamp="rowData">
             <span>{{measurestamp[col.field] == 0? "N/C" : measurestamp[col.field] }}</span>
         </template>
     </p-column>
-    <p-column field="value" header="Medida"></p-column>
+    <p-column field="prevValue" header="Medida anterior"></p-column>
+    <p-column field="modifiedValue" header="Medida" [editable]="true"></p-column>
+    <p-column field="pending" header="Pendiente" >
+        <template pTemplate let-col let-measurestamp="rowData">
+            <span [ngStyle]="{color: measurestamp[col.field] ? 'orange' : 'green'}">{{measurestamp[col.field] ? "PENDIENTE" : "REGISTRADO" }}</span>
+        </template>
+    </p-column>
+    <p-column header="Modificado" >
+        <template pTemplate let-col let-measurestamp="rowData">
+            <span style="color: red">{{measurestamp["modifiedValue"] != measurestamp["value"] ? "MODIFICADO" : "" }}</span>
+        </template>
+    </p-column>
+
+    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-floppy-o" style="float:left" (click)="save()" label="Guardar"></button></div></footer>
 </p-dataTable>
