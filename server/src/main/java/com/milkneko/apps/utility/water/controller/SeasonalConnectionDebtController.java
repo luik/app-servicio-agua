@@ -210,7 +210,6 @@ public class SeasonalConnectionDebtController {
             seasonalConnectionPayment.setSeasonalConnectionDebt(seasonalConnectionDebt);
 
             seasonalConnectionPaymentRepository.save(seasonalConnectionPayment);
-            //seasonalConnectionDebtRepository.save(seasonalConnectionDebt);
         }
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
@@ -231,10 +230,7 @@ public class SeasonalConnectionDebtController {
 		ImageData background = ImageDataFactory.create(IOUtils.toByteArray(classloader.getResourceAsStream("static/recibo.png")));
 		Image backgroundImage = new Image(background);
 
-		///int i = 0;
-
 		for (SeasonalConnectionDebt seasonalConnectionDebt: seasonalConnectionDebts) {
-		    ///if(i > 10) break;
 
 		    SeasonalConnectionDebtResponse seasonalConnectionDebtResponse =
 		    		new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
@@ -306,23 +302,13 @@ public class SeasonalConnectionDebtController {
 		    	previouseMeasurements[j] = measureStampList.get(j + 1 - initialIdx).getValue() - measureStampList.get(j - initialIdx).getValue();
 		    }
 		    
-		    /*
-		    for (int j = 0; j < measureStampList.size(); j++) {
-		    	MeasureStamp measureStamp = measureStampList.get(j);
-		        System.out.println(dateFormat.format(measureStamp.getDate()) + " " + measureStamp.getValue());
-		    }
-		    for (int j = 0; j < monthsToDraw; j++) {
-		        System.out.println(previouseMeasurements[j]);
-		    }
-		    System.out.println("---------------");
-		    */
-		    
+
 		    PdfPage pdfPage = pdfDocument.addNewPage(PageSize.A5);
 
 		    PdfCanvas pdfCanvas = new PdfCanvas(pdfPage);
 		    Canvas canvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
 		    Canvas backgroundCanvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
-		    //pdfCanvas.addImage(background, pdfPage.getPageSize(), true);
+
 		    backgroundCanvas.add(backgroundImage);
 		    pdfCanvas.saveState().beginText().moveText(50, 486).setFontAndSize(font, 7).showText(name).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(62, 511).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
@@ -373,8 +359,6 @@ public class SeasonalConnectionDebtController {
 		    canvas.setFont(font).setFontSize(10).showTextAligned(totalDebtStr, 403, 205, TextAlignment.RIGHT);
 		    
 		    for (int j = 0; j < monthsToDraw; j++) {
-		        //System.out.println(previouseMeasurements[j]);
-		        
 		        pdfCanvas.saveState().setLineWidth(7f).moveTo(110 + 14*j, 205).lineTo(110 + 14*j, 205 + 0.8*previouseMeasurements[j]).stroke().restoreState();
 		    }
 		    
@@ -400,8 +384,6 @@ public class SeasonalConnectionDebtController {
 		    
 		    pdfCanvas.saveState().beginText().moveText(58, 41).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(58, 33).setFontAndSize(font, 7).showText(issueDate).endText().restoreState();
-		    
-		    ///i++;
 		}
 
 		pdfDocument.close();
