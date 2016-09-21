@@ -26,6 +26,9 @@ public class Connection {
     @OneToOne(fetch = FetchType.LAZY)
     private Register register;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TypeConnection typeConnection;
+
     @OneToMany(mappedBy = "connection", fetch = FetchType.LAZY)
     private Collection<MeasureStamp> measureStamps;
 
@@ -101,6 +104,14 @@ public class Connection {
 
     public void setRegister(Register register) {
         this.register = register;
+    }
+
+    public TypeConnection getTypeConnection() {
+        return typeConnection;
+    }
+
+    public void setTypeConnection(TypeConnection typeConnection) {
+        this.typeConnection = typeConnection;
     }
 
     public String getComment() {

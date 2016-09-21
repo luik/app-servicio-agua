@@ -14,13 +14,19 @@ public class SeasonalConnectionDebtResponse {
     private int seasonYear;
     private int seasonMonth;
     private float priceM3;
+    private float waterServicePrice;
+    private float drainPrice;
+    private float fixedCharge;
+    private float connectionCharge;
 
     public SeasonalConnectionDebtResponse() {
     }
 
     public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue,
                                           float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3,
-                                          int seasonalConnectionPaymentId, Date seasonalConnectionPaymentDate) {
+                                          int seasonalConnectionPaymentId, Date seasonalConnectionPaymentDate,
+                                          float waterServicePrice, float drainPrice,
+                                          float fixedCharge, float connectionCharge) {
         this.id = id;
     	this.connectionId = connectionId;
         this.issuedDate = issuedDate;
@@ -31,6 +37,10 @@ public class SeasonalConnectionDebtResponse {
         this.priceM3 = priceM3;
         this.seasonalConnectionPaymentId = seasonalConnectionPaymentId;
         this.seasonalConnectionPaymentDate = seasonalConnectionPaymentDate;
+        this.waterServicePrice = waterServicePrice;
+        this.drainPrice = drainPrice;
+        this.fixedCharge = fixedCharge;
+        this.connectionCharge = connectionCharge;
     }
 
     public int getId() {
@@ -109,19 +119,56 @@ public class SeasonalConnectionDebtResponse {
         this.seasonalConnectionPaymentDate = seasonalConnectionPaymentDate;
     }
 
+    public float getWaterServicePrice() {
+        return waterServicePrice;
+    }
+
+    public void setWaterServicePrice(float waterServicePrice) {
+        this.waterServicePrice = waterServicePrice;
+    }
+
+    public float getDrainPrice() {
+        return drainPrice;
+    }
+
+    public void setDrainPrice(float drainPrice) {
+        this.drainPrice = drainPrice;
+    }
+
+    public float getFixedCharge() {
+        return fixedCharge;
+    }
+
+    public void setFixedCharge(float fixedCharge) {
+        this.fixedCharge = fixedCharge;
+    }
+
+    public float getConnectionCharge() {
+        return connectionCharge;
+    }
+
+    public void setConnectionCharge(float connectionCharge) {
+        this.connectionCharge = connectionCharge;
+    }
+
     /*
-        //derived
-        private float deltaMeasurements;
-        private float debtValue;
-        private float totalDebtValue
-        private boolean paidOut
-    */
+            //derived
+            private float deltaMeasurements;
+            private float debtValue;
+            private float totalDebtValue
+            private boolean paidOut
+        */
     public float getDeltaMeasurements(){
         return finalMeasurementValue - initialMeasurementValue;
     }
 
+    public float getWaterServiceDebt()
+    {
+        return getDeltaMeasurements()*this.waterServicePrice;
+    }
+
     public float getDebtValue(){
-        return getDeltaMeasurements()*this.priceM3;
+        return getWaterServiceDebt() + getDrainPrice() + getFixedCharge() + getConnectionCharge();
     }
 
     public float getTotalDebtValue(){

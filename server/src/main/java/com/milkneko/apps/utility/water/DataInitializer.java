@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.milkneko.apps.utility.water.model.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -15,19 +16,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.milkneko.apps.utility.water.model.Connection;
-import com.milkneko.apps.utility.water.model.ConnectionRepository;
-import com.milkneko.apps.utility.water.model.Customer;
-import com.milkneko.apps.utility.water.model.CustomerRepository;
-import com.milkneko.apps.utility.water.model.MeasureStamp;
-import com.milkneko.apps.utility.water.model.MeasureStampRepository;
-import com.milkneko.apps.utility.water.model.Register;
-import com.milkneko.apps.utility.water.model.RegisterRepository;
-import com.milkneko.apps.utility.water.model.SeasonEntry;
-import com.milkneko.apps.utility.water.model.SeasonEntryRepository;
-import com.milkneko.apps.utility.water.model.Zone;
-import com.milkneko.apps.utility.water.model.ZoneRepository;
 
 @Component
 public class DataInitializer{
@@ -46,6 +34,8 @@ public class DataInitializer{
     private SeasonEntryRepository seasonEntryRepository;
     @Autowired
     private MeasureStampRepository measureStampRepository;
+    @Autowired
+    private TypeConnectionRepository typeConnectionRepository;
     /*
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
@@ -125,6 +115,18 @@ public class DataInitializer{
         Workbook actaEntregaWorkbook = WorkbookFactory.create(classloader.getResourceAsStream("static/ACTA_ENTREGA.xlsx"));
         int numberOfSheets = actaEntregaWorkbook.getNumberOfSheets();
 
+        TypeConnection typeConnection1 = new TypeConnection(1, "SOCIAL", "", "0.5960", "0.2440", 2.78f, 4.16f);
+        TypeConnection typeConnection2 = new TypeConnection(2, "DOMESTICO", "11;31", "0.5960;1.0370;2.3840", "0.2440;0.4260;0.9800", 2.78f, 4.16f);
+        TypeConnection typeConnection3 = new TypeConnection(3, "ESTATAL", "101", "2.3840;3.3020", "0.9800;1.3560", 2.78f, 4.16f);
+        TypeConnection typeConnection4 = new TypeConnection(4, "COMERCIAL", "16", "3.9100;4.2730", "1.6060;1.7550", 2.78f, 4.16f);
+
+        typeConnectionRepository.save(typeConnection1);
+        typeConnectionRepository.save(typeConnection2);
+        typeConnectionRepository.save(typeConnection3);
+        typeConnectionRepository.save(typeConnection4);
+
+        TypeConnection[] typeConnections = new TypeConnection[]{typeConnection1, typeConnection2, typeConnection3, typeConnection4};
+
         for(int i = 0; i < numberOfSheets; i++)
         {
             Sheet sheet = actaEntregaWorkbook.getSheetAt(i);
@@ -192,6 +194,7 @@ public class DataInitializer{
                 connection.setRegister(register);
                 connection.setCustomer(customer);
                 connection.setZone(zone);
+                connection.setTypeConnection(typeConnections[j%4]);
                 connectionRepository.save(connection);
             }
 

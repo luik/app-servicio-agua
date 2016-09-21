@@ -65,7 +65,11 @@ public class SeasonalConnectionDebtController {
                         seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
                         seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
                         seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
-						seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null
+						seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
+						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getTypeConnection().getFixedCharge(),
+						seasonalConnectionDebt.getConnection().getTypeConnection().getConnectionCharge()
                 )
         ).collect(Collectors.toList());
 
@@ -83,7 +87,11 @@ public class SeasonalConnectionDebtController {
                         seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
                         seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
                         seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
-                        seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null
+                        seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
+						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getTypeConnection().getFixedCharge(),
+						seasonalConnectionDebt.getConnection().getTypeConnection().getConnectionCharge()
                 )
         ).collect(Collectors.toList());
 
@@ -233,18 +241,22 @@ public class SeasonalConnectionDebtController {
                             seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
                             seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
                             seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
-                            seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null
+                            seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
+							seasonalConnectionDebt.getConnection().getTypeConnection().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+							seasonalConnectionDebt.getConnection().getTypeConnection().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+							seasonalConnectionDebt.getConnection().getTypeConnection().getFixedCharge(),
+							seasonalConnectionDebt.getConnection().getTypeConnection().getConnectionCharge()
 		            );
 
 		    String name = seasonalConnectionDebt.getConnection().getCustomer().getName();
 		    String recibo = String.format("%09d", seasonalConnectionDebt.getId());
 		    String connection = String.format("%09d", seasonalConnectionDebtResponse.getConnectionId());
 		    String issueDate = dateFormat.format(seasonalConnectionDebtResponse.getIssuedDate());
-		    String serviceDebt = String.format("%.2f", seasonalConnectionDebtResponse.getDebtValue());
 		    String address = seasonalConnectionDebt.getConnection().getAddress();
 		    String zone = seasonalConnectionDebt.getConnection().getZone().getName();
 		    String documentId = seasonalConnectionDebt.getConnection().getCustomer().getDocumentId();
 		    String registerId = seasonalConnectionDebt.getConnection().getRegister().getRegisterId();
+			String categoryName = seasonalConnectionDebt.getConnection().getTypeConnection().getName();
 
 		    String prevMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getInitialMeasureStamp().getValue());
 		    String prevMeasurementDate = dateFormat.format(seasonalConnectionDebt.getInitialMeasureStamp().getDate());
@@ -254,11 +266,27 @@ public class SeasonalConnectionDebtController {
 		    String measuresDelta = String.format("%.2f", seasonalConnectionDebtResponse.getDeltaMeasurements());
 		    String codeService = "001";
 		    String descriptionService = "SERVICIO DE AGUA";
+
+			String codeDrainService = "008";
+			String descriptionDrainService = "SERVICIO DE DESAGUE";
+
+			String codeFixedCharge = "407";
+			String descriptionFixedCharge = "CARGO FIJO";
+
+			String codeConnectionCharge = "12";
+			String descriptionConnectionCharge = "CONEXIÓN DOMICILIARIA (24 meses)";
 		    
 		    float igvDebt = seasonalConnectionDebtResponse.getIGVDebtValue();
+		    float subtotalDebt = seasonalConnectionDebtResponse.getDebtValue();
 		    float totalDebt = seasonalConnectionDebtResponse.getTotalDebtRoundedValue();
 		    float round = seasonalConnectionDebtResponse.getRoundValue();
 
+			String serviceDebt = String.format("%.2f", seasonalConnectionDebtResponse.getWaterServiceDebt());
+			String drainServiceDebt = String.format("%.2f", seasonalConnectionDebtResponse.getDrainPrice());
+			String fixedChargeDebt = String.format("%.2f", seasonalConnectionDebtResponse.getFixedCharge());
+			String connectionChargeDebt = String.format("%.2f", seasonalConnectionDebtResponse.getConnectionCharge());
+			
+			String subtotalDebtStr = String.format("%.2f", subtotalDebt);
 		    String igvDebtStr = String.format("%.2f", igvDebt);
 		    String roundStr = String.format("%.2f", round);
 		    String totalDebtStr = String.format("%.2f", totalDebt);
@@ -300,11 +328,12 @@ public class SeasonalConnectionDebtController {
 		    pdfCanvas.saveState().beginText().moveText(62, 511).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(337, 465).setFontAndSize(font, 12).showText(connection).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(93, 501).setFontAndSize(font, 7).showText(issueDate).endText().restoreState();
-		    pdfCanvas.saveState().beginText().moveText(278, 501).setFontAndSize(font, 8).showText(serviceDebt).endText().restoreState();
+		    pdfCanvas.saveState().beginText().moveText(278, 501).setFontAndSize(font, 8).showText(totalDebtStr).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(53, 474).setFontAndSize(font, 7).showText(address).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(48, 458).setFontAndSize(font, 7).showText(zone).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(52, 449).setFontAndSize(font, 7).showText(documentId).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(27, 394).setFontAndSize(font, 7).showText(registerId).endText().restoreState();
+			pdfCanvas.saveState().beginText().moveText(251, 431).setFontAndSize(font, 7).showText(categoryName).endText().restoreState();
 
 		    pdfCanvas.saveState().beginText().moveText(80, 394).setFontAndSize(font, 7).showText(prevMeasurementValue).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(125, 394).setFontAndSize(font, 7).showText(prevMeasurementDate).endText().restoreState();
@@ -321,8 +350,22 @@ public class SeasonalConnectionDebtController {
 		    pdfCanvas.saveState().beginText().moveText(22, 356).setFontAndSize(font, 8).showText(codeService).endText().restoreState();
 		    pdfCanvas.saveState().beginText().moveText(50, 356).setFontAndSize(font, 8).showText(descriptionService).endText().restoreState();
 
+			pdfCanvas.saveState().beginText().moveText(22, 346).setFontAndSize(font, 8).showText(codeDrainService).endText().restoreState();
+			pdfCanvas.saveState().beginText().moveText(50, 346).setFontAndSize(font, 8).showText(descriptionDrainService).endText().restoreState();
+
+			pdfCanvas.saveState().beginText().moveText(22, 336).setFontAndSize(font, 8).showText(codeFixedCharge).endText().restoreState();
+			pdfCanvas.saveState().beginText().moveText(50, 336).setFontAndSize(font, 8).showText(descriptionFixedCharge).endText().restoreState();
+
+			pdfCanvas.saveState().beginText().moveText(22, 326).setFontAndSize(font, 8).showText(codeConnectionCharge).endText().restoreState();
+			pdfCanvas.saveState().beginText().moveText(50, 326).setFontAndSize(font, 8).showText(descriptionConnectionCharge).endText().restoreState();
+
 		    canvas.setFont(font).setFontSize(7).showTextAligned(serviceDebt, 403, 356, TextAlignment.RIGHT);
-		    canvas.setFont(font).setFontSize(7).showTextAligned(serviceDebt, 403, 253, TextAlignment.RIGHT);
+		    canvas.setFont(font).setFontSize(7).showTextAligned(drainServiceDebt, 403, 346, TextAlignment.RIGHT);
+		    canvas.setFont(font).setFontSize(7).showTextAligned(fixedChargeDebt, 403, 336, TextAlignment.RIGHT);
+		    canvas.setFont(font).setFontSize(7).showTextAligned(connectionChargeDebt, 403, 326, TextAlignment.RIGHT);
+		    
+		    
+		    canvas.setFont(font).setFontSize(7).showTextAligned(subtotalDebtStr, 403, 253, TextAlignment.RIGHT);
 		    canvas.setFont(font).setFontSize(7).showTextAligned(igvDebtStr, 403, 243, TextAlignment.RIGHT);
 		    canvas.setFont(font).setFontSize(7).showTextAligned(roundStr, 403, 233, TextAlignment.RIGHT);
 		    canvas.setFont(font).setFontSize(7).showTextAligned(totalDebtStr, 403, 223, TextAlignment.RIGHT);
