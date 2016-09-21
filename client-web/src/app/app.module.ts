@@ -23,6 +23,7 @@ import {SeasonalConnectionDebtList} from "./seasonal-connection-debt-list/season
 import {SeasonalConnectionDebtService} from "./services/seasonal-connection-debt.service";
 import {SeasonalConnectionPaymentList} from "./seasonal-connection-payment-list/seasonal-connection-payment-list.component";
 import {SeasonalConnectionPaymentService} from "./services/seasonal-connection-payment.service";
+import {RegisterListComponent} from "./register-list/register-list.component";
 
 @NgModule({
     imports:      [routing, HttpModule, BrowserModule, FormsModule, HttpModule,
@@ -31,7 +32,7 @@ import {SeasonalConnectionPaymentService} from "./services/seasonal-connection-p
     ],
     declarations: [AppComponent, CustomerListComponent, ConnectionListComponent, WelcomeComponent,
         SeasonEntryListComponent, MeasureStampListComponent, SeasonalConnectionDebtList,
-        SeasonalConnectionPaymentList
+        SeasonalConnectionPaymentList, RegisterListComponent
     ],
     bootstrap:    [AppComponent],
     providers:    [CustomerService, ConnectionService, RegisterService, ZoneService,

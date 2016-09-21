@@ -1,5 +1,9 @@
 export interface IRegister{
     id: number;
     registerID: string;
-    value: number;
+    initialValue: number;
+    connectionId: number;
+    customerName: string;
+    zoneName: string;
+    address: string;
 }

@@ -7,6 +7,7 @@
              [globalFilter]="gb" [(selection)]="selectedConnection" selectionMode="single"
              emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
              [responsive]="true" >
+    <header><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Agregar conexión"></button></div></header>
     <p-column field="id" header="ID" [filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="active" header="Estado">
         <template pTemplate let-col let-connection="rowData">
@@ -18,7 +19,7 @@
     <p-column field="zoneName" header="Sector" [filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="address" header="Dirección"></p-column>
     <p-column field="comment" header="Observación"></p-column>
-    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></footer>
+    <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Agregar conexión"></button></div></footer>
 </p-dataTable>
 
 <p-dialog header="Detalles conexión" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="580">

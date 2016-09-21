@@ -87,12 +87,14 @@ public class DataInitializer{
     }
 
     private void initializeTestRegisters(){
+    	/*
         for(int i = 0; i < 100; i++)
         {
             String registerName = Integer.toString((int)(Math.random()*100000 + 7000000));
-            Register register = new Register(registerName, 0f, 0f);
+            Register register = new Register(registerName, 0f);
             registerRepository.save(register);
         }
+        */
     }
 
 
@@ -103,9 +105,9 @@ public class DataInitializer{
             if(connections.toArray().length > 1)
             {
                 System.out.println(customer.getName() + " " + connections.toArray().length);
-                for (Connection connection: connections) {
+                ///for (Connection connection: connections) {
                     ///System.out.println(connection.getAddress() + " " + connection.getRegister().getRegisterId());
-                }
+                ///}
             }
         }
     }
@@ -160,7 +162,7 @@ public class DataInitializer{
                     break;
                 }
 
-                Register register = new Register(codigo, 0f, 0f);
+                Register register = new Register(codigo, 0f);
                 registerRepository.save(register);
 
                 row.getCell(2).setCellType(Cell.CELL_TYPE_STRING);

@@ -1,11 +1,13 @@
 package com.milkneko.apps.utility.water.controller;
 
+import com.milkneko.apps.utility.water.model.Register;
 import com.milkneko.apps.utility.water.model.RegisterRepository;
 import com.milkneko.apps.utility.water.response.RegisterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +24,7 @@ public class RegisterController {
     @RequestMapping(value = "ws/get-registers", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RegisterResponse>> getRegisters(){
         List<RegisterResponse> registers = registerRepository.findAll().stream().map(
-                register -> new RegisterResponse(register.getId(), register.getRegisterId(), register.getValue())
+                register -> RegisterResponse.createFromRegister(register)
         ).collect(Collectors.toList());
 
         return new ResponseEntity<List<RegisterResponse>>(registers, HttpStatus.OK);
@@ -32,9 +34,29 @@ public class RegisterController {
     public ResponseEntity<List<RegisterResponse>> getAvailableRegisters(){
         List<RegisterResponse> registers = registerRepository.findAll().stream().
                 filter(register -> register.getConnection() == null).
-                map(register -> new RegisterResponse(register.getId(), register.getRegisterId(), register.getValue())).
+                map(register -> RegisterResponse.createFromRegister(register)).
                 collect(Collectors.toList());
 
         return new ResponseEntity<List<RegisterResponse>>(registers, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "ws/add-register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> addRegister(@RequestBody RegisterResponse registerResponse){
+        Register register = new Register(registerResponse.getRegisterID(), registerResponse.getInitialValue());
+        registerRepository.save(register);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "ws/update-register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> updateRegister(@RequestBody RegisterResponse registerResponse){
+        Register register = registerRepository.getOne(registerResponse.getId());
+
+        register.setRegisterId(registerResponse.getRegisterID());
+        register.setInitialValue(registerResponse.getInitialValue());
+
+        registerRepository.save(register);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
+
 }

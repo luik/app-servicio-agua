@@ -10,8 +10,7 @@ public class Register {
     @GeneratedValue
     private int id;
     private String registerId;
-    private float value;
-    private float prevValue;
+    private float initialValue;
 
     @OneToOne(mappedBy = "register", fetch = FetchType.LAZY)
     private Connection connection;
@@ -22,10 +21,9 @@ public class Register {
     public Register(){
     }
 
-    public Register(String registerId, float value, float prevValue) {
+    public Register(String registerId, float initialValue) {
         this.registerId = registerId;
-        this.value = value;
-        this.prevValue = prevValue;
+        this.initialValue = initialValue;
     }
 
     public int getId(){
@@ -40,20 +38,12 @@ public class Register {
         this.registerId = registerId;
     }
 
-    public float getValue() {
-        return value;
+    public float getInitialValue() {
+        return initialValue;
     }
 
-    public void setValue(float value) {
-        this.value = value;
-    }
-
-    public float getPrevValue() {
-        return prevValue;
-    }
-
-    public void setPrevValue(float prevValue) {
-        this.prevValue = prevValue;
+    public void setInitialValue(float initialValue) {
+        this.initialValue = initialValue;
     }
 
     public Connection getConnection() {
