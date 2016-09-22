@@ -8,6 +8,7 @@ import {MeasureStampListComponent} from "./measure-stamp-list";
 import {SeasonalConnectionDebtList} from "./seasonal-connection-debt-list/seasonal-connection-debt-list.component";
 import {SeasonalConnectionPaymentList} from "./seasonal-connection-payment-list/seasonal-connection-payment-list.component";
 import {RegisterListComponent} from "./register-list/register-list.component";
+import {ConnectionTypeListComponent} from "./connection-type-list/connection-type-list.component";
 
 export const appRoutes: Routes = [
     { path: '', component: WelcomeComponent},
@@ -18,7 +19,8 @@ export const appRoutes: Routes = [
     { path: 'measure-stamps/:by/:id', component: MeasureStampListComponent},
     { path: 'seasonal-connection-debts/:by/:id', component: SeasonalConnectionDebtList},
     { path: 'seasonal-connection-payments/:by/:id', component: SeasonalConnectionPaymentList},
-    { path: 'registers', component: RegisterListComponent}
+    { path: 'registers', component: RegisterListComponent},
+    { path: 'connection-types', component: ConnectionTypeListComponent},
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

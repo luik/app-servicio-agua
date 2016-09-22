@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-public class TypeConnection {
+public class ConnectionType {
     @Id
     @GeneratedValue
     private int id;
@@ -14,14 +14,15 @@ public class TypeConnection {
     private String pricesDrain;
     private float fixedCharge;
     private float connectionCharge;
+    private int connectionChargeDuration;
 
-    @OneToMany(mappedBy = "typeConnection", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "connectionType", fetch = FetchType.LAZY)
     private Collection<Connection> connections;
 
-    public TypeConnection() {
+    public ConnectionType() {
     }
 
-    public TypeConnection(int id, String name, String limits, String pricesM3, String pricesDrain, float fixedCharge, float connectionCharge) {
+    public ConnectionType(int id, String name, String limits, String pricesM3, String pricesDrain, float fixedCharge, float connectionCharge, int connectionChargeDuration) {
         this.id = id;
         this.name = name;
         this.limits = limits;
@@ -29,6 +30,7 @@ public class TypeConnection {
         this.pricesDrain = pricesDrain;
         this.fixedCharge = fixedCharge;
         this.connectionCharge = connectionCharge;
+        this.connectionChargeDuration = connectionChargeDuration;
     }
 
     public int getId(){
@@ -81,6 +83,14 @@ public class TypeConnection {
 
     public void setConnectionCharge(float connectionCharge) {
         this.connectionCharge = connectionCharge;
+    }
+
+    public int getConnectionChargeDuration() {
+        return connectionChargeDuration;
+    }
+
+    public void setConnectionChargeDuration(int connectionChargeDuration) {
+        this.connectionChargeDuration = connectionChargeDuration;
     }
 
     /*

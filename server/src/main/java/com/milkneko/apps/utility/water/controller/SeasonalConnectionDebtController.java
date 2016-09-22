@@ -66,10 +66,10 @@ public class SeasonalConnectionDebtController {
                         seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
                         seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
 						seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
-						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
-						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
-						seasonalConnectionDebt.getConnection().getTypeConnection().getFixedCharge(),
-						seasonalConnectionDebt.getConnection().getTypeConnection().getConnectionCharge()
+						seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getConnectionType().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getConnectionType().getFixedCharge(),
+						seasonalConnectionDebt.getConnection().getConnectionType().getConnectionCharge()
                 )
         ).collect(Collectors.toList());
 
@@ -88,10 +88,10 @@ public class SeasonalConnectionDebtController {
                         seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
                         seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
                         seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
-						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
-						seasonalConnectionDebt.getConnection().getTypeConnection().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
-						seasonalConnectionDebt.getConnection().getTypeConnection().getFixedCharge(),
-						seasonalConnectionDebt.getConnection().getTypeConnection().getConnectionCharge()
+						seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getConnectionType().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+						seasonalConnectionDebt.getConnection().getConnectionType().getFixedCharge(),
+						seasonalConnectionDebt.getConnection().getConnectionType().getConnectionCharge()
                 )
         ).collect(Collectors.toList());
 
@@ -238,10 +238,10 @@ public class SeasonalConnectionDebtController {
                             seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
                             seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
                             seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
-							seasonalConnectionDebt.getConnection().getTypeConnection().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
-							seasonalConnectionDebt.getConnection().getTypeConnection().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
-							seasonalConnectionDebt.getConnection().getTypeConnection().getFixedCharge(),
-							seasonalConnectionDebt.getConnection().getTypeConnection().getConnectionCharge()
+							seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+							seasonalConnectionDebt.getConnection().getConnectionType().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+							seasonalConnectionDebt.getConnection().getConnectionType().getFixedCharge(),
+							seasonalConnectionDebt.getConnection().getConnectionType().getConnectionCharge()
 		            );
 
 		    String name = seasonalConnectionDebt.getConnection().getCustomer().getName();
@@ -252,7 +252,7 @@ public class SeasonalConnectionDebtController {
 		    String zone = seasonalConnectionDebt.getConnection().getZone().getName();
 		    String documentId = seasonalConnectionDebt.getConnection().getCustomer().getDocumentId();
 		    String registerId = seasonalConnectionDebt.getConnection().getRegister().getRegisterId();
-			String categoryName = seasonalConnectionDebt.getConnection().getTypeConnection().getName();
+			String categoryName = seasonalConnectionDebt.getConnection().getConnectionType().getName();
 
 		    String prevMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getInitialMeasureStamp().getValue());
 		    String prevMeasurementDate = dateFormat.format(seasonalConnectionDebt.getInitialMeasureStamp().getDate());

@@ -1,0 +1,48 @@
+<div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" style="float:left" placeholder="Filtro global">
+</div>
+<p-dataTable [value]="connectionTypes"
+             [globalFilter]="gb" [(selection)]="selectedConnectionType" selectionMode="single"
+             emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
+             [responsive]="true"
+>
+    <p-column field="category" header="Categoría"></p-column>
+    <p-column field="consumptionRange" header="Rango de consumo m3/mes"></p-column>
+    <p-column field="waterServicePrice" header="Tarifa de agua"></p-column>
+    <p-column field="drainServicePrice" header="Tarifa de desagüe"></p-column>
+    <p-column field="fixedCharge" header="Cargo fijo"></p-column>
+    <p-column field="connectionCharge" header="Conexión domiciliaria"></p-column>
+    <p-column field="connectionChargeDuration" header="Duración cargo por conexión"></p-column>
+
+</p-dataTable>
+
+<p-dialog header="Detalles categoría de conexión" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="500" [height]="330">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="connectionType" >
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6"><label for="priceM3">Tarifa de agua</label></div>
+            <div class="ui-grid-col-6"><input pInputText id="priceM3" [(ngModel)]="connectionType.waterServicePrice" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6"><label for="priceDrain">Tarifa de desagüe</label></div>
+            <div class="ui-grid-col-6"><input pInputText id="priceDrain" [(ngModel)]="connectionType.drainServicePrice" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6"><label for="fixedCharge">Cargo fijo</label></div>
+            <div class="ui-grid-col-6"><input pInputText id="fixedCharge" [(ngModel)]="connectionType.fixedCharge" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6"><label for="connectionCharge">Cargo conexión domiciliaria</label></div>
+            <div class="ui-grid-col-6"><input pInputText id="connectionCharge" [(ngModel)]="connectionType.connectionCharge" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-6"><label for="connectionChargeDuration">Duración cargo conexión</label></div>
+            <div class="ui-grid-col-6"><input pInputText id="connectionChargeDuration" [(ngModel)]="connectionType.connectionChargeDuration" /></div>
+        </div>
+    </div>
+    <footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
+        </div>
+    </footer>
+</p-dialog>

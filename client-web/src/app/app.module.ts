@@ -24,6 +24,8 @@ import {SeasonalConnectionDebtService} from "./services/seasonal-connection-debt
 import {SeasonalConnectionPaymentList} from "./seasonal-connection-payment-list/seasonal-connection-payment-list.component";
 import {SeasonalConnectionPaymentService} from "./services/seasonal-connection-payment.service";
 import {RegisterListComponent} from "./register-list/register-list.component";
+import {ConnectionTypeListComponent} from "./connection-type-list/connection-type-list.component";
+import {ConnectionTypeService} from "./services/connection-type.service";
 
 @NgModule({
     imports:      [routing, HttpModule, BrowserModule, FormsModule, HttpModule,
@@ -32,11 +34,12 @@ import {RegisterListComponent} from "./register-list/register-list.component";
     ],
     declarations: [AppComponent, CustomerListComponent, ConnectionListComponent, WelcomeComponent,
         SeasonEntryListComponent, MeasureStampListComponent, SeasonalConnectionDebtList,
-        SeasonalConnectionPaymentList, RegisterListComponent
+        SeasonalConnectionPaymentList, RegisterListComponent, ConnectionTypeListComponent
     ],
     bootstrap:    [AppComponent],
     providers:    [CustomerService, ConnectionService, RegisterService, ZoneService,
-        SeasonEntryService, MeasureStampService, SeasonalConnectionDebtService, SeasonalConnectionPaymentService
+        SeasonEntryService, MeasureStampService, SeasonalConnectionDebtService, SeasonalConnectionPaymentService,
+        ConnectionTypeService
     ]
 })
 export class AppModule { }

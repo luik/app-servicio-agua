@@ -35,7 +35,7 @@ public class DataInitializer{
     @Autowired
     private MeasureStampRepository measureStampRepository;
     @Autowired
-    private TypeConnectionRepository typeConnectionRepository;
+    private ConnectionTypeRepository connectionTypeRepository;
     /*
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
@@ -117,17 +117,17 @@ public class DataInitializer{
         Workbook actaEntregaWorkbook = WorkbookFactory.create(classloader.getResourceAsStream("static/ACTA_ENTREGA.xlsx"));
         int numberOfSheets = actaEntregaWorkbook.getNumberOfSheets();
 
-        TypeConnection typeConnection1 = new TypeConnection(1, "SOCIAL", "", "0.5960", "0.2440", 2.78f, 4.16f);
-        TypeConnection typeConnection2 = new TypeConnection(2, "DOMESTICO", "11;31", "0.5960;1.0370;2.3840", "0.2440;0.4260;0.9800", 2.78f, 4.16f);
-        TypeConnection typeConnection3 = new TypeConnection(3, "ESTATAL", "101", "2.3840;3.3020", "0.9800;1.3560", 2.78f, 4.16f);
-        TypeConnection typeConnection4 = new TypeConnection(4, "COMERCIAL", "16", "3.9100;4.2730", "1.6060;1.7550", 2.78f, 4.16f);
+        ConnectionType connectionType1 = new ConnectionType(1, "SOCIAL", "", "0.5960", "0.2440", 2.78f, 4.16f, 24);
+        ConnectionType connectionType2 = new ConnectionType(2, "DOMESTICO", "11;31", "0.5960;1.0370;2.3840", "0.2440;0.4260;0.9800", 2.78f, 4.16f, 24);
+        ConnectionType connectionType3 = new ConnectionType(3, "ESTATAL", "101", "2.3840;3.3020", "0.9800;1.3560", 2.78f, 4.16f, 24);
+        ConnectionType connectionType4 = new ConnectionType(4, "COMERCIAL", "16", "3.9100;4.2730", "1.6060;1.7550", 2.78f, 4.16f, 24);
 
-        typeConnectionRepository.save(typeConnection1);
-        typeConnectionRepository.save(typeConnection2);
-        typeConnectionRepository.save(typeConnection3);
-        typeConnectionRepository.save(typeConnection4);
+        connectionTypeRepository.save(connectionType1);
+        connectionTypeRepository.save(connectionType2);
+        connectionTypeRepository.save(connectionType3);
+        connectionTypeRepository.save(connectionType4);
 
-        TypeConnection[] typeConnections = new TypeConnection[]{typeConnection1, typeConnection2, typeConnection3, typeConnection4};
+        ConnectionType[] connectionTypes = new ConnectionType[]{connectionType1, connectionType2, connectionType3, connectionType4};
 
         for(int i = 0; i < numberOfSheets; i++)
         {
@@ -196,7 +196,7 @@ public class DataInitializer{
                 connection.setRegister(register);
                 connection.setCustomer(customer);
                 connection.setZone(zone);
-                connection.setTypeConnection(typeConnections[j%4]);
+                connection.setConnectionType(connectionTypes[j%4]);
                 connectionRepository.save(connection);
             }
 
