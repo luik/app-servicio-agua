@@ -8,6 +8,8 @@ import {RegisterService} from "../services/register.service";
 import {ZoneService} from "../services/zone.service";
 import {CustomerService} from "../services/customer.service";
 import {MenuItem} from "primeng/primeng";
+import {ConnectionTypeService} from "../services/connection-type.service";
+import {IConnectionCategory} from "../model/IConnectionCategory";
 
 @Component({
     selector: 'app-connection-list',
@@ -24,6 +26,8 @@ export class ConnectionListComponent implements OnInit {
     filteredCustomers: ICustomer[];
     zones: IZone[];
     filteredZones: IZone[];
+    connectionCategories: IConnectionCategory[];
+    filteredConnectionCategories: IConnectionCategory[];
     selectedConnection: IConnection;
     connection: IConnection;
     isNewConnection: boolean;
@@ -31,6 +35,7 @@ export class ConnectionListComponent implements OnInit {
     selectedRegister: IRegister;
     selectedCustomer: ICustomer;
     selectedZone: IZone;
+    selectedConnectionCategory: IConnectionCategory;
 
     items: MenuItem[];
 
@@ -38,7 +43,8 @@ export class ConnectionListComponent implements OnInit {
         private connectionService: ConnectionService,
         private registerService: RegisterService,
         private customerService: CustomerService,
-        private zoneService: ZoneService
+        private zoneService: ZoneService,
+        private connectionTypeService: ConnectionTypeService
     ) {
     }
 
@@ -65,6 +71,12 @@ export class ConnectionListComponent implements OnInit {
         this.zoneService.getZones().subscribe(
             zones => {
                 this.zones = zones as Array<IZone>;
+            }
+        );
+
+        this.connectionTypeService.getConnectionCategories().subscribe(
+            connectionTypes => {
+                this.connectionCategories = connectionTypes as Array<IConnectionCategory>;
             }
         );
 
@@ -96,12 +108,22 @@ export class ConnectionListComponent implements OnInit {
             );
     }
 
+    searchConnectionCategories(event){
+        this.filteredConnectionCategories =
+            this.connectionCategories.filter(
+                connectionCategory => {
+                    return connectionCategory.name.indexOf(event.query) >= 0;
+                }
+            );
+    }
+
     showDialogToAdd(){
         this.isNewConnection = true;
         this.connection = <IConnection>{id: 0, active: true};
         this.selectedRegister = null;
         this.selectedCustomer = null;
         this.selectedZone = null;
+        this.selectedConnectionCategory = null;
         this.isDisplayingDialog = true;
     }
 
@@ -109,6 +131,7 @@ export class ConnectionListComponent implements OnInit {
         this.connection.registerID = this.selectedRegister.id;
         this.connection.customerID = this.selectedCustomer.id;
         this.connection.zoneID = this.selectedZone.id;
+        this.connection.connectionCategoryID = this.selectedConnectionCategory.id;
 
         if(this.isNewConnection)
         {
@@ -149,6 +172,7 @@ export class ConnectionListComponent implements OnInit {
         this.selectedRegister = <IRegister>{id: this.connection.registerID, registerID: this.connection.registerName};
         this.selectedCustomer = <ICustomer>{id: this.connection.customerID, name: this.connection.customerName};
         this.selectedZone = <IZone>{id: this.connection.zoneID, name: this.connection.zoneName};
+        this.selectedConnectionCategory = <IConnectionCategory>{id: this.connection.connectionCategoryID, name: this.connection.connectionCategoryName};
 
         this.items[0].routerLink = ["/measure-stamps/connection/" + this.connection.id];
         this.items[1].routerLink = ["/seasonal-connection-debts/connection/" + this.connection.id];

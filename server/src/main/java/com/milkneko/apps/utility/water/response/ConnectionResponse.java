@@ -15,13 +15,15 @@ public class ConnectionResponse {
     private Date endDate;
     private boolean isActive;
     private String comment;
+    private int connectionCategoryID;
+    private String connectionCategoryName;
 
     public ConnectionResponse() {
     }
 
     public ConnectionResponse(int id, int customerID, String customerName, int zoneID, String zoneName,
                               int registerID, String registerName, String address, Date startDate, Date endDate,
-                               boolean isActive, String comment  ) {
+                              boolean isActive, String comment, int connectionCategoryID, String connectionCategoryName) {
         this.id = id;
         this.customerID = customerID;
         this.customerName = customerName;
@@ -34,6 +36,8 @@ public class ConnectionResponse {
         this.endDate = endDate;
         this.isActive = isActive;
         this.comment = comment;
+        this.connectionCategoryID = connectionCategoryID;
+        this.connectionCategoryName = connectionCategoryName;
     }
 
     public int getId() {
@@ -126,5 +130,21 @@ public class ConnectionResponse {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public int getConnectionCategoryID() {
+        return connectionCategoryID;
+    }
+
+    public void setConnectionCategoryID(int connectionCategoryID) {
+        this.connectionCategoryID = connectionCategoryID;
+    }
+
+    public String getConnectionCategoryName() {
+        return connectionCategoryName;
+    }
+
+    public void setConnectionCategoryName(String connectionCategoryName) {
+        this.connectionCategoryName = connectionCategoryName;
     }
 }

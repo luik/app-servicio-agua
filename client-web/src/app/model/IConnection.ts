@@ -11,4 +11,6 @@ export interface IConnection{
     active: boolean;
     startDate: string;
     endDate: string;
+    connectionCategoryID: number;
+    connectionCategoryName: string;
 }

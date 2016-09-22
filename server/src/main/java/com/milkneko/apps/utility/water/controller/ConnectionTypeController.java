@@ -2,6 +2,7 @@ package com.milkneko.apps.utility.water.controller;
 
 import com.milkneko.apps.utility.water.model.ConnectionType;
 import com.milkneko.apps.utility.water.model.ConnectionTypeRepository;
+import com.milkneko.apps.utility.water.response.ConnectionCategoryResponse;
 import com.milkneko.apps.utility.water.response.ConnectionTypeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 @RestController
 public class ConnectionTypeController {
@@ -32,6 +34,13 @@ public class ConnectionTypeController {
         }
 
         return new ResponseEntity<List<ConnectionTypeResponse>>(connectionTypeResponses, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "ws/get-connection-categories", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ConnectionCategoryResponse>> getConnectionsCategories(){
+        List<ConnectionCategoryResponse> connectionCategoryResponses = connectionTypeRepository.findAll().stream().map(connectionType -> ConnectionCategoryResponse.createFrom(connectionType)).collect(Collectors.toList());
+
+        return new ResponseEntity<List<ConnectionCategoryResponse>>(connectionCategoryResponses, HttpStatus.OK);
     }
 
     @RequestMapping(value = "ws/update-connection-type", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

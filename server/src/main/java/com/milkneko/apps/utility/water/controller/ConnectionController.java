@@ -28,6 +28,8 @@ public class ConnectionController{
     private CustomerRepository customerRepository;
     @Autowired
     private ZoneRepository zoneRepository;
+    @Autowired
+    private ConnectionTypeRepository connectionTypeRepository;
 
     @RequestMapping(value = "ws/add-connection", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> addConnection(@RequestBody ConnectionResponse _connectionResponse){
@@ -35,6 +37,8 @@ public class ConnectionController{
         Register register = registerRepository.getOne(_connectionResponse.getRegisterID());
         Customer customer = customerRepository.getOne(_connectionResponse.getCustomerID());
         Zone zone = zoneRepository.getOne(_connectionResponse.getZoneID());
+        ConnectionType connectionType = connectionTypeRepository.getOne(_connectionResponse.getConnectionCategoryID());
+
         String address = _connectionResponse.getAddress();
         boolean isActive = _connectionResponse.isActive();
         Date startDate = _connectionResponse.getStartDate();
@@ -50,6 +54,7 @@ public class ConnectionController{
         connection.setAddress(address);
         connection.setActive(isActive);
         connection.setStartDate(startDate);
+        connection.setConnectionType(connectionType);
         
         if(!isActive){
         	connection.setActive(isActive);
@@ -70,7 +75,8 @@ public class ConnectionController{
                 connection -> new ConnectionResponse(connection.getId(), connection.getCustomer().getId(), connection.getCustomer().getName(),
                 connection.getZone().getId(), connection.getZone().getName(),
                         connection.getRegister().getId(), connection.getRegister().getRegisterId(), connection.getAddress(),
-                        connection.getStartDate(), connection.getEndDate(), connection.isActive(), connection.getComment())
+                        connection.getStartDate(), connection.getEndDate(), connection.isActive(), connection.getComment(),
+                        connection.getConnectionType().getId(), connection.getConnectionType().getName())
         ).collect(Collectors.toList());
 
         System.out.println("get connections : " + Duration.between(startTime, Instant.now()));
@@ -84,7 +90,8 @@ public class ConnectionController{
         ConnectionResponse connectionResponse = new ConnectionResponse(connection.getId(), connection.getCustomer().getId(), connection.getCustomer().getName(),
                 connection.getZone().getId(), connection.getZone().getName(),
                 connection.getRegister().getId(), connection.getRegister().getRegisterId(), connection.getAddress(),
-                connection.getStartDate(), connection.getEndDate(), connection.isActive(), connection.getComment());
+                connection.getStartDate(), connection.getEndDate(), connection.isActive(), connection.getComment(),
+                connection.getConnectionType().getId(), connection.getConnectionType().getName());
         return new ResponseEntity<ConnectionResponse>(connectionResponse, HttpStatus.OK);
     }
 

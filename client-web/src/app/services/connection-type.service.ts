@@ -16,6 +16,13 @@ export class ConnectionTypeService {
             });
     }
 
+    getConnectionCategories(){
+        return this.http.post(ConfigApp.WS_HOST + "/ws/get-connection-categories", {}).map(
+            function (response: Response) {
+                return response.json();
+            });
+    }
+
     updateConnectionType(_connectionType: IConnectionType) {
         return this.http.post(ConfigApp.WS_HOST + "/ws/update-connection-type", _connectionType);
     }
