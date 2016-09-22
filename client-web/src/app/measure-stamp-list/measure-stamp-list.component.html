@@ -7,6 +7,8 @@
              emptyMessage="Registros no encontrados"
              [responsive]="true" [editable]="true"
 >
+    <header><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-floppy-o" style="float:left" (click)="save()" label="Guardar"></button></div></header>
+
     <p-column field="date" header="Fecha" [editable]="true" [sortable]="true"></p-column>
     <p-column field="connectionID" header="Conexión" [filter]="true" filterMatchMode="startsWith" [sortable]="true"></p-column>
     <p-column field="registerID" header="Medidor"></p-column>
