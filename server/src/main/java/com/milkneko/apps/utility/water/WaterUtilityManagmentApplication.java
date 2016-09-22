@@ -1,5 +1,7 @@
 package com.milkneko.apps.utility.water;
 
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +12,10 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
 
     @Autowired
     private DataInitializer dataInitializer;
+    @Autowired
+    SeasonalConnectionDebtManager seasonalConnectionDebtManager;
+    @Autowired
+    SeasonalConnectionDebtPrinter seasonalConnectionDebtPrinter;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WaterUtilityManagmentApplication.class, args);
