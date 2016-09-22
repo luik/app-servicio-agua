@@ -1,8 +1,28 @@
 package com.milkneko.apps.utility.water.response;
 
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
+
 import java.sql.Date;
 
 public class SeasonalConnectionDebtResponse {
+
+    public static SeasonalConnectionDebtResponse createFrom(SeasonalConnectionDebt seasonalConnectionDebt){
+
+        float seasonalConnectionDebtInitialMeasurementValue = seasonalConnectionDebt.getConnection().getRegister().getInitialValue();
+        //if(seasonalConnectionDebt.getInitialMeasureStamp() != null){
+            seasonalConnectionDebtInitialMeasurementValue = seasonalConnectionDebt.getInitialMeasureStamp().getValue();
+        //}
+
+        return new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
+                seasonalConnectionDebtInitialMeasurementValue, seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
+                seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
+                seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
+                seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
+                seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+                seasonalConnectionDebt.getConnection().getConnectionType().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
+                seasonalConnectionDebt.getConnection().getConnectionType().getFixedCharge(),
+                seasonalConnectionDebt.getConnection().getConnectionType().getConnectionCharge());
+    }
 
     private int id;
     private int seasonalConnectionPaymentId;

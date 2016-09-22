@@ -53,4 +53,12 @@ public class Register {
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
+
+    public Collection<MeasureStamp> getMeasureStamps() {
+        return measureStamps;
+    }
+
+    public void setMeasureStamps(Collection<MeasureStamp> measureStamps) {
+        this.measureStamps = measureStamps;
+    }
 }

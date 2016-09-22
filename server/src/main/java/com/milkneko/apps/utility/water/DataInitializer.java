@@ -76,7 +76,7 @@ public class DataInitializer{
             	int newMeasureStamp = connection2lastMeasureStampMap[connection.getId()] + (int)(Math.random()*50 + 20);
                 connection2lastMeasureStampMap[connection.getId()] = newMeasureStamp;
             	
-                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth() - 1, (int)(Math.random()*18 + 1));
+                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth() - 1, (int)(Math.random()*18 + 7));
 
                 MeasureStamp measureStamp = new MeasureStamp(new Date(calendar.getTime().getTime()), newMeasureStamp);
                 measureStamp.setConnection(connection);
@@ -87,14 +87,14 @@ public class DataInitializer{
     }
 
     private void initializeTestRegisters(){
-    	/*
+
         for(int i = 0; i < 100; i++)
         {
             String registerName = Integer.toString((int)(Math.random()*100000 + 7000000));
             Register register = new Register(registerName, 0f);
             registerRepository.save(register);
         }
-        */
+
     }
 
 
@@ -191,13 +191,19 @@ public class DataInitializer{
                     customerRepository.save(customer);
                 }
 
-                Connection connection = new Connection(connectionAddress, new Date(this.dateFormat.parse("2016-01-15").getTime()),
+                Connection connection = new Connection(connectionAddress, new Date(this.dateFormat.parse("2016-01-01").getTime()),
                         null, true, connectionComment);
                 connection.setRegister(register);
                 connection.setCustomer(customer);
                 connection.setZone(zone);
-                connection.setConnectionType(connectionTypes[j%4]);
+                connection.setConnectionType(connectionTypes[1]);
+
                 connectionRepository.save(connection);
+
+                MeasureStamp measureStamp = new MeasureStamp(new Date(this.dateFormat.parse("2016-01-01").getTime()), register.getInitialValue());
+                measureStamp.setConnection(connection);
+                measureStamp.setRegister(register);
+                measureStampRepository.save(measureStamp);
             }
 
             System.out.println(zoneName);

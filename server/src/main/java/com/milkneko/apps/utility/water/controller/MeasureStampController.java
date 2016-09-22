@@ -35,29 +35,9 @@ public class MeasureStampController {
 
         List<MeasureStampResponse> measureStampResponses = measureStampRepository.findAllByConnectionId(connectionResponse.getId()).stream().map(
                 measureStamp -> {
-
-                    LocalDate prevLocalDate = measureStamp.getDate().toLocalDate().minusMonths(1);
-                    int prevYear = prevLocalDate.getYear();
-                    int prevMonth = prevLocalDate.getMonthValue() - 1;
-                    int prevLastDay = new GregorianCalendar(prevYear, prevMonth, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
-
-                    MeasureStamp lastMeasureStamp = measureStampRepository.findOneByConnectionIdAndDateBetweenOrderByDate(measureStamp.getConnection().getId(),
-                            new Date(new GregorianCalendar(prevYear, prevMonth, 1).getTime().getTime()),
-                            new Date(new GregorianCalendar(prevYear, prevMonth, prevLastDay).getTime().getTime()));
+                	MeasureStamp lastMeasureStamp = measureStampRepository.findFirstByConnectionIdAndDateLessThanOrderByDateDesc(measureStamp.getConnection().getId(), measureStamp.getDate());
                     
-                    float lastMeasureValue = 0;
-                    if(lastMeasureStamp != null){
-                    	lastMeasureValue = lastMeasureStamp.getValue(); 
-                    }
-
-                    return new MeasureStampResponse(measureStamp.getId(), measureStamp.getDate(), measureStamp.getValue(),
-                            measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId(),
-                            measureStamp.getPrevSeasonalConnectionDebt() == null ? 0 : measureStamp.getPrevSeasonalConnectionDebt().getId(),
-                            measureStamp.getCurrentSeasonalConnectionDebt() == null ? 0 : measureStamp.getCurrentSeasonalConnectionDebt().getId(),
-                            measureStamp.getConnection().getCustomer().getName(), measureStamp.getConnection().getZone().getName(),
-                            measureStamp.getConnection().getAddress(), measureStamp.getValue(), false,
-                            lastMeasureValue
-                    );
+                    return MeasureStampResponse.createFrom(measureStamp, lastMeasureStamp);
                 }
         ).collect(Collectors.toList());
 
@@ -72,34 +52,17 @@ public class MeasureStampController {
         int month = index%12 - 1;
         int lastDay = new GregorianCalendar(year, month, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        int prevYear = (index - 1)/12 + 2016;
-        int prevMonth = (index - 1)%12 - 1;
-        int prevLastDay = new GregorianCalendar(prevYear, prevMonth, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
-
         List<MeasureStampResponse> measureStampResponses = measureStampRepository.findByDateBetween(new Date(new GregorianCalendar(year, month, 1).getTime().getTime()),
                 new Date(new GregorianCalendar(year, month, lastDay).getTime().getTime())).stream().map(
                 measureStamp -> {
-                    MeasureStamp lastMeasureStamp = measureStampRepository.findOneByConnectionIdAndDateBetweenOrderByDate(measureStamp.getConnection().getId(),
-                            new Date(new GregorianCalendar(prevYear, prevMonth, 1).getTime().getTime()),
-                            new Date(new GregorianCalendar(prevYear, prevMonth, prevLastDay).getTime().getTime()));
+                    MeasureStamp lastMeasureStamp = measureStampRepository
+                            .findFirstByConnectionIdAndDateLessThanOrderByDateDesc(measureStamp.getConnection().getId(), measureStamp.getDate());
                     
-                    float lastMeasureValue = 0;
-                    if(lastMeasureStamp != null){
-                    	lastMeasureValue = lastMeasureStamp.getValue(); 
-                    }
-
-                    return new MeasureStampResponse(measureStamp.getId(), measureStamp.getDate(), measureStamp.getValue(),
-                        measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId(),
-                        measureStamp.getPrevSeasonalConnectionDebt() == null ? 0 : measureStamp.getPrevSeasonalConnectionDebt().getId(),
-                        measureStamp.getCurrentSeasonalConnectionDebt() == null ? 0 : measureStamp.getCurrentSeasonalConnectionDebt().getId(),
-                        measureStamp.getConnection().getCustomer().getName(), measureStamp.getConnection().getZone().getName(),
-                        measureStamp.getConnection().getAddress(), measureStamp.getValue(), false,
-                        lastMeasureValue
-                        );
+                    return MeasureStampResponse.createFrom(measureStamp, lastMeasureStamp);
                 }
         ).collect(Collectors.toList());
 
-        List<Connection> connections = connectionRepository.findAll();
+        List<Connection> connections = connectionRepository.findAll().stream().filter(connection -> connection.isActive()).collect(Collectors.toList());
         Map<Integer, Connection> connectionsMap = new HashMap<>();
         for (Connection connection : connections){
             connectionsMap.put(connection.getId(), connection);
@@ -108,11 +71,9 @@ public class MeasureStampController {
             connectionsMap.remove(measureStampResponse.getConnectionID());
         }
         for (Connection connection: connectionsMap.values()) {
-            MeasureStamp lastMeasureStamp = measureStampRepository.findOneByConnectionIdAndDateBetweenOrderByDate(connection.getId(),
-                    new Date(new GregorianCalendar(prevYear, prevMonth, 1).getTime().getTime()),
-                    new Date(new GregorianCalendar(prevYear, prevMonth, prevLastDay).getTime().getTime()));
-            
-            float lastMeasureValue = 0;
+            MeasureStamp lastMeasureStamp = measureStampRepository.findTwoByConnectionIdOrderByDate(connection.getId()).get(0);
+
+            float lastMeasureValue = connection.getRegister().getInitialValue();
             if(lastMeasureStamp != null){
             	lastMeasureValue = lastMeasureStamp.getValue(); 
             }
@@ -126,6 +87,21 @@ public class MeasureStampController {
                             connection.getAddress(), 0, true, lastMeasureValue
             ));
         }
+        for (Connection connection : connections){
+            if(connection.getMeasureStamps().size() < 2){
+                System.out.println("add");
+
+                measureStampResponses.add(
+                        new MeasureStampResponse(0, new Date(new GregorianCalendar(year, month, 1).getTime().getTime()), 0,
+                                connection.getId(), connection.getRegister().getRegisterId(),
+                                0,
+                                0,
+                                connection.getCustomer().getName(), connection.getZone().getName(),
+                                connection.getAddress(), 0, true, connection.getRegister().getInitialValue()
+                        ));
+            }
+        }
+
         return new ResponseEntity<List<MeasureStampResponse>>(measureStampResponses, HttpStatus.OK);
     }
 

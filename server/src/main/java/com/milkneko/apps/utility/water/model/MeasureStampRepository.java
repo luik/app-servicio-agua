@@ -11,4 +11,6 @@ public interface MeasureStampRepository extends JpaRepository<MeasureStamp, Inte
     MeasureStamp findOneByConnectionIdAndDateBetweenOrderByDate(int connectionId, Date startDate, Date endDate);
     List<MeasureStamp> findAllByConnectionIdAndDateBetweenOrderByDate(int connectionId, Date startDate, Date endDate);
     List<MeasureStamp> findByDateBetween(Date startDate, Date endDate);
+    MeasureStamp findFirstByConnectionIdAndDateLessThanOrderByDateDesc(int connectionId, Date endDate);
+    List<MeasureStamp> findTwoByConnectionIdOrderByDate(int connectionId);
 }

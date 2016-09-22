@@ -30,6 +30,8 @@ public class ConnectionController{
     private ZoneRepository zoneRepository;
     @Autowired
     private ConnectionTypeRepository connectionTypeRepository;
+    @Autowired
+    private MeasureStampRepository measureStampRepository;
 
     @RequestMapping(value = "ws/add-connection", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> addConnection(@RequestBody ConnectionResponse _connectionResponse){
@@ -63,6 +65,15 @@ public class ConnectionController{
         
         connection.setComment(comment);
         connectionRepository.save(connection);
+
+        if(register.getMeasureStamps() == null || register.getMeasureStamps().size() == 0){
+        	System.out.println("set initial measurement");
+        	
+            MeasureStamp measureStamp = new MeasureStamp(startDate, register.getInitialValue());
+            measureStamp.setConnection(connection);
+            measureStamp.setRegister(register);
+            measureStampRepository.save(measureStamp);
+        }
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }

@@ -1,8 +1,37 @@
 package com.milkneko.apps.utility.water.response;
 
+import com.milkneko.apps.utility.water.model.MeasureStamp;
+
 import java.sql.Date;
 
 public class MeasureStampResponse {
+
+    public static MeasureStampResponse createFrom(MeasureStamp measureStamp, MeasureStamp prevMeasureStamp){
+
+        int prevSeasonalConnectionDebtId = 0;
+        if(measureStamp.getPrevSeasonalConnectionDebt() != null){
+            prevSeasonalConnectionDebtId = measureStamp.getPrevSeasonalConnectionDebt().getId();
+        }
+
+        int currentSeasonalConnectionDebtId = 0;
+        if(measureStamp.getCurrentSeasonalConnectionDebt() != null){
+            currentSeasonalConnectionDebtId = measureStamp.getCurrentSeasonalConnectionDebt().getId();
+        }
+        float lastMeasureValue = measureStamp.getConnection().getRegister().getInitialValue();
+        if(prevMeasureStamp != null){
+            lastMeasureValue = prevMeasureStamp.getValue();
+        }
+
+        return new MeasureStampResponse(measureStamp.getId(), measureStamp.getDate(), measureStamp.getValue(),
+                measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId(),
+                prevSeasonalConnectionDebtId,
+                currentSeasonalConnectionDebtId,
+                measureStamp.getConnection().getCustomer().getName(), measureStamp.getConnection().getZone().getName(),
+                measureStamp.getConnection().getAddress(), measureStamp.getValue(), false,
+                lastMeasureValue
+        );
+    }
+
     private int id;
     private Date date;
     private float value;
