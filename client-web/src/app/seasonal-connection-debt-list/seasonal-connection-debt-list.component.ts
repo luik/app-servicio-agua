@@ -37,7 +37,9 @@ export class SeasonalConnectionDebtList implements OnInit {
             {label: "Recibos PDF", icon: "fa-file-pdf-o", command: event => {
                     window.open(ConfigApp.WS_HOST + "/ws/" + this.route.snapshot.params["by"] + "/get-seasonal-connection-debts/pdf/" + this.route.snapshot.params["id"]);
                 }},
-            {label: "Reporte Excel", icon: "fa-file-excel-o"}
+            {label: "Reporte Excel", icon: "fa-file-excel-o", command: event => {
+                window.open(ConfigApp.WS_HOST + "/ws/" + this.route.snapshot.params["by"] + "/get-seasonal-connection-debts/excel/" + this.route.snapshot.params["id"]);
+            }}
         ];
     }
 

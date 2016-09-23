@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class SeasonalConnectionPaymentPrinter {
+public class SeasonalConnectionPaymentPDFPrinter {
 
     @Autowired
     private MeasureStampRepository measureStampRepository;

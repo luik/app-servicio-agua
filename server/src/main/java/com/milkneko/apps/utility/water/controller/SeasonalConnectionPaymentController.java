@@ -1,6 +1,7 @@
 package com.milkneko.apps.utility.water.controller;
 
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionPaymentPrinter;
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtExcelPrinter;
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionPaymentPDFPrinter;
 import com.milkneko.apps.utility.water.model.*;
 import com.milkneko.apps.utility.water.response.ConnectionResponse;
 import com.milkneko.apps.utility.water.response.SeasonEntryResponse;
@@ -27,7 +28,7 @@ public class SeasonalConnectionPaymentController {
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
     @Autowired
-    SeasonalConnectionPaymentPrinter seasonalConnectionPaymentPrinter;
+    SeasonalConnectionPaymentPDFPrinter seasonalConnectionPaymentPDFPrinter;
 
     @RequestMapping(value = "ws/connection/get-seasonal-connection-payments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SeasonalConnectionPaymentResponse>> getSeasonalConnectionDebtsByConnection(@RequestBody ConnectionResponse connectionResponse){
@@ -70,7 +71,7 @@ public class SeasonalConnectionPaymentController {
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(new byte[]{}, HttpStatus.INTERNAL_SERVER_ERROR);
         try {
             ByteArrayOutputStream byteArrayOutputStream =
-                    seasonalConnectionPaymentPrinter.getPDFOfSeasonalConnectionPayments(seasonalConnectionDebts);
+                    seasonalConnectionPaymentPDFPrinter.getPDFOfSeasonalConnectionPayments(seasonalConnectionDebts);
 
             byte[] bytes = byteArrayOutputStream.toByteArray();
 

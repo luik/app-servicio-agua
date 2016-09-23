@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class SeasonalConnectionDebtPrinter {
+public class SeasonalConnectionDebtPDFPrinter {
 
     @Autowired
     private MeasureStampRepository measureStampRepository;

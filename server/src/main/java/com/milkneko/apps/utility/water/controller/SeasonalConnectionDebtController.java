@@ -1,7 +1,8 @@
 package com.milkneko.apps.utility.water.controller;
 
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtExcelPrinter;
 import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtPrinter;
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtPDFPrinter;
 import com.milkneko.apps.utility.water.model.*;
 import com.milkneko.apps.utility.water.response.ConnectionResponse;
 import com.milkneko.apps.utility.water.response.SeasonEntryResponse;
@@ -34,7 +35,9 @@ public class SeasonalConnectionDebtController {
 	@Autowired
 	private SeasonalConnectionDebtManager seasonalConnectionDebtManager;
 	@Autowired
-	private SeasonalConnectionDebtPrinter seasonalConnectionDebtPrinter;
+	private SeasonalConnectionDebtPDFPrinter seasonalConnectionDebtPDFPrinter;
+    @Autowired
+    private SeasonalConnectionDebtExcelPrinter seasonalConnectionDebtExcelPrinter;
 
     @RequestMapping(value = "ws/connection/get-seasonal-connection-debts", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SeasonalConnectionDebtResponse>> getSeasonalConnectionDebtsByConnection(@RequestBody ConnectionResponse connectionResponse){
@@ -79,6 +82,15 @@ public class SeasonalConnectionDebtController {
         return getResponseOfSeasonalConnectionDebtsPdfBytes(seasonalConnectionDebts);
     }
 
+    @RequestMapping(value = "ws/season/get-seasonal-connection-debts/excel/{seasonEntryId}", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getSeasonalConnectionDebtsBySeasonInExcel(@PathVariable("seasonEntryId") int seasonEntryId) {
+        int year = seasonEntryId/12 + 2016;
+        int month = seasonEntryId%12;
+        List<SeasonalConnectionDebt> seasonalConnectionDebts = seasonalConnectionDebtRepository.findAllBySeasonEntryIdYearAndSeasonEntryIdMonth(year, month);
+
+        return getResponseOfSeasonalConnectionDebtsExcelBytes(seasonalConnectionDebts);
+    }
+
     @RequestMapping(value = "ws/connection/get-seasonal-connection-debts/pdf/{connectionId}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getSeasonalConnectionDebtsByConnectionInPdf(@PathVariable("connectionId") int connectionId) {
 
@@ -93,7 +105,7 @@ public class SeasonalConnectionDebtController {
 		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(new byte[]{}, HttpStatus.INTERNAL_SERVER_ERROR);
 		try {
 			ByteArrayOutputStream byteArrayOutputStream =
-					seasonalConnectionDebtPrinter.getPDFOfSeasonalConnectionDebts(seasonalConnectionDebts);
+					seasonalConnectionDebtPDFPrinter.getPDFOfSeasonalConnectionDebts(seasonalConnectionDebts);
 
 			byte[] bytes = byteArrayOutputStream.toByteArray();
 
@@ -109,6 +121,27 @@ public class SeasonalConnectionDebtController {
 
 		return response;
 	}
+
+    private ResponseEntity<byte[]> getResponseOfSeasonalConnectionDebtsExcelBytes(List<SeasonalConnectionDebt> seasonalConnectionDebts){
+        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(new byte[]{}, HttpStatus.INTERNAL_SERVER_ERROR);
+        try {
+            ByteArrayOutputStream byteArrayOutputStream =
+                    seasonalConnectionDebtExcelPrinter.getExcelOfSeasonalConnectionDebts(seasonalConnectionDebts);
+
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/vnd.ms-excel"));
+            String filename = "reporte.xlsx";
+            headers.setContentDispositionFormData(filename, filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            response = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
 
 	@RequestMapping(value = "ws/update-seasonal-connection-debt", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> updateSeasonalConnectionDebt(@RequestBody SeasonalConnectionDebtResponse seasonalConnectionDebtResponse){
