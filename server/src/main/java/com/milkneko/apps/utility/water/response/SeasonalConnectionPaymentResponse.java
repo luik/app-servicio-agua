@@ -1,8 +1,20 @@
 package com.milkneko.apps.utility.water.response;
 
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
+import com.milkneko.apps.utility.water.model.SeasonalConnectionPayment;
+
 import java.sql.Date;
 
 public class SeasonalConnectionPaymentResponse {
+
+    public static SeasonalConnectionPaymentResponse createFrom(SeasonalConnectionDebt seasonalConnectionDebt){
+        return new SeasonalConnectionPaymentResponse(seasonalConnectionDebt.getSeasonalConnectionPayment().getId(),
+                seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
+                seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
+                seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
+                seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment().getDate());
+    }
+
     private int id;
     private int seasonalConnectionDebtId;
     private int connectionId;

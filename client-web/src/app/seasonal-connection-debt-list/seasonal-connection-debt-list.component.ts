@@ -52,6 +52,10 @@ export class SeasonalConnectionDebtList implements OnInit {
         this.seasonalConnectionDebtService.updateSeasonalConnectionDebts(this.seasonalConnectionDebt).subscribe(
             response =>
             {
+                if(this.seasonalConnectionDebt.paidOut === true){
+                    window.open(ConfigApp.WS_HOST + "/ws/get-seasonal-connection-payment/pdf/" + this.seasonalConnectionDebt.id);
+                }
+
                 this.ngOnInit();
                 this.isDisplayingDialog = false;
             }

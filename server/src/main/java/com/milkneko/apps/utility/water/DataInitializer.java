@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
 import com.milkneko.apps.utility.water.model.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,6 +17,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class DataInitializer{
@@ -36,6 +39,8 @@ public class DataInitializer{
     private MeasureStampRepository measureStampRepository;
     @Autowired
     private ConnectionTypeRepository connectionTypeRepository;
+    @Autowired
+    private SeasonalConnectionDebtManager seasonalConnectionDebtManager;
     /*
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
@@ -54,6 +59,11 @@ public class DataInitializer{
         testData();
         initializeTestRegisters();
         initializeSeasonEntries();
+
+        for(int i=2; i < 9; i++){
+            System.out.println("Generating debt for " + i);
+            ///seasonalConnectionDebtManager.generateSeasonalConnectionDebtsBySeason(i);
+        }
     }
 
     private void initializeSeasonEntries(){
@@ -96,7 +106,6 @@ public class DataInitializer{
         }
 
     }
-
 
     private void testData(){
         List<Customer> customers = customerRepository.findAllAndFetchConnectionsEagerly();
