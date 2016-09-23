@@ -1,7 +1,10 @@
 package com.milkneko.apps.utility.water.manager;
 
+import com.itextpdf.barcodes.Barcode1D;
+import com.itextpdf.barcodes.BarcodeQRCode;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -14,6 +17,7 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.property.TextAlignment;
 import com.milkneko.apps.utility.water.model.*;
 import com.milkneko.apps.utility.water.response.SeasonalConnectionDebtResponse;
+import com.milkneko.apps.utility.water.util.CantLetras;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +29,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class SeasonalConnectionDebtPrinter {
@@ -112,6 +117,7 @@ public class SeasonalConnectionDebtPrinter {
             PdfPage pdfPage = pdfDocument.addNewPage(PageSize.A5);
 
             PdfCanvas pdfCanvas = new PdfCanvas(pdfPage);
+
             Canvas canvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
             Canvas backgroundCanvas = new Canvas(pdfCanvas, pdfDocument, pdfPage.getPageSize());
 
@@ -182,6 +188,8 @@ public class SeasonalConnectionDebtPrinter {
             pdfCanvas.saveState().setLineWidth(0.5f).moveTo(110 - 14, 205).lineTo(110 - 14, 205 + 0.8*100).stroke().restoreState();
             pdfCanvas.saveState().setLineWidth(0.5f).moveTo(110 + 14*6, 205).lineTo(110 + 14*6, 205 + 0.8*100).stroke().restoreState();
 
+            pdfCanvas.saveState().beginText().moveText(32, 182).setFontAndSize(font, 7).showText(CantLetras.convertNumberToLetter(totalDebtStr)).endText().restoreState();
+
             pdfCanvas.saveState().beginText().moveText(141, 101).setFontAndSize(font, 7).showText(connection).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(141, 93).setFontAndSize(font, 7).showText(name).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(141, 85).setFontAndSize(font, 7).showText("GRUPO IV").endText().restoreState();
@@ -190,6 +198,9 @@ public class SeasonalConnectionDebtPrinter {
 
             pdfCanvas.saveState().beginText().moveText(58, 41).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(58, 33).setFontAndSize(font, 7).showText(issueDate).endText().restoreState();
+
+            BarcodeQRCode barcode = new BarcodeQRCode(UUID.randomUUID().toString());
+            pdfCanvas.saveState().addXObject(barcode.createFormXObject(Color.BLACK, 3, pdfDocument), 300, 10).restoreState();
         }
 
         pdfDocument.close();

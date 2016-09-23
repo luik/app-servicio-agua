@@ -1,7 +1,9 @@
 package com.milkneko.apps.utility.water.manager;
 
+import com.itextpdf.barcodes.BarcodeQRCode;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -17,7 +19,9 @@ import com.milkneko.apps.utility.water.model.MeasureStampRepository;
 import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
 import com.milkneko.apps.utility.water.model.SeasonalConnectionPayment;
 import com.milkneko.apps.utility.water.response.SeasonalConnectionDebtResponse;
+import com.milkneko.apps.utility.water.util.CantLetras;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.id.GUIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +32,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class SeasonalConnectionPaymentPrinter {
@@ -126,26 +131,30 @@ public class SeasonalConnectionPaymentPrinter {
             pdfCanvas.saveState().beginText().moveText(256, 545).setFontAndSize(font, 8).showText("Plaza Principal S/N Yanaquihua").endText().restoreState();
 
             pdfCanvas.saveState().beginText().moveText(19, 511).setFontAndSize(font, 8).showText("Recibo Nro: " + recibo ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(19, 503).setFontAndSize(font, 8).showText("Fecha emisión: " + issueDate ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(19, 495).setFontAndSize(font, 8).showText("Nombre: " + name ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(19, 487).setFontAndSize(font, 8).showText("DNI/RUC: " + documentId ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(19, 479).setFontAndSize(font, 8).showText("Conexión: " + connection ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(19, 471).setFontAndSize(font, 8).showText("Dirección: " + address ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(19, 463).setFontAndSize(font, 8).showText("Sector: " + zone ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(19, 501).setFontAndSize(font, 8).showText("Fecha emisión: " + issueDate ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(19, 491).setFontAndSize(font, 8).showText("Nombre: " + name ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(19, 481).setFontAndSize(font, 8).showText("DNI/RUC: " + documentId ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(19, 471).setFontAndSize(font, 8).showText("Conexión: " + connection ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(19, 461).setFontAndSize(font, 8).showText("Dirección: " + address ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(19, 451).setFontAndSize(font, 8).showText("Sector: " + zone ).endText().restoreState();
 
             pdfCanvas.saveState().beginText().moveText(288, 511).setFontAndSize(font, 8).showText("Codigo de pago: " + paymentId ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(288, 503).setFontAndSize(font, 8).showText("Total pagado: " + totalDebtStr ).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(288, 495).setFontAndSize(font, 8).showText("Fecha pago: " + paymentDate ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(288, 501).setFontAndSize(font, 8).showText("Total pagado: " + totalDebtStr ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(288, 491).setFontAndSize(font, 8).showText("Fecha pago: " + paymentDate ).endText().restoreState();
 
             pdfCanvas.saveState().beginText().moveText(18, 409).setFontAndSize(font, 8).showText("Periodo / ciclo Del " + prevMeasurementDate + " al " + finalMeasurementDate ).endText().restoreState();
 
             pdfCanvas.saveState().beginText().moveText(18, 393).setFontAndSize(font, 8).showText("Categoria : " + categoryName ).endText().restoreState();
 
-            pdfCanvas.saveState().beginText().moveText(17, 374).setFontAndSize(font, 8).showText("Son: " + "....." ).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(17, 374).setFontAndSize(font, 8).showText("Son: " + CantLetras.convertNumberToLetter(totalDebtStr)).endText().restoreState();
 
             pdfCanvas.saveState().setLineWidth(1f).moveTo(245, 349).lineTo(362, 349).stroke().restoreState();
 
             pdfCanvas.saveState().beginText().moveText(275, 337).setFontAndSize(font, 8).showText("Firma autorizada").endText().restoreState();
+
+            BarcodeQRCode barcode = new BarcodeQRCode(UUID.randomUUID().toString());
+            pdfCanvas.saveState().addXObject(barcode.createFormXObject(Color.BLACK, 3, pdfDocument), 155, 10).restoreState();
+
             /*
             pdfCanvas.saveState().beginText().moveText(50, 486).setFontAndSize(font, 7).showText(name).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(62, 511).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
