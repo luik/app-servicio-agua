@@ -1,30 +1,32 @@
 package com.milkneko.apps.utility.water.controller;
 
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtExcelPrinter;
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionPaymentPDFPrinter;
-import com.milkneko.apps.utility.water.model.*;
-import com.milkneko.apps.utility.water.response.ConnectionResponse;
-import com.milkneko.apps.utility.water.response.SeasonEntryResponse;
-import com.milkneko.apps.utility.water.response.SeasonalConnectionPaymentResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionPaymentPDFPrinter;
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebtRepository;
+import com.milkneko.apps.utility.water.model.SeasonalConnectionPayment;
+import com.milkneko.apps.utility.water.response.ConnectionResponse;
+import com.milkneko.apps.utility.water.response.SeasonEntryResponse;
+import com.milkneko.apps.utility.water.response.SeasonalConnectionPaymentResponse;
+
 @RestController
 public class SeasonalConnectionPaymentController {
-    @Autowired
-    private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
-    @Autowired
-    private ConnectionRepository connectionRepository;
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
     @Autowired
@@ -32,9 +34,6 @@ public class SeasonalConnectionPaymentController {
 
     @RequestMapping(value = "ws/connection/get-seasonal-connection-payments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SeasonalConnectionPaymentResponse>> getSeasonalConnectionDebtsByConnection(@RequestBody ConnectionResponse connectionResponse){
-
-        List<SeasonalConnectionDebt> seasonalConnectionDebts = seasonalConnectionDebtRepository.findAllByConnectionId(connectionResponse.getId());
-
         List<SeasonalConnectionPaymentResponse> seasonalConnectionPayments = seasonalConnectionDebtRepository.findAllByConnectionId(connectionResponse.getId()).
                 stream().filter(seasonalConnectionDebt -> seasonalConnectionDebt.getSeasonalConnectionPayment() != null).map(
                 seasonalConnectionDebt -> SeasonalConnectionPaymentResponse.createFrom(seasonalConnectionDebt)).collect(Collectors.toList());

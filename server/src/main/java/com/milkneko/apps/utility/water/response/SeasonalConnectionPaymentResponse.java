@@ -1,9 +1,8 @@
 package com.milkneko.apps.utility.water.response;
 
-import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
-import com.milkneko.apps.utility.water.model.SeasonalConnectionPayment;
-
 import java.sql.Date;
+
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
 
 public class SeasonalConnectionPaymentResponse {
 

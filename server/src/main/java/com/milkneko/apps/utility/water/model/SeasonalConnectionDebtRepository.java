@@ -1,9 +1,8 @@
 package com.milkneko.apps.utility.water.model;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SeasonalConnectionDebtRepository extends JpaRepository<SeasonalConnectionDebt, Integer> {
     List<SeasonalConnectionDebt> findAllByConnectionId(int connectionId);

@@ -1,7 +1,12 @@
 package com.milkneko.apps.utility.water.model;
 
-import javax.persistence.*;
 import java.util.Collection;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Zone {
@@ -28,7 +33,7 @@ public class Zone {
         return name;
     }
 
-    public void setName(String lastName) {
+    public void setName(String name) {
         this.name = name;
     }
 

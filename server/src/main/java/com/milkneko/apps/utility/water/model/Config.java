@@ -3,7 +3,6 @@ package com.milkneko.apps.utility.water.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.sql.Date;
 
 @Entity
 public class Config {
@@ -37,7 +36,7 @@ public class Config {
         return name;
     }
 
-    public void setName(String lastName) {
+    public void setName(String name) {
         this.name = name;
     }
 

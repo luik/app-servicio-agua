@@ -1,32 +1,5 @@
 package com.milkneko.apps.utility.water.manager;
 
-import com.itextpdf.barcodes.BarcodeQRCode;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.color.Color;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.layout.Canvas;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.property.TextAlignment;
-import com.milkneko.apps.utility.water.model.MeasureStamp;
-import com.milkneko.apps.utility.water.model.MeasureStampRepository;
-import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
-import com.milkneko.apps.utility.water.response.SeasonalConnectionDebtResponse;
-import com.milkneko.apps.utility.water.util.CantLetras;
-import org.apache.commons.io.IOUtils;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Date;
@@ -34,7 +7,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.milkneko.apps.utility.water.model.MeasureStamp;
+import com.milkneko.apps.utility.water.model.MeasureStampRepository;
+import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
+import com.milkneko.apps.utility.water.response.SeasonalConnectionDebtResponse;
 
 @Component
 public class SeasonalConnectionDebtExcelPrinter {
