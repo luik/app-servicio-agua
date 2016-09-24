@@ -10,11 +10,7 @@ import java.util.List;
 
 import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
 import com.milkneko.apps.utility.water.model.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -155,7 +151,7 @@ public class DataInitializer{
 
                 if(row != null && row.getCell(0) != null)
                 {
-                    row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
+                    row.getCell(0).setCellType(CellType.STRING);
                     if(row.getCell(0).getStringCellValue().trim().equals("1"))
                         break;
                 }
@@ -164,7 +160,7 @@ public class DataInitializer{
             for(; j < rows; j++)
             {
                 row = sheet.getRow(j);
-                row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
+                row.getCell(1).setCellType(CellType.STRING);
                 String codigo = row.getCell(1).getStringCellValue().trim();
                 if(codigo == null || codigo.trim().equals(""))
                 {
@@ -174,10 +170,10 @@ public class DataInitializer{
                 Register register = new Register(codigo, 0f);
                 registerRepository.save(register);
 
-                row.getCell(2).setCellType(Cell.CELL_TYPE_STRING);
-                row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
-                row.getCell(4).setCellType(Cell.CELL_TYPE_STRING);
-                row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+                row.getCell(2).setCellType(CellType.STRING);
+                row.getCell(3).setCellType(CellType.STRING);
+                row.getCell(4).setCellType(CellType.STRING);
+                row.getCell(5).setCellType(CellType.STRING);
 
                 String customerName = row.getCell(2).getStringCellValue().trim().toUpperCase();
                 String customerDocumentID = row.getCell(3).getStringCellValue().trim();
