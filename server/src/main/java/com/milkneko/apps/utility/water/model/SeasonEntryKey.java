@@ -37,4 +37,17 @@ public class SeasonEntryKey implements Serializable
     public void setMonth(int month) {
         this.month = month;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	SeasonEntryKey seasonEntryKey = (SeasonEntryKey) obj;
+    	
+    	return seasonEntryKey.year == this.year && seasonEntryKey.month == this.month;
+    }
+    
+    @Override
+    public int hashCode() {
+    	return year*100 + month;
+    }
+    
 }
