@@ -39,22 +39,30 @@ export class SeasonEntryListComponent implements OnInit {
         this.seasonEntry = this.cloneSeasonEntry(event.data);
         this.isDisplayingDialog = true;
 
-        if(this.seasonEntry.id <= 1){
-            this.items = [
-                {label: "Medidas", icon: "fa-search"}];
-        }
-        else{
-            this.items = [
-                {label: "Medidas", icon: "fa-search"},
-                {label: "Cobros", icon: "fa-search"},
-                {label: "Generar cobros", icon: "fa-gear"}
-            ];
+        // if(this.seasonEntry.id <= 1){
+        //     this.items = [
+        //         {label: "Medidas", icon: "fa-search"}];
+        // }
+        // else{
+        //     this.items = [
+        //         {label: "Medidas", icon: "fa-search"},
+        //         {label: "Cobros", icon: "fa-search"},
+        //         {label: "Generar cobros", icon: "fa-gear"}
+        //     ];
+        //
+        //     this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
+        //     this.items[2].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
+        // }
 
-            this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
-            this.items[2].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
-        }
+        this.items = [
+                    {label: "Medidas", icon: "fa-search"},
+                    {label: "Cobros", icon: "fa-search"},
+                    {label: "Generar cobros", icon: "fa-gear"}
+                ];
 
         this.items[0].routerLink = ["/measure-stamps/season/" + this.seasonEntry.id];
+        this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
+        this.items[2].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
     }
 
     onGenerateSeasonalConnectionDebts(event){

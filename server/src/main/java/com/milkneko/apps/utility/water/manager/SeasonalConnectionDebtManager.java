@@ -1,24 +1,12 @@
 package com.milkneko.apps.utility.water.manager;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.milkneko.apps.utility.water.model.*;
+import com.milkneko.apps.utility.water.util.SeasonsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.milkneko.apps.utility.water.model.MeasureStamp;
-import com.milkneko.apps.utility.water.model.MeasureStampRepository;
-import com.milkneko.apps.utility.water.model.SeasonEntry;
-import com.milkneko.apps.utility.water.model.SeasonEntryKey;
-import com.milkneko.apps.utility.water.model.SeasonEntryRepository;
-import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
-import com.milkneko.apps.utility.water.model.SeasonalConnectionDebtRepository;
+import java.sql.Date;
+import java.util.*;
 
 @Component
 public class SeasonalConnectionDebtManager{
@@ -30,23 +18,15 @@ public class SeasonalConnectionDebtManager{
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
 
-
     public void generateSeasonalConnectionDebtsBySeason(int seasonIndex){
-        int year = seasonIndex/12 + 2016;
-        int month = seasonIndex%12 - 1;
-        int lastDay = new GregorianCalendar(year, month, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
+        generateSeasonalConnectionDebtsBySeason(seasonIndex, new Date(new java.util.Date().getTime()));
+    }
 
-        int prevYear = (seasonIndex - 1)/12 + 2016;
-        int prevMonth = (seasonIndex - 1)%12 - 1;
-        int prevLastDay = new GregorianCalendar(prevYear, prevMonth, 1).getActualMaximum(Calendar.DAY_OF_MONTH);
+    public void generateSeasonalConnectionDebtsBySeason(int seasonIndex, Date issueDate){
+        List<MeasureStamp> measureStamps =
+                measureStampRepository.findByDateBetween(SeasonsUtil.getFirstDayOfSeasonIdx(seasonIndex),
+                        SeasonsUtil.getLastDayOfSeasonIdx(seasonIndex));
 
-        Date startDate = new Date(new GregorianCalendar(year, month, 1).getTime().getTime());
-        Date endDate = new Date(new GregorianCalendar(year, month, lastDay).getTime().getTime());
-
-        Date prevStartDate = new Date(new GregorianCalendar(prevYear, prevMonth, 1).getTime().getTime());
-        Date prevEndDate = new Date(new GregorianCalendar(prevYear, prevMonth, prevLastDay).getTime().getTime());
-
-        List<MeasureStamp> measureStamps = measureStampRepository.findByDateBetween(startDate, endDate);
         //we need to filter the measures the have the same connection
         Map<Integer, List<MeasureStamp>> connectionId2MeasurementsStamps = new HashMap<>();
         for (MeasureStamp measureStamp : measureStamps) {
@@ -67,9 +47,8 @@ public class SeasonalConnectionDebtManager{
                 continue;
             }
 
-            SeasonEntry seasonEntry = seasonEntryRepository.findOne(new SeasonEntryKey(year, month + 1));
+            SeasonEntry seasonEntry = seasonEntryRepository.findOne(SeasonsUtil.createSeasonEntryKey(seasonIndex));
 
-            ///MeasureStamp prevMeasureStamp = measureStampRepository.findOneByConnectionIdAndDateBetweenOrderByDate(measureStamp.getConnection().getId(), prevStartDate, prevEndDate);
             //get the previous measurement
             MeasureStamp prevMeasureStamp = measureStampRepository.findFirstByConnectionIdAndDateLessThanOrderByDateDesc(
                     measureStamp.getConnection().getId(), measureStamp.getDate());
@@ -85,7 +64,7 @@ public class SeasonalConnectionDebtManager{
                 continue;
             }
 
-            SeasonalConnectionDebt seasonalConnectionDebt = new SeasonalConnectionDebt(new Date(new java.util.Date().getTime()));
+            SeasonalConnectionDebt seasonalConnectionDebt = new SeasonalConnectionDebt(issueDate);
             seasonalConnectionDebt.setConnection(measureStamp.getConnection());
             seasonalConnectionDebt.setSeasonEntry(seasonEntry);
             seasonalConnectionDebt.setInitialMeasureStamp(prevMeasureStamp);
@@ -94,8 +73,4 @@ public class SeasonalConnectionDebtManager{
             seasonalConnectionDebtRepository.save(seasonalConnectionDebt);
         }
     }
-
-
-
-
 }

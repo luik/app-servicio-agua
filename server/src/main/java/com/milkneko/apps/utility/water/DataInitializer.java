@@ -3,6 +3,7 @@ package com.milkneko.apps.utility.water;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
 import com.milkneko.apps.utility.water.model.*;
+import com.milkneko.apps.utility.water.util.SeasonsUtil;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,12 +38,6 @@ public class DataInitializer{
     private ConnectionTypeRepository connectionTypeRepository;
     @Autowired
     private SeasonalConnectionDebtManager seasonalConnectionDebtManager;
-    /*
-    @Autowired
-    private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
-    @Autowired
-    private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
-     */
 
     @Transactional
     public void initialize()throws Exception{
@@ -52,18 +48,19 @@ public class DataInitializer{
             initializeExcelData();
         }
 
-        //testData();
         initializeTestRegisters();
         initializeSeasonEntries();
-
-
     }
     
     @Transactional
     public void generateSeasonalConnectionDebts(){
-        for(int i=2; i < 9; i++){
+        for(int i = 1; i < 9; i++){
             System.out.println("Generating debt for " + i);
-            seasonalConnectionDebtManager.generateSeasonalConnectionDebtsBySeason(i);
+
+            SeasonEntryKey seasonEntryKey = SeasonsUtil.createSeasonEntryKey(i);
+            LocalDate localDate = LocalDate.of(seasonEntryKey.getYear(), seasonEntryKey.getMonth(), (int)(16 + 3*Math.random()));
+
+            seasonalConnectionDebtManager.generateSeasonalConnectionDebtsBySeason(i, Date.valueOf(localDate));
         }
     }
 
@@ -102,7 +99,7 @@ public class DataInitializer{
             	int newMeasureStamp = connection2lastMeasureStampMap[connection.getId()] + (int)(Math.random()*50 + 20);
                 connection2lastMeasureStampMap[connection.getId()] = newMeasureStamp;
             	
-                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth() - 1, (int)(Math.random()*18 + 7));
+                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth() - 1, (int)(Math.random()*7 + 8));
 
                 MeasureStamp measureStamp = new MeasureStamp(new Date(calendar.getTime().getTime()), newMeasureStamp);
                 measureStamp.setConnection(connection);
@@ -113,14 +110,12 @@ public class DataInitializer{
     }
 
     private void initializeTestRegisters(){
-
         for(int i = 0; i < 100; i++)
         {
             String registerName = Integer.toString((int)(Math.random()*100000 + 7000000));
             Register register = new Register(registerName, 0f);
             registerRepository.save(register);
         }
-
     }
 
     private void initializeExcelData() throws Exception{

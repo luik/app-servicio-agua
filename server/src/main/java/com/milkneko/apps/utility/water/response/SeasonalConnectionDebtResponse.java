@@ -6,18 +6,19 @@ import java.sql.Date;
 
 public class SeasonalConnectionDebtResponse {
 
-    public static SeasonalConnectionDebtResponse createFrom(SeasonalConnectionDebt seasonalConnectionDebt){
+    public static SeasonalConnectionDebtResponse createFrom(SeasonalConnectionDebt seasonalConnectionDebt) {
 
         float seasonalConnectionDebtInitialMeasurementValue = seasonalConnectionDebt.getConnection().getRegister().getInitialValue();
         //if(seasonalConnectionDebt.getInitialMeasureStamp() != null){
-            seasonalConnectionDebtInitialMeasurementValue = seasonalConnectionDebt.getInitialMeasureStamp().getValue();
+        seasonalConnectionDebtInitialMeasurementValue = seasonalConnectionDebt.getInitialMeasureStamp().getValue();
         //}
 
         return new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
-                seasonalConnectionDebtInitialMeasurementValue, seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
+                seasonalConnectionDebt.getInitialMeasureStamp().getDate(), seasonalConnectionDebtInitialMeasurementValue,
+                seasonalConnectionDebt.getFinalMeasureStamp().getDate(),  seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
                 seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
-                seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getId(): -1,
-                seasonalConnectionDebt.getSeasonalConnectionPayment() != null? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate(): null,
+                seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment() != null ? seasonalConnectionDebt.getSeasonalConnectionPayment().getId() : -1,
+                seasonalConnectionDebt.getSeasonalConnectionPayment() != null ? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate() : null,
                 seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
                 seasonalConnectionDebt.getConnection().getConnectionType().getPriceDrainOf(seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()),
                 seasonalConnectionDebt.getConnection().getConnectionType().getFixedCharge(),
@@ -29,7 +30,9 @@ public class SeasonalConnectionDebtResponse {
     private Date seasonalConnectionPaymentDate;
     private int connectionId;
     private Date issuedDate;
+    private Date initialMeasurementDate;
     private float initialMeasurementValue;
+    private Date finalMeasurementDate;
     private float finalMeasurementValue;
     private int seasonYear;
     private int seasonMonth;
@@ -39,18 +42,21 @@ public class SeasonalConnectionDebtResponse {
     private float fixedCharge;
     private float connectionCharge;
 
+
     public SeasonalConnectionDebtResponse() {
     }
 
-    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, float initialMeasurementValue,
-                                          float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3,
+    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, Date initialMeasurementDate, float initialMeasurementValue,
+                                          Date finalMeasurementDate, float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3,
                                           int seasonalConnectionPaymentId, Date seasonalConnectionPaymentDate,
                                           float waterServicePrice, float drainPrice,
                                           float fixedCharge, float connectionCharge) {
         this.id = id;
-    	this.connectionId = connectionId;
+        this.connectionId = connectionId;
         this.issuedDate = issuedDate;
+        this.initialMeasurementDate = initialMeasurementDate;
         this.initialMeasurementValue = initialMeasurementValue;
+        this.finalMeasurementDate = finalMeasurementDate;
         this.finalMeasurementValue = finalMeasurementValue;
         this.seasonYear = seasonYear;
         this.seasonMonth = seasonMonth;
@@ -83,12 +89,28 @@ public class SeasonalConnectionDebtResponse {
         this.issuedDate = issuedDate;
     }
 
+    public Date getInitialMeasurementDate() {
+        return initialMeasurementDate;
+    }
+
+    public void setInitialMeasurementDate(Date initialMeasurementDate) {
+        this.initialMeasurementDate = initialMeasurementDate;
+    }
+
     public float getInitialMeasurementValue() {
         return initialMeasurementValue;
     }
 
     public void setInitialMeasurementValue(float initialMeasurementValue) {
         this.initialMeasurementValue = initialMeasurementValue;
+    }
+
+    public Date getFinalMeasurementDate() {
+        return finalMeasurementDate;
+    }
+
+    public void setFinalMeasurementDate(Date finalMeasurementDate) {
+        this.finalMeasurementDate = finalMeasurementDate;
     }
 
     public float getFinalMeasurementValue() {
@@ -178,39 +200,38 @@ public class SeasonalConnectionDebtResponse {
             private float totalDebtValue
             private boolean paidOut
         */
-    public float getDeltaMeasurements(){
+    public float getDeltaMeasurements() {
         return finalMeasurementValue - initialMeasurementValue;
     }
 
-    public float getWaterServiceDebt()
-    {
-        return getDeltaMeasurements()*this.waterServicePrice;
+    public float getWaterServiceDebt() {
+        return getDeltaMeasurements() * this.waterServicePrice;
     }
 
-    public float getDebtValue(){
+    public float getDebtValue() {
         return getWaterServiceDebt() + getDrainPrice() + getFixedCharge() + getConnectionCharge();
     }
 
-    public float getTotalDebtValue(){
+    public float getTotalDebtValue() {
         return getDebtValue() + getIGVDebtValue();
     }
 
-    public float getTotalDebtRoundedValue(){
+    public float getTotalDebtRoundedValue() {
         return getTotalDebtValue() + getRoundValue();
     }
 
-    public float getRoundValue(){
-    	if(Math.IEEEremainder(getTotalDebtValue(), 0.05) > 0){
-    		return -(float) Math.IEEEremainder(getTotalDebtValue(), 0.05);
-    	}
+    public float getRoundValue() {
+        if (Math.IEEEremainder(getTotalDebtValue(), 0.05) > 0) {
+            return -(float) Math.IEEEremainder(getTotalDebtValue(), 0.05);
+        }
         return -(float) Math.IEEEremainder(getTotalDebtValue(), 0.05) - 0.05f;
     }
 
-    public float getIGVDebtValue(){
-        return 0.18f*getDebtValue();
+    public float getIGVDebtValue() {
+        return 0.18f * getDebtValue();
     }
 
-    public boolean isPaidOut(){
+    public boolean isPaidOut() {
         return this.seasonalConnectionPaymentId != -1;
     }
 

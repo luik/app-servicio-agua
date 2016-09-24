@@ -58,8 +58,16 @@
             <div class="ui-grid-col-8"><input pInputText id="issuedDate" [(ngModel)]="seasonalConnectionDebt.issuedDate" disabled="true"/></div>
         </div>
         <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="initialMeasurementDate">Fecha Medida inicial</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="initialMeasurementDate" [(ngModel)]="seasonalConnectionDebt.initialMeasurementDate" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="initialMeasurement">Medida inicial</label></div>
             <div class="ui-grid-col-8"><input pInputText id="initialMeasurement" [(ngModel)]="seasonalConnectionDebt.initialMeasurementValue" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="finalMeasurementDate">Fecha Medida final</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="finalMeasurementDate" [(ngModel)]="seasonalConnectionDebt.finalMeasurementDate" disabled="true"/></div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="finalMeasurement">Medida final</label></div>
