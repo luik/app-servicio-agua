@@ -13,7 +13,6 @@ import com.milkneko.apps.utility.water.model.*;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
@@ -44,6 +43,7 @@ public class DataInitializer{
     private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
      */
 
+    @Transactional
     public void initialize()throws Exception{
         List<Customer> customers = customerRepository.findAll();
         if(customers.isEmpty())
@@ -52,17 +52,37 @@ public class DataInitializer{
             initializeExcelData();
         }
 
-        testData();
+        //testData();
         initializeTestRegisters();
         initializeSeasonEntries();
 
+
+    }
+    
+    @Transactional
+    public void generateSeasonalConnectionDebts(){
         for(int i=2; i < 9; i++){
             System.out.println("Generating debt for " + i);
-            ///seasonalConnectionDebtManager.generateSeasonalConnectionDebtsBySeason(i);
+            seasonalConnectionDebtManager.generateSeasonalConnectionDebtsBySeason(i);
         }
     }
 
-    private void initializeSeasonEntries(){
+    @Transactional
+    public void testData(){
+	    List<Customer> customers = customerRepository.findAllAndFetchConnectionsEagerly();
+	    for (Customer customer: customers) {
+	        Collection<Connection> connections = customer.getConnections();
+	        if(connections.toArray().length > 1)
+	        {
+	            System.out.println(customer.getName() + " " + connections.toArray().length);
+	            for (Connection connection: connections) {
+	                System.out.println(connection.getAddress() + " " + connection.getRegister().getRegisterId());
+	            }
+	        }
+	    }
+	}
+
+	private void initializeSeasonEntries(){
         SeasonEntry[] seasonEntries = new SeasonEntry[100];
 
         for(int i = 0; i < 100; i++){
@@ -101,20 +121,6 @@ public class DataInitializer{
             registerRepository.save(register);
         }
 
-    }
-
-    private void testData(){
-        List<Customer> customers = customerRepository.findAllAndFetchConnectionsEagerly();
-        for (Customer customer: customers) {
-            Collection<Connection> connections = customer.getConnections();
-            if(connections.toArray().length > 1)
-            {
-                System.out.println(customer.getName() + " " + connections.toArray().length);
-                ///for (Connection connection: connections) {
-                    ///System.out.println(connection.getAddress() + " " + connection.getRegister().getRegisterId());
-                ///}
-            }
-        }
     }
 
     private void initializeExcelData() throws Exception{

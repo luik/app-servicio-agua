@@ -30,5 +30,7 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
     @Override
     public void run(String... strings) throws Exception {
         dataInitializer.initialize();
+        dataInitializer.testData();
+        dataInitializer.generateSeasonalConnectionDebts();
     }
 }
