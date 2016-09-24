@@ -9,6 +9,7 @@ public class SeasonalConnectionDebt {
     @GeneratedValue
     private int id;
     private Date issuedDay;
+    private Date dueDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Connection connection;
