@@ -83,13 +83,13 @@ public class DataInitializer{
 	}
 
 	private void initializeConfigData(){
-        Config config = new Config("Tasa interés mora", "0.10");
+        Config config = new Config(Config.INTEREST_RATE_PENALTY, "0.10");
         configRepository.save(config);
 
-        config = new Config("Meses vencimiento recibo", "1");
+        config = new Config(Config.MONTHS_TO_DUE_DEBT, "1");
         configRepository.save(config);
 
-        config = new Config("Meses corte servicio", "2");
+        config = new Config(Config.MONTHS_TO_CUT_SERVICE, "2");
         configRepository.save(config);
     }
 

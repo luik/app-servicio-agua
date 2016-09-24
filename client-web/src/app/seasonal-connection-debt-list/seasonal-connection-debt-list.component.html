@@ -11,7 +11,7 @@
              [responsive]="true"
 >
     <p-column field="id" header="ID"></p-column>
-    <p-column field="connectionId" header="Conexión ID"></p-column>
+    <p-column field="connectionId" header="Conexión ID" [filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="issuedDate" header="Emitido"></p-column>
     <p-column field="seasonYear" header="Año"></p-column>
     <p-column field="seasonMonth" header="Mes"></p-column>
@@ -42,8 +42,8 @@
     </p-column>
 </p-dataTable>
 
-<p-dialog header="Detalles cobro por servicio mensual" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="590">
-    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="seasonalConnectionDebt" style="height: 370px;margin-top: 20px">
+<p-dialog header="Detalles cobro por servicio mensual" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="654">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="seasonalConnectionDebt" >
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="seasonalConnectionDebtId">Código recibo</label></div>
             <div class="ui-grid-col-8"><input pInputText id="seasonalConnectionDebtId" [(ngModel)]="seasonalConnectionDebt.id" disabled="true"/></div>
@@ -56,6 +56,10 @@
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="issuedDate">Fecha emisión</label></div>
             <div class="ui-grid-col-8"><input pInputText id="issuedDate" [(ngModel)]="seasonalConnectionDebt.issuedDate" disabled="true"/></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="dueDate">Fecha vencimiento</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="dueDate" [(ngModel)]="seasonalConnectionDebt.dueDate" disabled="true"/></div>
         </div>
         <div class="ui-grid-row">
             <div class="ui-grid-col-4"><label for="initialMeasurementDate">Fecha Medida inicial</label></div>
@@ -113,13 +117,6 @@
         </div>
     </div>
 
-    <!--
-{"id":1298,"seasonalConnectionPaymentId":-1,"seasonalConnectionPaymentDate":null,"connectionId":3,"issuedDate":"2016-09-14","initialMeasurementValue":23.0,
-"finalMeasurementValue":63.0,"seasonYear":2016,"seasonMonth":2,"priceM3":5.31,"deltaMeasurements":40.0,"debtValue":212.4,"totalDebtValue":250.60199,"paidOut":false}
-
-{"seasonalConnectionPaymentId":-1,"seasonalConnectionPaymentDate":null,
-"debtValue":212.4,"totalDebtValue":250.60199,"paidOut":false}
--->
     <footer>
         <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
             <!--<button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>-->

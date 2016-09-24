@@ -136,6 +136,10 @@ public class SeasonalConnectionDebtExcelPrinter {
 
             float[] previouseMeasurements = new float[monthsToDraw];
             int initialIdx = previouseMeasurements.length + 1 - measureStampList.size();
+            if(initialIdx < 0){
+                initialIdx = 0;
+            }
+
             for(int j = initialIdx; j < monthsToDraw; j++){
                 previouseMeasurements[j] = measureStampList.get(j + 1 - initialIdx).getValue() - measureStampList.get(j - initialIdx).getValue();
             }

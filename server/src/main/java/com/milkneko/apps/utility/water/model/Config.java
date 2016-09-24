@@ -6,6 +6,10 @@ import javax.persistence.Id;
 
 @Entity
 public class Config {
+    public static String INTEREST_RATE_PENALTY = "Tasa interés mora";
+    public static String MONTHS_TO_DUE_DEBT = "Meses vencimiento recibo";
+    public static String MONTHS_TO_CUT_SERVICE = "Meses corte servicio";
+
     @Id
     @GeneratedValue
     private int id;

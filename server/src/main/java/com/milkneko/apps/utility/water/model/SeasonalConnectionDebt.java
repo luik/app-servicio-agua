@@ -15,6 +15,7 @@ public class SeasonalConnectionDebt {
 	@GeneratedValue
 	private int id;
 	private Date issuedDay;
+	private Date dueDate;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Connection connection;
@@ -29,13 +30,13 @@ public class SeasonalConnectionDebt {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private SeasonEntry seasonEntry;
-	private Date dueDate;
 
 	public SeasonalConnectionDebt() {
 	}
 
-	public SeasonalConnectionDebt(Date issuedDay) {
+	public SeasonalConnectionDebt(Date issuedDay, Date dueDate) {
 		this.issuedDay = issuedDay;
+		this.dueDate = dueDate;
 	}
 
 	public int getId() {
@@ -50,6 +51,13 @@ public class SeasonalConnectionDebt {
 		this.issuedDay = issuedDay;
 	}
 
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date param) {
+		this.dueDate = param;
+	}
 	public Connection getConnection() {
 		return connection;
 	}
@@ -90,11 +98,4 @@ public class SeasonalConnectionDebt {
 		this.seasonEntry = seasonEntry;
 	}
 
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date param) {
-		this.dueDate = param;
-	}
 }

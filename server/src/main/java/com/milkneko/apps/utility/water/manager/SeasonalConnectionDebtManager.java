@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 @Component
@@ -17,6 +18,8 @@ public class SeasonalConnectionDebtManager{
     private MeasureStampRepository measureStampRepository;
     @Autowired
     private SeasonalConnectionDebtRepository seasonalConnectionDebtRepository;
+    @Autowired
+    private ConfigRepository configRepository;
 
     public void generateSeasonalConnectionDebtsBySeason(int seasonIndex){
         generateSeasonalConnectionDebtsBySeason(seasonIndex, new Date(new java.util.Date().getTime()));
@@ -64,7 +67,9 @@ public class SeasonalConnectionDebtManager{
                 continue;
             }
 
-            SeasonalConnectionDebt seasonalConnectionDebt = new SeasonalConnectionDebt(issueDate);
+            LocalDate dueDate = issueDate.toLocalDate().plusMonths(configRepository.findOneByName(Config.MONTHS_TO_DUE_DEBT).getIntValue());
+            SeasonalConnectionDebt seasonalConnectionDebt = new SeasonalConnectionDebt(issueDate, Date.valueOf(dueDate));
+
             seasonalConnectionDebt.setConnection(measureStamp.getConnection());
             seasonalConnectionDebt.setSeasonEntry(seasonEntry);
             seasonalConnectionDebt.setInitialMeasureStamp(prevMeasureStamp);

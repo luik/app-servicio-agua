@@ -13,7 +13,8 @@ public class SeasonalConnectionDebtResponse {
         seasonalConnectionDebtInitialMeasurementValue = seasonalConnectionDebt.getInitialMeasureStamp().getValue();
         //}
 
-        return new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
+        return new SeasonalConnectionDebtResponse(seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(),
+                seasonalConnectionDebt.getIssuedDay(), seasonalConnectionDebt.getDueDate(),
                 seasonalConnectionDebt.getInitialMeasureStamp().getDate(), seasonalConnectionDebtInitialMeasurementValue,
                 seasonalConnectionDebt.getFinalMeasureStamp().getDate(),  seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
                 seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
@@ -30,6 +31,7 @@ public class SeasonalConnectionDebtResponse {
     private Date seasonalConnectionPaymentDate;
     private int connectionId;
     private Date issuedDate;
+    private Date dueDate;
     private Date initialMeasurementDate;
     private float initialMeasurementValue;
     private Date finalMeasurementDate;
@@ -46,7 +48,8 @@ public class SeasonalConnectionDebtResponse {
     public SeasonalConnectionDebtResponse() {
     }
 
-    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, Date initialMeasurementDate, float initialMeasurementValue,
+    public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, Date dueDate,
+                                          Date initialMeasurementDate, float initialMeasurementValue,
                                           Date finalMeasurementDate, float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3,
                                           int seasonalConnectionPaymentId, Date seasonalConnectionPaymentDate,
                                           float waterServicePrice, float drainPrice,
@@ -54,6 +57,7 @@ public class SeasonalConnectionDebtResponse {
         this.id = id;
         this.connectionId = connectionId;
         this.issuedDate = issuedDate;
+        this.dueDate = dueDate;
         this.initialMeasurementDate = initialMeasurementDate;
         this.initialMeasurementValue = initialMeasurementValue;
         this.finalMeasurementDate = finalMeasurementDate;
@@ -87,6 +91,14 @@ public class SeasonalConnectionDebtResponse {
 
     public void setIssuedDate(Date issuedDate) {
         this.issuedDate = issuedDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public Date getInitialMeasurementDate() {

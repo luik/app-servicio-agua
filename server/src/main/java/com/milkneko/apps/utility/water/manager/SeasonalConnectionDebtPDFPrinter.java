@@ -61,6 +61,7 @@ public class SeasonalConnectionDebtPDFPrinter {
             String recibo = String.format("%09d", seasonalConnectionDebt.getId());
             String connection = String.format("%09d", seasonalConnectionDebtResponse.getConnectionId());
             String issueDate = dateFormat.format(seasonalConnectionDebtResponse.getIssuedDate());
+            String dueDate = dateFormat.format(seasonalConnectionDebtResponse.getDueDate());
             String address = seasonalConnectionDebt.getConnection().getAddress();
             String zone = seasonalConnectionDebt.getConnection().getZone().getName();
             String documentId = seasonalConnectionDebt.getConnection().getCustomer().getDocumentId();
@@ -109,12 +110,16 @@ public class SeasonalConnectionDebtPDFPrinter {
             List<MeasureStamp> measureStampList = this.measureStampRepository.findAllByConnectionIdAndDateBetweenOrderByDate(seasonalConnectionDebtResponse.getConnectionId(),
                     Date.valueOf(startDateSearch), Date.valueOf(endDateSearch));
 
-            float[] previouseMeasurements = new float[monthsToDraw];
-            int initialIdx = previouseMeasurements.length + 1 - measureStampList.size();
-            for(int j = initialIdx; j < monthsToDraw; j++){
-                previouseMeasurements[j] = measureStampList.get(j + 1 - initialIdx).getValue() - measureStampList.get(j - initialIdx).getValue();
+            float[] previousMeasurements = new float[monthsToDraw];
+            int initialIdx = previousMeasurements.length + 1 - measureStampList.size();
+
+            if(initialIdx < 0){
+                initialIdx = 0;
             }
 
+            for(int j = initialIdx; j < monthsToDraw; j++){
+                previousMeasurements[j] = measureStampList.get(j + 1 - initialIdx).getValue() - measureStampList.get(j - initialIdx).getValue();
+            }
 
             PdfPage pdfPage = pdfDocument.addNewPage(PageSize.A5);
 
@@ -128,7 +133,8 @@ public class SeasonalConnectionDebtPDFPrinter {
             pdfCanvas.saveState().beginText().moveText(62, 511).setFontAndSize(font, 7).showText(recibo).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(337, 465).setFontAndSize(font, 12).showText(connection).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(93, 501).setFontAndSize(font, 7).showText(issueDate).endText().restoreState();
-            pdfCanvas.saveState().beginText().moveText(278, 501).setFontAndSize(font, 8).showText(totalDebtStr).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(288, 501).setFontAndSize(font, 8).showText(totalDebtStr).endText().restoreState();
+            pdfCanvas.saveState().beginText().moveText(288, 510).setFontAndSize(font, 8).showText(dueDate).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(53, 474).setFontAndSize(font, 7).showText(address).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(48, 458).setFontAndSize(font, 7).showText(zone).endText().restoreState();
             pdfCanvas.saveState().beginText().moveText(52, 449).setFontAndSize(font, 7).showText(documentId).endText().restoreState();
@@ -173,7 +179,7 @@ public class SeasonalConnectionDebtPDFPrinter {
             canvas.setFont(font).setFontSize(10).showTextAligned(totalDebtStr, 403, 205, TextAlignment.RIGHT);
 
             for (int j = 0; j < monthsToDraw; j++) {
-                pdfCanvas.saveState().setLineWidth(7f).moveTo(110 + 14*j, 205).lineTo(110 + 14*j, 205 + 0.8*previouseMeasurements[j]).stroke().restoreState();
+                pdfCanvas.saveState().setLineWidth(7f).moveTo(110 + 14*j, 205).lineTo(110 + 14*j, 205 + 0.8*previousMeasurements[j]).stroke().restoreState();
             }
 
             pdfCanvas.saveState().setLineWidth(0.5f).moveTo(110 - 14 - 5, 205).lineTo(110 + 14*6, 205).stroke().restoreState();
