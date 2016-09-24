@@ -9,6 +9,7 @@ import {SeasonalConnectionDebtList} from "./seasonal-connection-debt-list/season
 import {SeasonalConnectionPaymentList} from "./seasonal-connection-payment-list/seasonal-connection-payment-list.component";
 import {RegisterListComponent} from "./register-list/register-list.component";
 import {ConnectionTypeListComponent} from "./connection-type-list/connection-type-list.component";
+import {ConfigListComponent} from "./config-list/config-list.component";
 
 export const appRoutes: Routes = [
     { path: '', component: WelcomeComponent},
@@ -21,6 +22,7 @@ export const appRoutes: Routes = [
     { path: 'seasonal-connection-payments/:by/:id', component: SeasonalConnectionPaymentList},
     { path: 'registers', component: RegisterListComponent},
     { path: 'connection-types', component: ConnectionTypeListComponent},
+    { path: 'configs', component: ConfigListComponent},
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

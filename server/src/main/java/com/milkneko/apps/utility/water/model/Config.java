@@ -40,4 +40,14 @@ public class Config {
         this.name = name;
     }
 
+    // derived
+
+    public int getIntValue(){
+        return Integer.parseInt(value);
+    }
+
+    public float getFloatValue(){
+        return Float.parseFloat(value);
+    }
+
 }

@@ -38,6 +38,8 @@ public class DataInitializer{
     private ConnectionTypeRepository connectionTypeRepository;
     @Autowired
     private SeasonalConnectionDebtManager seasonalConnectionDebtManager;
+    @Autowired
+    private ConfigRepository configRepository;
 
     @Transactional
     public void initialize()throws Exception{
@@ -48,6 +50,7 @@ public class DataInitializer{
             initializeExcelData();
         }
 
+        initializeConfigData();
         initializeTestRegisters();
         initializeSeasonEntries();
     }
@@ -78,6 +81,17 @@ public class DataInitializer{
 	        }
 	    }
 	}
+
+	private void initializeConfigData(){
+        Config config = new Config("Tasa interés mora", "0.10");
+        configRepository.save(config);
+
+        config = new Config("Meses vencimiento recibo", "1");
+        configRepository.save(config);
+
+        config = new Config("Meses corte servicio", "2");
+        configRepository.save(config);
+    }
 
 	private void initializeSeasonEntries(){
         SeasonEntry[] seasonEntries = new SeasonEntry[100];
