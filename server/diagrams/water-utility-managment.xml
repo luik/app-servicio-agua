@@ -3,8 +3,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.Config</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>128</entity-height>
-		<entity-X-Coordinate>38</entity-X-Coordinate>
-		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<entity-X-Coordinate>473</entity-X-Coordinate>
+		<entity-Y-Coordinate>737</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -14,8 +14,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.Connection</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>326</entity-height>
-		<entity-X-Coordinate>369</entity-X-Coordinate>
-		<entity-Y-Coordinate>241</entity-Y-Coordinate>
+		<entity-X-Coordinate>371</entity-X-Coordinate>
+		<entity-Y-Coordinate>87</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -25,8 +25,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.ConnectionType</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>266</entity-height>
-		<entity-X-Coordinate>20</entity-X-Coordinate>
-		<entity-Y-Coordinate>545</entity-Y-Coordinate>
+		<entity-X-Coordinate>30</entity-X-Coordinate>
+		<entity-Y-Coordinate>451</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -37,7 +37,7 @@
 		<entity-width>120</entity-width>
 		<entity-height>166</entity-height>
 		<entity-X-Coordinate>30</entity-X-Coordinate>
-		<entity-Y-Coordinate>177</entity-Y-Coordinate>
+		<entity-Y-Coordinate>20</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -47,8 +47,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.MeasureStamp</entity-name>
 		<entity-width>196</entity-width>
 		<entity-height>226</entity-height>
-		<entity-X-Coordinate>1060</entity-X-Coordinate>
-		<entity-Y-Coordinate>324</entity-Y-Coordinate>
+		<entity-X-Coordinate>1228</entity-X-Coordinate>
+		<entity-Y-Coordinate>102</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -58,8 +58,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.Register</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>186</entity-height>
-		<entity-X-Coordinate>723</entity-X-Coordinate>
-		<entity-Y-Coordinate>135</entity-Y-Coordinate>
+		<entity-X-Coordinate>730</entity-X-Coordinate>
+		<entity-Y-Coordinate>10</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -69,8 +69,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.SeasonalConnectionDebt</entity-name>
 		<entity-width>226</entity-width>
 		<entity-height>246</entity-height>
-		<entity-X-Coordinate>632</entity-X-Coordinate>
-		<entity-Y-Coordinate>454</entity-Y-Coordinate>
+		<entity-X-Coordinate>670</entity-X-Coordinate>
+		<entity-Y-Coordinate>533</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -80,8 +80,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.SeasonalConnectionPayment</entity-name>
 		<entity-width>191</entity-width>
 		<entity-height>146</entity-height>
-		<entity-X-Coordinate>729</entity-X-Coordinate>
-		<entity-Y-Coordinate>790</entity-Y-Coordinate>
+		<entity-X-Coordinate>1260</entity-X-Coordinate>
+		<entity-Y-Coordinate>515</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -91,8 +91,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.SeasonEntry</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>146</entity-height>
-		<entity-X-Coordinate>347</entity-X-Coordinate>
-		<entity-Y-Coordinate>671</entity-Y-Coordinate>
+		<entity-X-Coordinate>320</entity-X-Coordinate>
+		<entity-Y-Coordinate>491</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -102,8 +102,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.Zone</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>146</entity-height>
-		<entity-X-Coordinate>30</entity-X-Coordinate>
-		<entity-Y-Coordinate>364</entity-Y-Coordinate>
+		<entity-X-Coordinate>38</entity-X-Coordinate>
+		<entity-Y-Coordinate>243</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
