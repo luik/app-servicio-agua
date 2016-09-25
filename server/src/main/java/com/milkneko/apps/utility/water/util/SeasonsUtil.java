@@ -7,6 +7,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class SeasonsUtil {
+
+    private static String[] monthNames = new String[]{
+            "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
+            "JULIO", "AGOSTO", "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"
+    };
+
     public static Date getFirstDayOfSeasonIdx(int seasonIndex){
         SeasonEntryKey seasonEntryKey = createSeasonEntryKey(seasonIndex);
         return new Date(new GregorianCalendar(
@@ -27,5 +33,9 @@ public class SeasonsUtil {
         int month = seasonIndex%12;
 
         return new SeasonEntryKey(year, month);
+    }
+
+    public static String getMonthName(int _idx){
+        return monthNames[_idx - 1];
     }
 }

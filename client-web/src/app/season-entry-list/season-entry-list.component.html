@@ -9,8 +9,7 @@
 >
     <p-column field="id" header="ID"[filter]="true" filterMatchMode="contains"></p-column>
     <p-column field="year" header="Año" [filter]="true" filterMatchMode="contains"></p-column>
-    <p-column field="month" header="Mes"></p-column>
-    <p-column field="priceM3" header="Precio M3"></p-column>
+    <p-column field="monthName" header="Mes"></p-column>
 </p-dataTable>
 
 <p-dialog header="Detalles temporada" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="600" height="340">
@@ -22,20 +21,16 @@
             <div class="ui-grid-col-8"><input pInputText id="year" [(ngModel)]="seasonEntry.year" disabled="true"/></div>
         </div>
         <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="month">Mes</label></div>
-            <div class="ui-grid-col-8"><input pInputText id="month" [(ngModel)]="seasonEntry.month" disabled="true"/></div>
-        </div>
-        <div class="ui-grid-row">
-            <div class="ui-grid-col-4"><label for="priceM3">Precio m3</label></div>
-            <div class="ui-grid-col-8"><input pInputText id="priceM3" [(ngModel)]="seasonEntry.priceM3" type="number"/></div>
+            <div class="ui-grid-col-4"><label for="monthname">Mes</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="monthname" [(ngModel)]="seasonEntry.monthName" disabled="true"/></div>
         </div>
     </div>
 
-    <footer>
-        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-            <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
-        </div>
-    </footer>
+    <!--<footer>-->
+        <!--<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">-->
+            <!--<button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>-->
+        <!--</div>-->
+    <!--</footer>-->
 </p-dialog>
 
 <p-dialog header="Generando cobros" [(visible)]="isGeneratingSeasonalConnectionDebts" showeffect="fade" [modal]="true" width="600" height="200">

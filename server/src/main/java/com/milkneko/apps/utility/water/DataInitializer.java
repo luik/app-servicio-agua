@@ -97,7 +97,7 @@ public class DataInitializer{
         SeasonEntry[] seasonEntries = new SeasonEntry[100];
 
         for(int i = 0; i < 100; i++){
-            SeasonEntry seasonEntry = new SeasonEntry(i/12 + 2016, i%12 + 1, 5.31f);
+            SeasonEntry seasonEntry = new SeasonEntry(i/12 + 2016, i%12 + 1);
             seasonEntries[i] = seasonEntry;
             seasonEntryRepository.save(seasonEntry);
         }
@@ -110,7 +110,7 @@ public class DataInitializer{
 
         for (Connection connection : connections) {
             for(int i = 0; i < 8; i++){
-            	int newMeasureStamp = connection2lastMeasureStampMap[connection.getId()] + (int)(Math.random()*50 + 20);
+            	int newMeasureStamp = connection2lastMeasureStampMap[connection.getId()] + (int)(Math.random()*30 + 0);
                 connection2lastMeasureStampMap[connection.getId()] = newMeasureStamp;
             	
                 calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth() - 1, (int)(Math.random()*7 + 8));

@@ -29,7 +29,7 @@ public class SeasonEntryController {
         Instant startTime = Instant.now();
 
         List<SeasonEntryResponse> seasonEntries = seasonEntryRepository.findAllOrderByYearMonth().stream().map(
-                seasonEntry -> new SeasonEntryResponse(seasonEntry.getYear(), seasonEntry.getMonth(), seasonEntry.getPriceM3())
+                seasonEntry -> new SeasonEntryResponse(seasonEntry.getYear(), seasonEntry.getMonth())
         ).collect(Collectors.toList());
 
         System.out.println("get seasons : " + Duration.between(startTime, Instant.now()));
@@ -37,13 +37,12 @@ public class SeasonEntryController {
         return new ResponseEntity<List<SeasonEntryResponse>>(seasonEntries, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "ws/update-season-entry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> updateSeasonEntry(@RequestBody SeasonEntryResponse seasonEntryResponse){
-    	SeasonEntry seasonEntry = seasonEntryRepository.findOne(new SeasonEntryKey(seasonEntryResponse.getYear(), seasonEntryResponse.getMonth()));
-    	seasonEntry.setPriceM3(seasonEntryResponse.getPriceM3());
-    	seasonEntryRepository.save(seasonEntry);
-    	
-    	return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-    }
+    //@RequestMapping(value = "ws/update-season-entry", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    //public ResponseEntity<Boolean> updateSeasonEntry(@RequestBody SeasonEntryResponse seasonEntryResponse){
+    //	SeasonEntry seasonEntry = seasonEntryRepository.findOne(new SeasonEntryKey(seasonEntryResponse.getYear(), seasonEntryResponse.getMonth()));
+    //	seasonEntryRepository.save(seasonEntry);
+//
+//    	return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+//    }
 
 }

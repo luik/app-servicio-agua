@@ -7,11 +7,16 @@ import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
 public class SeasonalConnectionPaymentResponse {
 
     public static SeasonalConnectionPaymentResponse createFrom(SeasonalConnectionDebt seasonalConnectionDebt){
+
+        float m3price = seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(
+                seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()
+        );
+
         return new SeasonalConnectionPaymentResponse(seasonalConnectionDebt.getSeasonalConnectionPayment().getId(),
                 seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
                 seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
                 seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
-                seasonalConnectionDebt.getSeasonEntry().getPriceM3(), seasonalConnectionDebt.getSeasonalConnectionPayment().getDate());
+                m3price, seasonalConnectionDebt.getSeasonalConnectionPayment().getDate());
     }
 
     private int id;

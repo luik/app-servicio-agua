@@ -17,7 +17,7 @@
     <p-column field="seasonMonth" header="Mes"></p-column>
     <p-column field="priceM3" header="Precio M3">
         <template pTemplate let-col let-seasonalconnectiondebt="rowData">
-            <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>
+            <span>{{seasonalconnectiondebt[col.field].toFixed(3)}}</span>
         </template>
     </p-column>
     <p-column field="initialMeasurementValue" header="Medida inicial">

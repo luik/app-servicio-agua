@@ -12,7 +12,6 @@ public class SeasonEntry implements Serializable{
 	private static final long serialVersionUID = -8137536980942692825L;
 	@EmbeddedId
     private SeasonEntryKey id;
-    private float priceM3;
 
     @OneToMany(mappedBy = "seasonEntry", fetch = FetchType.LAZY)
     private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
@@ -20,9 +19,8 @@ public class SeasonEntry implements Serializable{
     public SeasonEntry(){
     }
 
-    public SeasonEntry(int year, int month, float priceM3) {
+    public SeasonEntry(int year, int month) {
         this.id = new SeasonEntryKey(year, month);
-        this.priceM3 = priceM3;
     }
 
     public SeasonEntryKey getId() {
@@ -35,14 +33,6 @@ public class SeasonEntry implements Serializable{
 
     public int getMonth() {
         return this.id.getMonth();
-    }
-
-    public float getPriceM3() {
-        return priceM3;
-    }
-
-    public void setPriceM3(float priceM3) {
-        this.priceM3 = priceM3;
     }
 
     public Collection<SeasonalConnectionDebt> getSeasonalConnectionDebts() {
