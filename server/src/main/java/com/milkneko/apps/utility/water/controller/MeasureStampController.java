@@ -84,8 +84,6 @@ public class MeasureStampController {
             measureStampResponses.add(
                     new MeasureStampResponse(0, new Date(new GregorianCalendar(year, month, 1).getTime().getTime()), 0,
                             connection.getId(), connection.getRegister().getRegisterId(),
-                            0,
-                            0,
                             connection.getCustomer().getName(), connection.getZone().getName(),
                             connection.getAddress(), 0, true, lastMeasureValue
             ));
@@ -97,8 +95,6 @@ public class MeasureStampController {
                 measureStampResponses.add(
                         new MeasureStampResponse(0, new Date(new GregorianCalendar(year, month, 1).getTime().getTime()), 0,
                                 connection.getId(), connection.getRegister().getRegisterId(),
-                                0,
-                                0,
                                 connection.getCustomer().getName(), connection.getZone().getName(),
                                 connection.getAddress(), 0, true, connection.getRegister().getInitialValue()
                         ));

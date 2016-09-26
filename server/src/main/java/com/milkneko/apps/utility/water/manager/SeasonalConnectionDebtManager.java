@@ -26,6 +26,36 @@ public class SeasonalConnectionDebtManager{
     }
 
     public void generateSeasonalConnectionDebtsBySeason(int seasonIndex, Date issueDate){
+        SeasonEntry seasonEntry = seasonEntryRepository.getOne(SeasonsUtil.createSeasonEntryKey(seasonIndex));
+        Collection<MeasureStamp> measureStamps = seasonEntry.getMeasureStamp();
+        //we need to filter the measures the have the same connection;
+        //it need to be not necessary, we will not filter
+        for (MeasureStamp measureStamp : measureStamps) {
+            // if the measurement stamp has a seasonal connection debt do nothing
+            if(measureStamp.getSeasonalConnectionDebt() != null){
+                continue;
+            }
+
+            MeasureStamp prevMeasureStamp = measureStamp.getPrevMeasureStamp();
+
+            // The register must be the same, in order to operate with the measurement values
+            if(prevMeasureStamp.getRegister().getId() != measureStamp.getRegister().getId()){
+                continue;
+            }
+
+            LocalDate dueDate = issueDate.toLocalDate().plusMonths(configRepository.findOneByName(Config.MONTHS_TO_DUE_DEBT).getIntValue());
+            SeasonalConnectionDebt seasonalConnectionDebt = new SeasonalConnectionDebt(issueDate, Date.valueOf(dueDate));
+
+            seasonalConnectionDebt.setConnection(measureStamp.getConnection());
+            seasonalConnectionDebt.setSeasonEntry(seasonEntry);
+            seasonalConnectionDebt.setMeasureStamp(prevMeasureStamp);
+            seasonalConnectionDebt.setMeasureStamp(measureStamp);
+
+            seasonalConnectionDebtRepository.save(seasonalConnectionDebt);
+        }
+    }
+
+    public void generateSeasonalConnectionDebtsBySeasonPrev(int seasonIndex, Date issueDate){
         List<MeasureStamp> measureStamps =
                 measureStampRepository.findByDateBetween(SeasonsUtil.getFirstDayOfSeasonIdx(seasonIndex),
                         SeasonsUtil.getLastDayOfSeasonIdx(seasonIndex));
@@ -43,10 +73,11 @@ public class SeasonalConnectionDebtManager{
             Collections.sort(connectionId2MeasurementsStamps.get(connectionId), (o1, o2) -> -o1.getDate().compareTo(o2.getDate()));
             filteredMeasureStamps.add(connectionId2MeasurementsStamps.get(connectionId).get(0));
         }
+        //end filter
 
         for (MeasureStamp measureStamp : filteredMeasureStamps) {
             // if the measurement stamp has a seasonal connection debt do nothing
-            if(measureStamp.getCurrentSeasonalConnectionDebt() != null){
+            if(measureStamp.getSeasonalConnectionDebt() != null){
                 continue;
             }
 
@@ -72,8 +103,7 @@ public class SeasonalConnectionDebtManager{
 
             seasonalConnectionDebt.setConnection(measureStamp.getConnection());
             seasonalConnectionDebt.setSeasonEntry(seasonEntry);
-            seasonalConnectionDebt.setInitialMeasureStamp(prevMeasureStamp);
-            seasonalConnectionDebt.setFinalMeasureStamp(measureStamp);
+            seasonalConnectionDebt.setMeasureStamp(measureStamp);
 
             seasonalConnectionDebtRepository.save(seasonalConnectionDebt);
         }

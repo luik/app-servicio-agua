@@ -92,10 +92,10 @@ public class SeasonalConnectionDebtExcelPrinter {
             String registerId = seasonalConnectionDebt.getConnection().getRegister().getRegisterId();
             String categoryName = seasonalConnectionDebt.getConnection().getConnectionType().getName();
 
-            String prevMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getInitialMeasureStamp().getValue());
-            String prevMeasurementDate = dateFormat.format(seasonalConnectionDebt.getInitialMeasureStamp().getDate());
-            String finalMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getFinalMeasureStamp().getValue());
-            String finalMeasurementDate = dateFormat.format(seasonalConnectionDebt.getFinalMeasureStamp().getDate());
+            String prevMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getMeasureStamp().getPrevMeasureStamp().getValue());
+            String prevMeasurementDate = dateFormat.format(seasonalConnectionDebt.getMeasureStamp().getPrevMeasureStamp().getDate());
+            String finalMeasurementValue = String.format("%.2f", seasonalConnectionDebt.getMeasureStamp().getValue());
+            String finalMeasurementDate = dateFormat.format(seasonalConnectionDebt.getMeasureStamp().getDate());
 
             String measuresDelta = String.format("%.2f", seasonalConnectionDebtResponse.getDeltaMeasurements());
             String codeService = "001";

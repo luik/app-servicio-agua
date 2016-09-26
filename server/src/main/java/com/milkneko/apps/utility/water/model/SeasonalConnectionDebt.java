@@ -24,12 +24,13 @@ public class SeasonalConnectionDebt {
 	private SeasonalConnectionPayment seasonalConnectionPayment;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	private MeasureStamp initialMeasureStamp;
-	@OneToOne(fetch = FetchType.LAZY)
-	private MeasureStamp finalMeasureStamp;
+	private MeasureStamp measureStamp;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private SeasonEntry seasonEntry;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private ServiceShutOff serviceShutOff;
 
 	public SeasonalConnectionDebt() {
 	}
@@ -74,20 +75,12 @@ public class SeasonalConnectionDebt {
 		this.seasonalConnectionPayment = seasonalConnectionPayment;
 	}
 
-	public MeasureStamp getInitialMeasureStamp() {
-		return initialMeasureStamp;
+	public MeasureStamp getMeasureStamp() {
+		return measureStamp;
 	}
 
-	public void setInitialMeasureStamp(MeasureStamp initialMeasureStamp) {
-		this.initialMeasureStamp = initialMeasureStamp;
-	}
-
-	public MeasureStamp getFinalMeasureStamp() {
-		return finalMeasureStamp;
-	}
-
-	public void setFinalMeasureStamp(MeasureStamp finalMeasureStamp) {
-		this.finalMeasureStamp = finalMeasureStamp;
+	public void setMeasureStamp(MeasureStamp finalMeasureStamp) {
+		this.measureStamp = finalMeasureStamp;
 	}
 
 	public SeasonEntry getSeasonEntry() {

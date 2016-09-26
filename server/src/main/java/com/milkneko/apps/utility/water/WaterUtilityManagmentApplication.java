@@ -31,6 +31,14 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
     public void run(String... strings) throws Exception {
         dataInitializer.initialize();
         dataInitializer.testData();
-        dataInitializer.generateSeasonalConnectionDebts();
+
+        for(int seasonEntryIdx = 1; seasonEntryIdx <= 8; seasonEntryIdx++){
+            System.out.println("Initializing data for season " + seasonEntryIdx);
+
+            dataInitializer.generateSeasonalMeasurements(seasonEntryIdx);
+            dataInitializer.generateSeasonalConnectionDebts(seasonEntryIdx);
+//            dataInitializer.generateSeasonalConnectionPayments(seasonEntryIdx);
+        }
+
     }
 }

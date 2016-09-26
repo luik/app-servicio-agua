@@ -13,6 +13,7 @@ import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
 import com.milkneko.apps.utility.water.model.*;
 import com.milkneko.apps.utility.water.util.SeasonsUtil;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,17 +55,45 @@ public class DataInitializer{
         initializeTestRegisters();
         initializeSeasonEntries();
     }
+
+    @Transactional
+    public void generateSeasonalMeasurements(int seasonIdx){
+        List<Connection> connections = connectionRepository.findAll();
+        SeasonEntry seasonEntry = seasonEntryRepository.findOne(SeasonsUtil.createSeasonEntryKey(seasonIdx));
+
+        for (Connection connection : connections){
+            Register register = connection.getRegister();
+            MeasureStamp lastMeasureStamp = register.getLastMeasureStamp();
+
+            // day is from 8 to 14
+            // consume is from 0 to 29
+            MeasureStamp measureStamp = new MeasureStamp(Date.valueOf(LocalDate.of(seasonEntry.getYear(), seasonEntry.getMonth(),
+                    (int)(Math.random()*7 + 8))), lastMeasureStamp.getValue() + (int)(Math.random()*30 + 0));
+            measureStamp.setSeasonEntry(seasonEntry);
+            measureStamp.setPrevMeasureStamp(lastMeasureStamp);
+            measureStamp.setConnection(connection);
+            measureStamp.setRegister(register);
+            measureStampRepository.save(measureStamp);
+        }
+    }
     
     @Transactional
-    public void generateSeasonalConnectionDebts(){
-        for(int i = 1; i < 9; i++){
-            System.out.println("Generating debt for " + i);
+    public void generateSeasonalConnectionDebts(int seasonIdx){
+        SeasonEntryKey seasonEntryKey = SeasonsUtil.createSeasonEntryKey(seasonIdx);
+        // day if from 16 to 18
+        LocalDate localDate = LocalDate.of(seasonEntryKey.getYear(), seasonEntryKey.getMonth(), (int)(16 + 3*Math.random()));
+        seasonalConnectionDebtManager.generateSeasonalConnectionDebtsBySeason(seasonIdx, Date.valueOf(localDate));
+    }
 
-            SeasonEntryKey seasonEntryKey = SeasonsUtil.createSeasonEntryKey(i);
-            LocalDate localDate = LocalDate.of(seasonEntryKey.getYear(), seasonEntryKey.getMonth(), (int)(16 + 3*Math.random()));
-
-            seasonalConnectionDebtManager.generateSeasonalConnectionDebtsBySeason(i, Date.valueOf(localDate));
+    @Transactional
+    public void generateSeasonalConnectionPayments(int seasonIdx){
+        for(int i = 1; i < 9; i++) {
+            System.out.println("Generating payments for " + i);
         }
+    }
+
+    @Transactional
+    public void generateSeasonalConnectionShutoff(int seasonIdx){
     }
 
     @Transactional
@@ -101,34 +130,21 @@ public class DataInitializer{
             seasonEntries[i] = seasonEntry;
             seasonEntryRepository.save(seasonEntry);
         }
-
-        List<Connection> connections = connectionRepository.findAll();
-
-        Calendar calendar = new GregorianCalendar();
-
-        int[] connection2lastMeasureStampMap = new int[connections.size() + 1];
-
-        for (Connection connection : connections) {
-            for(int i = 0; i < 8; i++){
-            	int newMeasureStamp = connection2lastMeasureStampMap[connection.getId()] + (int)(Math.random()*30 + 0);
-                connection2lastMeasureStampMap[connection.getId()] = newMeasureStamp;
-            	
-                calendar.set(seasonEntries[i].getYear(), seasonEntries[i].getMonth() - 1, (int)(Math.random()*7 + 8));
-
-                MeasureStamp measureStamp = new MeasureStamp(new Date(calendar.getTime().getTime()), newMeasureStamp);
-                measureStamp.setConnection(connection);
-                measureStamp.setRegister(connection.getRegister());
-                measureStampRepository.save(measureStamp);
-            }
-        }
     }
 
     private void initializeTestRegisters(){
         for(int i = 0; i < 100; i++)
         {
+            MeasureStamp measureStamp = new MeasureStamp(Date.valueOf(LocalDate.of(2016, 1, 1)), 0f);
+            measureStampRepository.save(measureStamp);
+
             String registerName = Integer.toString((int)(Math.random()*100000 + 7000000));
             Register register = new Register(registerName, 0f);
+            register.setLastMeasureStamp(measureStamp);
+            measureStamp.setRegister(register);
+
             registerRepository.save(register);
+            measureStampRepository.save(measureStamp);
         }
     }
 
@@ -182,7 +198,11 @@ public class DataInitializer{
                     break;
                 }
 
+                MeasureStamp measureStamp = new MeasureStamp(Date.valueOf(LocalDate.of(2016, 1, 1)), 0f);
+                measureStampRepository.save(measureStamp);
+
                 Register register = new Register(codigo, 0f);
+                register.setLastMeasureStamp(measureStamp);
                 registerRepository.save(register);
 
                 row.getCell(2).setCellType(CellType.STRING);
@@ -220,7 +240,6 @@ public class DataInitializer{
 
                 connectionRepository.save(connection);
 
-                MeasureStamp measureStamp = new MeasureStamp(new Date(this.dateFormat.parse("2016-01-01").getTime()), register.getInitialValue());
                 measureStamp.setConnection(connection);
                 measureStamp.setRegister(register);
                 measureStampRepository.save(measureStamp);

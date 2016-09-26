@@ -17,6 +17,8 @@ public class Register {
 
     @OneToMany(mappedBy = "register", fetch = FetchType.LAZY)
     private Collection<MeasureStamp> measureStamps;
+	@OneToOne
+	private MeasureStamp lastMeasureStamp;
 
     public Register(){
     }
@@ -61,4 +63,12 @@ public class Register {
     public void setMeasureStamps(Collection<MeasureStamp> measureStamps) {
         this.measureStamps = measureStamps;
     }
+
+	public MeasureStamp getLastMeasureStamp() {
+	    return lastMeasureStamp;
+	}
+
+	public void setLastMeasureStamp(MeasureStamp param) {
+	    this.lastMeasureStamp = param;
+	}
 }

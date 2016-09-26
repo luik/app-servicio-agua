@@ -20,10 +20,13 @@ public class MeasureStamp {
     @ManyToOne(fetch = FetchType.LAZY)
     private Connection connection;
 
-    @OneToOne(mappedBy = "initialMeasureStamp", fetch = FetchType.LAZY)
-    private SeasonalConnectionDebt prevSeasonalConnectionDebt;
-    @OneToOne(mappedBy = "finalMeasureStamp", fetch = FetchType.LAZY)
-    private SeasonalConnectionDebt currentSeasonalConnectionDebt;
+    @OneToOne(mappedBy = "measureStamp", fetch = FetchType.LAZY)
+    private SeasonalConnectionDebt seasonalConnectionDebt;
+
+    @OneToOne
+	private MeasureStamp prevMeasureStamp;
+	@ManyToOne
+	private SeasonEntry seasonEntry;
 
     public MeasureStamp() {
     }
@@ -69,19 +72,27 @@ public class MeasureStamp {
         this.connection = connection;
     }
 
-    public SeasonalConnectionDebt getPrevSeasonalConnectionDebt() {
-        return prevSeasonalConnectionDebt;
+    public SeasonalConnectionDebt getSeasonalConnectionDebt() {
+        return seasonalConnectionDebt;
     }
 
-    public void setPrevSeasonalConnectionDebt(SeasonalConnectionDebt prevSeasonalConnectionDebt) {
-        this.prevSeasonalConnectionDebt = prevSeasonalConnectionDebt;
+    public void setSeasonalConnectionDebt(SeasonalConnectionDebt currentSeasonalConnectionDebt) {
+        this.seasonalConnectionDebt = currentSeasonalConnectionDebt;
     }
 
-    public SeasonalConnectionDebt getCurrentSeasonalConnectionDebt() {
-        return currentSeasonalConnectionDebt;
-    }
+	public MeasureStamp getPrevMeasureStamp() {
+	    return prevMeasureStamp;
+	}
 
-    public void setCurrentSeasonalConnectionDebt(SeasonalConnectionDebt currentSeasonalConnectionDebt) {
-        this.currentSeasonalConnectionDebt = currentSeasonalConnectionDebt;
-    }
+	public void setPrevMeasureStamp(MeasureStamp param) {
+	    this.prevMeasureStamp = param;
+	}
+
+	public SeasonEntry getSeasonEntry() {
+	    return seasonEntry;
+	}
+
+	public void setSeasonEntry(SeasonEntry param) {
+	    this.seasonEntry = param;
+	}
 }

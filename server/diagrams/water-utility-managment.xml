@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
-		<entity-name>com.milkneko.apps.utility.water.model.Config</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>128</entity-height>
-		<entity-X-Coordinate>473</entity-X-Coordinate>
-		<entity-Y-Coordinate>737</entity-Y-Coordinate>
+		<entity-name>com.milkneko.apps.utility.water.model.MeasureStamp</entity-name>
+		<entity-width>196</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>1265</entity-X-Coordinate>
+		<entity-Y-Coordinate>186</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
 	</entity>
 
 	<entity>
-		<entity-name>com.milkneko.apps.utility.water.model.Connection</entity-name>
+		<entity-name>com.milkneko.apps.utility.water.model.SeasonalConnectionPayment</entity-name>
+		<entity-width>191</entity-width>
+		<entity-height>146</entity-height>
+		<entity-X-Coordinate>1267</entity-X-Coordinate>
+		<entity-Y-Coordinate>611</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.milkneko.apps.utility.water.model.Register</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>326</entity-height>
-		<entity-X-Coordinate>371</entity-X-Coordinate>
-		<entity-Y-Coordinate>87</entity-Y-Coordinate>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>730</entity-X-Coordinate>
+		<entity-Y-Coordinate>10</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -33,33 +44,33 @@
 	</entity>
 
 	<entity>
-		<entity-name>com.milkneko.apps.utility.water.model.Customer</entity-name>
+		<entity-name>com.milkneko.apps.utility.water.model.ServiceShutOff</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>210</entity-X-Coordinate>
+		<entity-Y-Coordinate>730</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.milkneko.apps.utility.water.model.ServiceShutOn</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>166</entity-height>
-		<entity-X-Coordinate>30</entity-X-Coordinate>
-		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<entity-X-Coordinate>595</entity-X-Coordinate>
+		<entity-Y-Coordinate>837</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
 	</entity>
 
 	<entity>
-		<entity-name>com.milkneko.apps.utility.water.model.MeasureStamp</entity-name>
-		<entity-width>196</entity-width>
-		<entity-height>226</entity-height>
-		<entity-X-Coordinate>1228</entity-X-Coordinate>
-		<entity-Y-Coordinate>102</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.milkneko.apps.utility.water.model.Register</entity-name>
+		<entity-name>com.milkneko.apps.utility.water.model.Connection</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>186</entity-height>
-		<entity-X-Coordinate>730</entity-X-Coordinate>
-		<entity-Y-Coordinate>10</entity-Y-Coordinate>
+		<entity-height>346</entity-height>
+		<entity-X-Coordinate>371</entity-X-Coordinate>
+		<entity-Y-Coordinate>87</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -67,32 +78,10 @@
 
 	<entity>
 		<entity-name>com.milkneko.apps.utility.water.model.SeasonalConnectionDebt</entity-name>
-		<entity-width>226</entity-width>
+		<entity-width>250</entity-width>
 		<entity-height>246</entity-height>
-		<entity-X-Coordinate>670</entity-X-Coordinate>
-		<entity-Y-Coordinate>533</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.milkneko.apps.utility.water.model.SeasonalConnectionPayment</entity-name>
-		<entity-width>191</entity-width>
-		<entity-height>146</entity-height>
-		<entity-X-Coordinate>1260</entity-X-Coordinate>
-		<entity-Y-Coordinate>515</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.milkneko.apps.utility.water.model.SeasonEntry</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>146</entity-height>
-		<entity-X-Coordinate>320</entity-X-Coordinate>
-		<entity-Y-Coordinate>491</entity-Y-Coordinate>
+		<entity-X-Coordinate>731</entity-X-Coordinate>
+		<entity-Y-Coordinate>611</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -104,6 +93,39 @@
 		<entity-height>146</entity-height>
 		<entity-X-Coordinate>38</entity-X-Coordinate>
 		<entity-Y-Coordinate>243</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.milkneko.apps.utility.water.model.Config</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>30</entity-X-Coordinate>
+		<entity-Y-Coordinate>768</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.milkneko.apps.utility.water.model.Customer</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>166</entity-height>
+		<entity-X-Coordinate>30</entity-X-Coordinate>
+		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.milkneko.apps.utility.water.model.SeasonEntry</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>128</entity-height>
+		<entity-X-Coordinate>781</entity-X-Coordinate>
+		<entity-Y-Coordinate>331</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

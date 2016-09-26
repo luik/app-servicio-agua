@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import java.sql.Date;
 import java.util.Collection;
+import com.milkneko.apps.utility.water.model.ServiceShutOff;
 
 @Entity
 public class Connection {
@@ -34,6 +35,8 @@ public class Connection {
 
     @OneToMany(mappedBy = "connection", fetch = FetchType.LAZY)
     private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
+	@OneToOne
+	private ServiceShutOff serviceShutOff;
 
     public Connection() {
     }
@@ -137,4 +140,12 @@ public class Connection {
     public void setMeasureStamps(Collection<MeasureStamp> measureStamps) {
         this.measureStamps = measureStamps;
     }
+
+	public ServiceShutOff getServiceShutOff() {
+	    return serviceShutOff;
+	}
+
+	public void setServiceShutOff(ServiceShutOff param) {
+	    this.serviceShutOff = param;
+	}
 }

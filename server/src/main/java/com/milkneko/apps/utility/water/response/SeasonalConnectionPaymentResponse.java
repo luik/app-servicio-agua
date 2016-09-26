@@ -9,12 +9,12 @@ public class SeasonalConnectionPaymentResponse {
     public static SeasonalConnectionPaymentResponse createFrom(SeasonalConnectionDebt seasonalConnectionDebt){
 
         float m3price = seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(
-                seasonalConnectionDebt.getFinalMeasureStamp().getValue() - seasonalConnectionDebt.getInitialMeasureStamp().getValue()
+                seasonalConnectionDebt.getMeasureStamp().getValue() - seasonalConnectionDebt.getMeasureStamp().getPrevMeasureStamp().getValue()
         );
 
         return new SeasonalConnectionPaymentResponse(seasonalConnectionDebt.getSeasonalConnectionPayment().getId(),
                 seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
-                seasonalConnectionDebt.getInitialMeasureStamp().getValue(), seasonalConnectionDebt.getFinalMeasureStamp().getValue(),
+                seasonalConnectionDebt.getMeasureStamp().getPrevMeasureStamp().getValue(), seasonalConnectionDebt.getMeasureStamp().getValue(),
                 seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
                 m3price, seasonalConnectionDebt.getSeasonalConnectionPayment().getDate());
     }

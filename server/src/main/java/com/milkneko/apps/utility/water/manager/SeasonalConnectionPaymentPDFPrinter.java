@@ -65,10 +65,10 @@ public class SeasonalConnectionPaymentPDFPrinter {
             String paymentId = Integer.toString(seasonalConnectionPayment.getId());
             String paymentDate = dateFormat.format(seasonalConnectionPayment.getDate());
 
-            String prevMeasurementValue = String.format("%.2f", seasonalConnectionPayment.getSeasonalConnectionDebt().getInitialMeasureStamp().getValue());
-            String prevMeasurementDate = dateFormat.format(seasonalConnectionPayment.getSeasonalConnectionDebt().getInitialMeasureStamp().getDate());
-            String finalMeasurementValue = String.format("%.2f", seasonalConnectionPayment.getSeasonalConnectionDebt().getFinalMeasureStamp().getValue());
-            String finalMeasurementDate = dateFormat.format(seasonalConnectionPayment.getSeasonalConnectionDebt().getFinalMeasureStamp().getDate());
+            String prevMeasurementValue = String.format("%.2f", seasonalConnectionPayment.getSeasonalConnectionDebt().getMeasureStamp().getPrevMeasureStamp().getValue());
+            String prevMeasurementDate = dateFormat.format(seasonalConnectionPayment.getSeasonalConnectionDebt().getMeasureStamp().getPrevMeasureStamp().getDate());
+            String finalMeasurementValue = String.format("%.2f", seasonalConnectionPayment.getSeasonalConnectionDebt().getMeasureStamp().getValue());
+            String finalMeasurementDate = dateFormat.format(seasonalConnectionPayment.getSeasonalConnectionDebt().getMeasureStamp().getDate());
 
             String measuresDelta = String.format("%.2f", seasonalConnectionDebtResponse.getDeltaMeasurements());
             String codeService = "001";

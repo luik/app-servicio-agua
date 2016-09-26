@@ -7,7 +7,7 @@ import java.sql.Date;
 public class MeasureStampResponse {
 
     public static MeasureStampResponse createFrom(MeasureStamp measureStamp, MeasureStamp prevMeasureStamp){
-
+/*
         int prevSeasonalConnectionDebtId = 0;
         if(measureStamp.getPrevSeasonalConnectionDebt() != null){
             prevSeasonalConnectionDebtId = measureStamp.getPrevSeasonalConnectionDebt().getId();
@@ -21,14 +21,14 @@ public class MeasureStampResponse {
         if(prevMeasureStamp != null){
             lastMeasureValue = prevMeasureStamp.getValue();
         }
-
+*/
         return new MeasureStampResponse(measureStamp.getId(), measureStamp.getDate(), measureStamp.getValue(),
                 measureStamp.getConnection().getId(), measureStamp.getRegister().getRegisterId(),
-                prevSeasonalConnectionDebtId,
-                currentSeasonalConnectionDebtId,
+                //prevSeasonalConnectionDebtId,
+                //currentSeasonalConnectionDebtId,
                 measureStamp.getConnection().getCustomer().getName(), measureStamp.getConnection().getZone().getName(),
                 measureStamp.getConnection().getAddress(), measureStamp.getValue(), false,
-                lastMeasureValue
+                prevMeasureStamp.getValue()
         );
     }
 
@@ -37,8 +37,8 @@ public class MeasureStampResponse {
     private float value;
     private int connectionID;
     private String registerID;
-    private int previousSeasonalConnectionDebtId;
-    private int currentSeasonalConnectionDebtId;
+    //private int previousSeasonalConnectionDebtId;
+    //private int currentSeasonalConnectionDebtId;
     private String customerName;
     private String zoneName;
     private String address;
@@ -50,7 +50,7 @@ public class MeasureStampResponse {
     }
 
     public MeasureStampResponse(int id, Date date, float value, int connectionID, String registerID,
-    		                    int previousSeasonalConnectionDebtId, int currentSeasonalConnectionDebtId,
+    		                    //int previousSeasonalConnectionDebtId, int currentSeasonalConnectionDebtId,
                                 String customerName, String zoneName, String address, float modifiedValue, boolean pending,
                                 float prevValue ) {
         this.id = id;
@@ -58,8 +58,8 @@ public class MeasureStampResponse {
         this.value = value;
         this.connectionID = connectionID;
         this.registerID = registerID;
-        this.previousSeasonalConnectionDebtId = previousSeasonalConnectionDebtId;
-        this.currentSeasonalConnectionDebtId = currentSeasonalConnectionDebtId;
+        //this.previousSeasonalConnectionDebtId = previousSeasonalConnectionDebtId;
+        //this.currentSeasonalConnectionDebtId = currentSeasonalConnectionDebtId;
         this.customerName = customerName;
         this.zoneName = zoneName;
         this.address = address;
@@ -151,12 +151,13 @@ public class MeasureStampResponse {
     public void setPending(boolean pending) {
         this.pending = pending;
     }
-
-    public int getPreviousSeasonalConnectionDebtId() {
-        return previousSeasonalConnectionDebtId;
-    }
-
-    public int getCurrentSeasonalConnectionDebtId() {
-        return currentSeasonalConnectionDebtId;
-    }
+//
+//    public int getPreviousSeasonalConnectionDebtId() {
+//        return previousSeasonalConnectionDebtId;
+//    }
+//
+//    public int getCurrentSeasonalConnectionDebtId() {
+//        return currentSeasonalConnectionDebtId;
+//    }
+//
 }

@@ -3,6 +3,7 @@ package com.milkneko.apps.utility.water.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import com.milkneko.apps.utility.water.model.MeasureStamp;
 
 @Entity
 public class SeasonEntry implements Serializable{
@@ -15,6 +16,9 @@ public class SeasonEntry implements Serializable{
 
     @OneToMany(mappedBy = "seasonEntry", fetch = FetchType.LAZY)
     private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
+
+	@OneToMany(mappedBy = "seasonEntry", fetch = FetchType.LAZY)
+	private Collection<MeasureStamp> measureStamp;
 
     public SeasonEntry(){
     }
@@ -42,4 +46,12 @@ public class SeasonEntry implements Serializable{
     public void setSeasonalConnectionDebts(Collection<SeasonalConnectionDebt> seasonalConnectionDebts) {
         this.seasonalConnectionDebts = seasonalConnectionDebts;
     }
+
+	public Collection<MeasureStamp> getMeasureStamp() {
+	    return measureStamp;
+	}
+
+	public void setMeasureStamp(Collection<MeasureStamp> param) {
+	    this.measureStamp = param;
+	}
 }
