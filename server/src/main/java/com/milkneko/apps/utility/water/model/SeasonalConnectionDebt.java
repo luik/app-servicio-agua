@@ -29,7 +29,10 @@ public class SeasonalConnectionDebt {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private SeasonEntry seasonEntry;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne
+	private SeasonalConnectionDebt prevSeasonalConnectionDebt;
+
+	@OneToOne(mappedBy = "seasonalConnectionDebt")
 	private ServiceShutOff serviceShutOff;
 
 	public SeasonalConnectionDebt() {
@@ -89,6 +92,26 @@ public class SeasonalConnectionDebt {
 
 	public void setSeasonEntry(SeasonEntry seasonEntry) {
 		this.seasonEntry = seasonEntry;
+	}
+
+	public SeasonalConnectionDebt getPrevSeasonalConnectionDebt() {
+	    return prevSeasonalConnectionDebt;
+	}
+
+	public void setPrevSeasonalConnectionDebt(SeasonalConnectionDebt seasonalConnectionDebt) {
+		if(seasonalConnectionDebt.getIssuedDay().compareTo(issuedDay) >= 0){
+			throw new VerifyError("SeasonalConnectionDebt: Previous seasonal connection debt date must be lower than its date");
+		}
+
+	    this.prevSeasonalConnectionDebt = seasonalConnectionDebt;
+	}
+
+	public ServiceShutOff getServiceShutOff() {
+	    return serviceShutOff;
+	}
+
+	public void setServiceShutOff(ServiceShutOff param) {
+	    this.serviceShutOff = param;
 	}
 
 }

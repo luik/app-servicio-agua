@@ -3,6 +3,7 @@ package com.milkneko.apps.utility.water.response;
 import java.sql.Date;
 
 import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
+import com.milkneko.apps.utility.water.util.SeasonsUtil;
 
 public class SeasonalConnectionPaymentResponse {
 
@@ -16,6 +17,7 @@ public class SeasonalConnectionPaymentResponse {
                 seasonalConnectionDebt.getId(), seasonalConnectionDebt.getConnection().getId(), seasonalConnectionDebt.getIssuedDay(),
                 seasonalConnectionDebt.getMeasureStamp().getPrevMeasureStamp().getValue(), seasonalConnectionDebt.getMeasureStamp().getValue(),
                 seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
+                SeasonsUtil.getMonthName(seasonalConnectionDebt.getSeasonEntry().getMonth()),
                 m3price, seasonalConnectionDebt.getSeasonalConnectionPayment().getDate());
     }
 
@@ -28,13 +30,14 @@ public class SeasonalConnectionPaymentResponse {
     private float finalMeasurementValue;
     private int seasonYear;
     private int seasonMonth;
+    private String seasonMonthName;
     private float priceM3;
 
     public SeasonalConnectionPaymentResponse() {
     }
 
     public SeasonalConnectionPaymentResponse(int id, int seasonalConnectionDebtId, int connectionId, Date issuedDate, float initialMeasurementValue,
-                                             float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3, Date paymentDate) {
+                                             float finalMeasurementValue, int seasonYear, int seasonMonth, String seasonMonthName, float priceM3, Date paymentDate) {
         this.id = id;
         this.seasonalConnectionDebtId = seasonalConnectionDebtId;
     	this.connectionId = connectionId;
@@ -44,6 +47,7 @@ public class SeasonalConnectionPaymentResponse {
         this.finalMeasurementValue = finalMeasurementValue;
         this.seasonYear = seasonYear;
         this.seasonMonth = seasonMonth;
+        this.seasonMonthName = seasonMonthName;
         this.priceM3 = priceM3;
     }
 
@@ -113,6 +117,14 @@ public class SeasonalConnectionPaymentResponse {
 
     public void setSeasonMonth(int seasonMonth) {
         this.seasonMonth = seasonMonth;
+    }
+
+    public String getSeasonMonthName() {
+        return seasonMonthName;
+    }
+
+    public void setSeasonMonthName(String seasonMonthName) {
+        this.seasonMonthName = seasonMonthName;
     }
 
     public float getPriceM3() {

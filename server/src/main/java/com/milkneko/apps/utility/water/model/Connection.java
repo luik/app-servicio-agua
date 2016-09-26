@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import java.sql.Date;
 import java.util.Collection;
-import com.milkneko.apps.utility.water.model.ServiceShutOff;
 
 @Entity
 public class Connection {
@@ -37,6 +36,11 @@ public class Connection {
     private Collection<SeasonalConnectionDebt> seasonalConnectionDebts;
 	@OneToOne
 	private ServiceShutOff serviceShutOff;
+	@OneToOne(fetch =  FetchType.LAZY)
+	private SeasonalConnectionPayment lastSeasonalConnectionPayment;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	private SeasonalConnectionDebt lastSeasonalConnectionDebt;
 
     public Connection() {
     }
@@ -147,5 +151,29 @@ public class Connection {
 
 	public void setServiceShutOff(ServiceShutOff param) {
 	    this.serviceShutOff = param;
+	}
+
+	public SeasonalConnectionPayment getLastSeasonalConnectionPayment() {
+	    return lastSeasonalConnectionPayment;
+	}
+
+	public void setLastSeasonalConnectionPayment(SeasonalConnectionPayment seasonalConnectionPayment) {
+        if(lastSeasonalConnectionPayment != null && lastSeasonalConnectionPayment.getDate().compareTo(seasonalConnectionPayment.getDate()) > 0){
+            throw new VerifyError("Connection: Last seasonal connection payment date must be upper than the current");
+        }
+
+	    this.lastSeasonalConnectionPayment = seasonalConnectionPayment;
+	}
+
+	public SeasonalConnectionDebt getLastSeasonalConnectionDebt() {
+	    return lastSeasonalConnectionDebt;
+	}
+
+	public void setLastSeasonalConnectionDebt(SeasonalConnectionDebt seasonalConnectionDebt) {
+        if(lastSeasonalConnectionDebt != null && lastSeasonalConnectionDebt.getIssuedDay().compareTo(seasonalConnectionDebt.getIssuedDay()) > 0){
+            throw new VerifyError("Connection: Last seasonal connection debt date must be upper than the current");
+        }
+
+	    this.lastSeasonalConnectionDebt = seasonalConnectionDebt;
 	}
 }

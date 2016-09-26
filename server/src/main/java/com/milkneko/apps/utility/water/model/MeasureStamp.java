@@ -84,8 +84,12 @@ public class MeasureStamp {
 	    return prevMeasureStamp;
 	}
 
-	public void setPrevMeasureStamp(MeasureStamp param) {
-	    this.prevMeasureStamp = param;
+	public void setPrevMeasureStamp(MeasureStamp measureStamp) {
+        if(measureStamp.getDate().compareTo(date) >= 0){
+            throw new VerifyError("MeasureStamp: Previous measure stamp date must be lower than its date");
+        }
+
+	    this.prevMeasureStamp = measureStamp;
 	}
 
 	public SeasonEntry getSeasonEntry() {

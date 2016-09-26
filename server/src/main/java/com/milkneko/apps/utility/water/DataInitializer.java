@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
+import com.milkneko.apps.utility.water.manager.SeasonalConnectionPaymentManager;
 import com.milkneko.apps.utility.water.model.*;
 import com.milkneko.apps.utility.water.util.SeasonsUtil;
 import org.apache.poi.ss.usermodel.*;
@@ -42,7 +43,7 @@ public class DataInitializer{
     @Autowired
     private ConfigRepository configRepository;
     @Autowired
-    private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
+    private SeasonalConnectionPaymentManager seasonalConnectionPaymentManager;
 
     @Transactional
     public void initialize()throws Exception{
@@ -96,10 +97,12 @@ public class DataInitializer{
         // day of payment is between 20 and + [0, 20)
         for (SeasonalConnectionDebt seasonalConnectionDebt: seasonEntry.getSeasonalConnectionDebts()) {
             if(Math.random() < 0.95){
-                SeasonalConnectionPayment seasonalConnectionPayment = new SeasonalConnectionPayment(
+
+                seasonalConnectionPaymentManager.create(
+                        seasonalConnectionDebt,
                         Date.valueOf(LocalDate.of(seasonEntryKey.getYear(), seasonEntryKey.getMonth(), 1).plusDays((int)(20 + 20*Math.random()))));
-                seasonalConnectionPayment.setSeasonalConnectionDebt(seasonalConnectionDebt);
-                seasonalConnectionPaymentRepository.save(seasonalConnectionPayment);
+
+
             }
         }
     }

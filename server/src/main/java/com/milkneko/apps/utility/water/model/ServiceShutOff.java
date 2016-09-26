@@ -1,10 +1,8 @@
 package com.milkneko.apps.utility.water.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.Collection;
-
-import javax.persistence.*;
 
 @Entity
 public class ServiceShutOff implements Serializable {
@@ -17,6 +15,7 @@ public class ServiceShutOff implements Serializable {
 	private Date executedDate;
 	private Date date;
 	private float debt;
+	private Date debtDate;
 
 	@OneToOne(mappedBy = "serviceShutOff", fetch = FetchType.LAZY)
 	private Connection connection;
@@ -24,19 +23,17 @@ public class ServiceShutOff implements Serializable {
 	@OneToOne(mappedBy = "serviceShutOff", fetch = FetchType.LAZY)
 	private ServiceShutOn serviceShutOn;
 
-	@OneToMany(mappedBy = "serviceShutOff", fetch = FetchType.LAZY)
-	private Collection<SeasonalConnectionDebt> seasonalConnectionDebt;
+	@OneToOne
+	private SeasonalConnectionDebt seasonalConnectionDebt;
 
 	public ServiceShutOff() {
 	}
 
-	public ServiceShutOff(Date executedDate, Date date, float debt, Connection connection, ServiceShutOn serviceShutOn, Collection<SeasonalConnectionDebt> seasonalConnectionDebt) {
+	public ServiceShutOff(Date executedDate, Date date, float debt, Date debtDate) {
 		this.executedDate = executedDate;
 		this.date = date;
 		this.debt = debt;
-		this.connection = connection;
-		this.serviceShutOn = serviceShutOn;
-		this.seasonalConnectionDebt = seasonalConnectionDebt;
+		this.debtDate = debtDate;
 	}
 
 	public long getId() {
@@ -53,14 +50,6 @@ public class ServiceShutOff implements Serializable {
 
 	public void setConnection(Connection param) {
 		this.connection = param;
-	}
-
-	public Collection<SeasonalConnectionDebt> getSeasonalConnectionDebt() {
-		return seasonalConnectionDebt;
-	}
-
-	public void setSeasonalConnectionDebt(Collection<SeasonalConnectionDebt> param) {
-		this.seasonalConnectionDebt = param;
 	}
 
 	public ServiceShutOn getServiceShutOn() {
@@ -93,6 +82,22 @@ public class ServiceShutOff implements Serializable {
 
 	public void setDebt(float param) {
 		this.debt = param;
+	}
+
+	public Date getDebtDate() {
+		return debtDate;
+	}
+
+	public void setDebtDate(Date param) {
+		this.debtDate = param;
+	}
+
+	public SeasonalConnectionDebt getSeasonalConnectionDebt() {
+	    return seasonalConnectionDebt;
+	}
+
+	public void setSeasonalConnectionDebt(SeasonalConnectionDebt param) {
+	    this.seasonalConnectionDebt = param;
 	}
 
 }

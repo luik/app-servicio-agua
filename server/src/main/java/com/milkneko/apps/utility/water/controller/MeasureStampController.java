@@ -37,7 +37,8 @@ public class MeasureStampController {
     @RequestMapping(value = "ws/connection/get-measure-stamps", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<MeasureStampResponse>> getMeasureStampsByConnection(@RequestBody ConnectionResponse connectionResponse){
 
-        List<MeasureStampResponse> measureStampResponses = measureStampRepository.findAllByConnectionId(connectionResponse.getId()).stream().map(
+        List<MeasureStampResponse> measureStampResponses = measureStampRepository.findAllByConnectionId(connectionResponse.getId()).stream().
+        filter(measureStamp -> measureStamp.getSeasonEntry() != null).map(
                 measureStamp -> MeasureStampResponse.createFrom(measureStamp)).collect(Collectors.toList());
 
         return new ResponseEntity<List<MeasureStampResponse>>(measureStampResponses, HttpStatus.OK);

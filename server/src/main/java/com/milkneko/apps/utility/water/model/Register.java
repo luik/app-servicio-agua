@@ -68,7 +68,11 @@ public class Register {
 	    return lastMeasureStamp;
 	}
 
-	public void setLastMeasureStamp(MeasureStamp param) {
-	    this.lastMeasureStamp = param;
+	public void setLastMeasureStamp(MeasureStamp measureStamp) {
+        if(this.lastMeasureStamp != null && this.lastMeasureStamp.getDate().compareTo(measureStamp.getDate()) >= 0){
+            throw new VerifyError("Register: Previous measure stamp date must be lower than its date");
+        }
+
+	    this.lastMeasureStamp = measureStamp;
 	}
 }

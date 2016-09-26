@@ -1,9 +1,6 @@
 package com.milkneko.apps.utility.water;
 
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtExcelPrinter;
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtPDFPrinter;
-import com.milkneko.apps.utility.water.manager.SeasonalConnectionPaymentPDFPrinter;
+import com.milkneko.apps.utility.water.manager.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,13 +12,17 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
     @Autowired
     private DataInitializer dataInitializer;
     @Autowired
-    SeasonalConnectionDebtManager seasonalConnectionDebtManager;
+    private SeasonalConnectionDebtManager seasonalConnectionDebtManager;
     @Autowired
-    SeasonalConnectionDebtPDFPrinter seasonalConnectionDebtPDFPrinter;
+    private SeasonalConnectionDebtPDFPrinter seasonalConnectionDebtPDFPrinter;
     @Autowired
-    SeasonalConnectionPaymentPDFPrinter seasonalConnectionPaymentPDFPrinter;
+    private SeasonalConnectionPaymentPDFPrinter seasonalConnectionPaymentPDFPrinter;
     @Autowired
-    SeasonalConnectionDebtExcelPrinter seasonalConnectionDebtExcelPrinter;
+    private SeasonalConnectionDebtExcelPrinter seasonalConnectionDebtExcelPrinter;
+    @Autowired
+    private ServiceShutOffManager serviceShutOffManager;
+    @Autowired
+    private SeasonalConnectionPaymentManager seasonalConnectionPaymentManager;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WaterUtilityManagmentApplication.class, args);

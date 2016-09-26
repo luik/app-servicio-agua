@@ -16,7 +16,7 @@
     <p-column field="seasonalConnectionDebtId" header="Código de recibo"></p-column>
     <p-column field="paymentDate" header="Día de cancelación"></p-column>
     <p-column field="seasonYear" header="Año"></p-column>
-    <p-column field="seasonMonth" header="Mes"></p-column>
+    <p-column field="seasonMonthName" header="Mes"></p-column>
     <p-column field="priceM3" header="Precio M3">
         <template pTemplate let-col let-seasonalconnectiondebt="rowData">
             <span>{{seasonalconnectiondebt[col.field].toFixed(2)}}</span>

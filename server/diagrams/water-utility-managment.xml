@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
 		<entity-name>com.milkneko.apps.utility.water.model.MeasureStamp</entity-name>
-		<entity-width>196</entity-width>
+		<entity-width>322</entity-width>
 		<entity-height>246</entity-height>
-		<entity-X-Coordinate>1265</entity-X-Coordinate>
-		<entity-Y-Coordinate>186</entity-Y-Coordinate>
+		<entity-X-Coordinate>1269</entity-X-Coordinate>
+		<entity-Y-Coordinate>40</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -14,8 +14,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.SeasonalConnectionPayment</entity-name>
 		<entity-width>191</entity-width>
 		<entity-height>146</entity-height>
-		<entity-X-Coordinate>1267</entity-X-Coordinate>
-		<entity-Y-Coordinate>611</entity-Y-Coordinate>
+		<entity-X-Coordinate>460</entity-X-Coordinate>
+		<entity-Y-Coordinate>691</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -25,8 +25,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.Register</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>206</entity-height>
-		<entity-X-Coordinate>730</entity-X-Coordinate>
-		<entity-Y-Coordinate>10</entity-Y-Coordinate>
+		<entity-X-Coordinate>731</entity-X-Coordinate>
+		<entity-Y-Coordinate>0</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -46,9 +46,9 @@
 	<entity>
 		<entity-name>com.milkneko.apps.utility.water.model.ServiceShutOff</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>226</entity-height>
+		<entity-height>246</entity-height>
 		<entity-X-Coordinate>210</entity-X-Coordinate>
-		<entity-Y-Coordinate>730</entity-Y-Coordinate>
+		<entity-Y-Coordinate>802</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -58,8 +58,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.ServiceShutOn</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>166</entity-height>
-		<entity-X-Coordinate>595</entity-X-Coordinate>
-		<entity-Y-Coordinate>837</entity-Y-Coordinate>
+		<entity-X-Coordinate>809</entity-X-Coordinate>
+		<entity-Y-Coordinate>1000</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -67,8 +67,8 @@
 
 	<entity>
 		<entity-name>com.milkneko.apps.utility.water.model.Connection</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>346</entity-height>
+		<entity-width>189</entity-width>
+		<entity-height>386</entity-height>
 		<entity-X-Coordinate>371</entity-X-Coordinate>
 		<entity-Y-Coordinate>87</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -79,9 +79,9 @@
 	<entity>
 		<entity-name>com.milkneko.apps.utility.water.model.SeasonalConnectionDebt</entity-name>
 		<entity-width>250</entity-width>
-		<entity-height>246</entity-height>
-		<entity-X-Coordinate>731</entity-X-Coordinate>
-		<entity-Y-Coordinate>611</entity-Y-Coordinate>
+		<entity-height>266</entity-height>
+		<entity-X-Coordinate>1042</entity-X-Coordinate>
+		<entity-Y-Coordinate>699</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -124,8 +124,8 @@
 		<entity-name>com.milkneko.apps.utility.water.model.SeasonEntry</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>128</entity-height>
-		<entity-X-Coordinate>781</entity-X-Coordinate>
-		<entity-Y-Coordinate>331</entity-Y-Coordinate>
+		<entity-X-Coordinate>854</entity-X-Coordinate>
+		<entity-Y-Coordinate>325</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
