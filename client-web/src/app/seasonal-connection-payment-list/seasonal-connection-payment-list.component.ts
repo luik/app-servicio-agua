@@ -37,7 +37,7 @@ export class SeasonalConnectionPaymentList implements OnInit {
             {label: "Recibos PDF", icon: "fa-file-excel-o", command: event => {
                     window.open(ConfigApp.WS_HOST + "/ws/" + this.route.snapshot.params["by"] + "/get-seasonal-connection-payments/pdf/" + this.route.snapshot.params["id"]);
                 }},
-            {label: "Reporte Excel", icon: "fa-file-word-o"}
+            //{label: "Reporte Excel", icon: "fa-file-word-o"}
         ];
     }
 

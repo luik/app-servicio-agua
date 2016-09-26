@@ -12,6 +12,7 @@ export interface ISeasonalConnectionDebt{
     finalMeasurementValue: number;
     seasonYear: number;
     seasonMonth: number;
+    seasonMonthName: string;
     priceM3: number;
     debtValue: number;
     totalDebtValue: number;

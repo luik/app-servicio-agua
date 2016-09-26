@@ -41,6 +41,8 @@ public class DataInitializer{
     private SeasonalConnectionDebtManager seasonalConnectionDebtManager;
     @Autowired
     private ConfigRepository configRepository;
+    @Autowired
+    private SeasonalConnectionPaymentRepository seasonalConnectionPaymentRepository;
 
     @Transactional
     public void initialize()throws Exception{
@@ -88,8 +90,17 @@ public class DataInitializer{
 
     @Transactional
     public void generateSeasonalConnectionPayments(int seasonIdx){
-        for(int i = 1; i < 9; i++) {
-            System.out.println("Generating payments for " + i);
+        SeasonEntryKey seasonEntryKey = SeasonsUtil.createSeasonEntryKey(seasonIdx);
+        SeasonEntry seasonEntry = seasonEntryRepository.findOne(seasonEntryKey);
+        // 95% probability that the debt is paid out
+        // day of payment is between 20 and + [0, 20)
+        for (SeasonalConnectionDebt seasonalConnectionDebt: seasonEntry.getSeasonalConnectionDebts()) {
+            if(Math.random() < 0.95){
+                SeasonalConnectionPayment seasonalConnectionPayment = new SeasonalConnectionPayment(
+                        Date.valueOf(LocalDate.of(seasonEntryKey.getYear(), seasonEntryKey.getMonth(), 1).plusDays((int)(20 + 20*Math.random()))));
+                seasonalConnectionPayment.setSeasonalConnectionDebt(seasonalConnectionDebt);
+                seasonalConnectionPaymentRepository.save(seasonalConnectionPayment);
+            }
         }
     }
 
@@ -165,6 +176,8 @@ public class DataInitializer{
         connectionTypeRepository.save(connectionType4);
 
         ConnectionType[] connectionTypes = new ConnectionType[]{connectionType1, connectionType2, connectionType3, connectionType4};
+
+        int count = 0;
 
         for(int i = 0; i < numberOfSheets; i++)
         {
@@ -244,6 +257,11 @@ public class DataInitializer{
                 measureStamp.setConnection(connection);
                 measureStamp.setRegister(register);
                 measureStampRepository.save(measureStamp);
+
+                count++;
+                if(count > 50){
+                    break;
+                }
             }
 
             System.out.println(zoneName);

@@ -1,6 +1,7 @@
 package com.milkneko.apps.utility.water.response;
 
 import com.milkneko.apps.utility.water.model.SeasonalConnectionDebt;
+import com.milkneko.apps.utility.water.util.SeasonsUtil;
 
 import java.sql.Date;
 
@@ -20,6 +21,7 @@ public class SeasonalConnectionDebtResponse {
                 seasonalConnectionDebt.getMeasureStamp().getPrevMeasureStamp().getDate(), seasonalConnectionDebtInitialMeasurementValue,
                 seasonalConnectionDebt.getMeasureStamp().getDate(),  seasonalConnectionDebt.getMeasureStamp().getValue(),
                 seasonalConnectionDebt.getSeasonEntry().getYear(), seasonalConnectionDebt.getSeasonEntry().getMonth(),
+                SeasonsUtil.getMonthName(seasonalConnectionDebt.getSeasonEntry().getMonth()),
                 m3price, seasonalConnectionDebt.getSeasonalConnectionPayment() != null ? seasonalConnectionDebt.getSeasonalConnectionPayment().getId() : -1,
                 seasonalConnectionDebt.getSeasonalConnectionPayment() != null ? seasonalConnectionDebt.getSeasonalConnectionPayment().getDate() : null,
                 seasonalConnectionDebt.getConnection().getConnectionType().getPriceM3Of(seasonalConnectionDebt.getMeasureStamp().getValue() - seasonalConnectionDebt.getMeasureStamp().getPrevMeasureStamp().getValue()),
@@ -40,6 +42,7 @@ public class SeasonalConnectionDebtResponse {
     private float finalMeasurementValue;
     private int seasonYear;
     private int seasonMonth;
+    private String seasonMonthName;
     private float priceM3;
     private float waterServicePrice;
     private float drainPrice;
@@ -52,7 +55,8 @@ public class SeasonalConnectionDebtResponse {
 
     public SeasonalConnectionDebtResponse(int id, int connectionId, Date issuedDate, Date dueDate,
                                           Date initialMeasurementDate, float initialMeasurementValue,
-                                          Date finalMeasurementDate, float finalMeasurementValue, int seasonYear, int seasonMonth, float priceM3,
+                                          Date finalMeasurementDate, float finalMeasurementValue, int seasonYear,
+                                          int seasonMonth, String seasonMonthName, float priceM3,
                                           int seasonalConnectionPaymentId, Date seasonalConnectionPaymentDate,
                                           float waterServicePrice, float drainPrice,
                                           float fixedCharge, float connectionCharge) {
@@ -66,6 +70,7 @@ public class SeasonalConnectionDebtResponse {
         this.finalMeasurementValue = finalMeasurementValue;
         this.seasonYear = seasonYear;
         this.seasonMonth = seasonMonth;
+        this.seasonMonthName = seasonMonthName;
         this.priceM3 = priceM3;
         this.seasonalConnectionPaymentId = seasonalConnectionPaymentId;
         this.seasonalConnectionPaymentDate = seasonalConnectionPaymentDate;
@@ -149,6 +154,14 @@ public class SeasonalConnectionDebtResponse {
 
     public void setSeasonMonth(int seasonMonth) {
         this.seasonMonth = seasonMonth;
+    }
+
+    public String getSeasonMonthName() {
+        return seasonMonthName;
+    }
+
+    public void setSeasonMonthName(String seasonMonthName) {
+        this.seasonMonthName = seasonMonthName;
     }
 
     public float getPriceM3() {

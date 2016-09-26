@@ -12,9 +12,19 @@
 >
     <p-column field="id" header="ID"></p-column>
     <p-column field="connectionId" header="Conexión ID" [filter]="true" filterMatchMode="contains"></p-column>
-    <p-column field="issuedDate" header="Emitido"></p-column>
+    <p-column field="issuedDate" header="Fecha emisión"></p-column>
     <p-column field="seasonYear" header="Año"></p-column>
-    <p-column field="seasonMonth" header="Mes"></p-column>
+    <p-column field="seasonMonthName" header="Mes"></p-column>
+    <p-column field="seasonalConnectionPaymentId" header="Codigó pago">
+        <template pTemplate let-col let-seasonalconnectiondebt="rowData">
+            <span>{{seasonalconnectiondebt[col.field] != -1? seasonalconnectiondebt[col.field] : "NC"}}</span>
+        </template>
+    </p-column>
+    <p-column field="seasonalConnectionPaymentDate" header="Fecha pago">
+        <template pTemplate let-col let-seasonalconnectiondebt="rowData">
+            <span>{{seasonalconnectiondebt[col.field] != null? seasonalconnectiondebt[col.field] : "NC"}}</span>
+        </template>
+    </p-column>
     <p-column field="priceM3" header="Precio M3">
         <template pTemplate let-col let-seasonalconnectiondebt="rowData">
             <span>{{seasonalconnectiondebt[col.field].toFixed(3)}}</span>

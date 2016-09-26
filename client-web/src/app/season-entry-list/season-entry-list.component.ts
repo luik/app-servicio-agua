@@ -57,12 +57,14 @@ export class SeasonEntryListComponent implements OnInit {
         this.items = [
                     {label: "Medidas", icon: "fa-search"},
                     {label: "Cobros", icon: "fa-search"},
+                    {label: "Pagos", icon: "fa-search"},
                     {label: "Generar cobros", icon: "fa-gear"}
                 ];
 
         this.items[0].routerLink = ["/measure-stamps/season/" + this.seasonEntry.id];
         this.items[1].routerLink = ["/seasonal-connection-debts/season/" + this.seasonEntry.id];
-        this.items[2].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
+        this.items[2].routerLink = ["/seasonal-connection-payments/season/" + this.seasonEntry.id];
+        this.items[3].command = (event) => this.onGenerateSeasonalConnectionDebts(event);
     }
 
     onGenerateSeasonalConnectionDebts(event){

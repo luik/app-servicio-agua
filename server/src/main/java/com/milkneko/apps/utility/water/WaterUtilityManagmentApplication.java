@@ -37,7 +37,7 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
 
             dataInitializer.generateSeasonalMeasurements(seasonEntryIdx);
             dataInitializer.generateSeasonalConnectionDebts(seasonEntryIdx);
-//            dataInitializer.generateSeasonalConnectionPayments(seasonEntryIdx);
+            dataInitializer.generateSeasonalConnectionPayments(seasonEntryIdx);
         }
 
     }
