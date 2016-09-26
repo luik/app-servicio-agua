@@ -28,6 +28,8 @@ import {ConnectionTypeListComponent} from "./connection-type-list/connection-typ
 import {ConnectionTypeService} from "./services/connection-type.service";
 import {ConfigListComponent} from "./config-list/config-list.component";
 import {ConfigService} from "./services/config.service";
+import {ServiceShutOffListComponent} from "./service-shut-off-list/service-shut-off-list.component";
+import {ServiceShutOffService} from "./services/service-shut-off.service";
 
 @NgModule({
     imports:      [routing, HttpModule, BrowserModule, FormsModule, HttpModule,
@@ -37,12 +39,12 @@ import {ConfigService} from "./services/config.service";
     declarations: [AppComponent, CustomerListComponent, ConnectionListComponent, WelcomeComponent,
         SeasonEntryListComponent, MeasureStampListComponent, SeasonalConnectionDebtList,
         SeasonalConnectionPaymentList, RegisterListComponent, ConnectionTypeListComponent,
-        ConfigListComponent
+        ConfigListComponent, ServiceShutOffListComponent
     ],
     bootstrap:    [AppComponent],
     providers:    [CustomerService, ConnectionService, RegisterService, ZoneService,
         SeasonEntryService, MeasureStampService, SeasonalConnectionDebtService, SeasonalConnectionPaymentService,
-        ConnectionTypeService, ConfigService
+        ConnectionTypeService, ConfigService, ServiceShutOffService
     ]
 })
 export class AppModule { }

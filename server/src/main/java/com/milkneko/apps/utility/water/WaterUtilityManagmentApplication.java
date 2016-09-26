@@ -41,5 +41,8 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
             dataInitializer.generateSeasonalConnectionPayments(seasonEntryIdx);
         }
 
+        System.out.println("Generating service shutoff");
+        dataInitializer.generateSeasonalConnectionShutoff();
+
     }
 }

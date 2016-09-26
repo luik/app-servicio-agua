@@ -1,0 +1,38 @@
+<div class="ui-widget-header ui-helper-clearfix" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="float:left;margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" style="float:left" placeholder="Filtro global">
+</div>
+<p-dataTable [value]="serviceShutOffs" [rows]="15" [paginator]="true"
+             [globalFilter]="gb" [(selection)]="selectedServiceShutOff" selectionMode="single"
+             emptyMessage="Registros no encontrados" (onRowSelect)="onRowSelect($event)"
+             [responsive]="true"
+>
+    <p-column field="id" header="ID"></p-column>
+    <p-column field="date" header="Fecha corte"></p-column>
+    <p-column field="debt" header="Deuda"></p-column>
+    <p-column field="debtDate" header="Fecha deuda"></p-column>
+    <p-column field="executedDate" header="Día de ejecución"></p-column>
+    <p-column field="seasonalConnectionId" header="Número recibo"></p-column>
+    <p-column field="connectionId" header="Número de conexión"></p-column>
+    <p-column field="customerName" header="Beneficiario"></p-column>
+    <p-column field="zoneName" header="Sector"></p-column>
+    <p-column field="address" header="Dirección"></p-column>
+</p-dataTable>
+
+<p-dialog header="Detalles medidor" [(visible)]="isDisplayingDialog" [responsive]="true" showEffect="fade" [modal]="true" width="500" [height]="250">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="register" >
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="registerID">Número medidor</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="registerID" [(ngModel)]="register.registerID" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="initialValue">Medida inicial</label></div>
+            <div class="ui-grid-col-8"><input pInputText id="initialValue" [(ngModel)]="register.initialValue" /></div>
+        </div>
+    </div>
+    <footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
+        </div>
+    </footer>
+</p-dialog>

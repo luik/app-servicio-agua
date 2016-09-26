@@ -52,6 +52,8 @@ public class SeasonalConnectionDebtManager{
 
             if(measureStamp.getConnection().getLastSeasonalConnectionDebt() != null) {
                 seasonalConnectionDebt.setPrevSeasonalConnectionDebt(measureStamp.getConnection().getLastSeasonalConnectionDebt());
+
+                seasonalConnectionDebt.getPrevSeasonalConnectionDebt().setNextSeasonalConnectionDebt(seasonalConnectionDebt);
             }
             measureStamp.getConnection().setLastSeasonalConnectionDebt(seasonalConnectionDebt);
 

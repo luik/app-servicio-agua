@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.milkneko.apps.utility.water.manager.SeasonalConnectionDebtManager;
 import com.milkneko.apps.utility.water.manager.SeasonalConnectionPaymentManager;
+import com.milkneko.apps.utility.water.manager.ServiceShutOffManager;
 import com.milkneko.apps.utility.water.model.*;
 import com.milkneko.apps.utility.water.util.SeasonsUtil;
 import org.apache.poi.ss.usermodel.*;
@@ -44,6 +45,8 @@ public class DataInitializer{
     private ConfigRepository configRepository;
     @Autowired
     private SeasonalConnectionPaymentManager seasonalConnectionPaymentManager;
+    @Autowired
+    private ServiceShutOffManager serviceShutOffManager;
 
     @Transactional
     public void initialize()throws Exception{
@@ -97,18 +100,26 @@ public class DataInitializer{
         // day of payment is between 20 and + [0, 20)
         for (SeasonalConnectionDebt seasonalConnectionDebt: seasonEntry.getSeasonalConnectionDebts()) {
             if(Math.random() < 0.95){
+                SeasonalConnectionDebt prevSeasonalConnectionDebt = seasonalConnectionDebt.getPrevSeasonalConnectionDebt();
+                Date paymentDate = Date.valueOf(LocalDate.of(seasonEntryKey.getYear(), seasonEntryKey.getMonth(), 1).plusDays((int) (20 + 20 * Math.random())));
+
+                // we need to enforce to pay previous debts
+                if(prevSeasonalConnectionDebt != null && prevSeasonalConnectionDebt.getSeasonalConnectionPayment() == null &&
+                        prevSeasonalConnectionDebt.getIssuedDay().compareTo(paymentDate) < 0
+                        ){
+                    continue;
+                }
 
                 seasonalConnectionPaymentManager.create(
                         seasonalConnectionDebt,
-                        Date.valueOf(LocalDate.of(seasonEntryKey.getYear(), seasonEntryKey.getMonth(), 1).plusDays((int)(20 + 20*Math.random()))));
-
-
+                        paymentDate);
             }
         }
     }
 
     @Transactional
-    public void generateSeasonalConnectionShutoff(int seasonIdx){
+    public void generateSeasonalConnectionShutoff(){
+        serviceShutOffManager.generateServiceShutOffs();
     }
 
     @Transactional

@@ -11,7 +11,7 @@ public class ServiceShutOff implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private int id;
 	private Date executedDate;
 	private Date date;
 	private float debt;
@@ -36,11 +36,11 @@ public class ServiceShutOff implements Serializable {
 		this.debtDate = debtDate;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
