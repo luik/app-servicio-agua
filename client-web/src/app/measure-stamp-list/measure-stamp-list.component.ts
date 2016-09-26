@@ -11,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 export class MeasureStampListComponent implements OnInit {
 
     measureStamps: IMeasureStamp[];
-    selectedMeasureStamp: IMeasureStamp;
+    selectedMeasureStamp: IMeasureStamp;1
 
     constructor(
         private measureStampService: MeasureStampService,

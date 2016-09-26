@@ -73,6 +73,7 @@ public class DataInitializer{
             measureStamp.setPrevMeasureStamp(lastMeasureStamp);
             measureStamp.setConnection(connection);
             measureStamp.setRegister(register);
+            register.setLastMeasureStamp(measureStamp);
             measureStampRepository.save(measureStamp);
         }
     }

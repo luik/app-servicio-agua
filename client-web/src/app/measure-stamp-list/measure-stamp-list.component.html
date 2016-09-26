@@ -15,7 +15,7 @@
     <p-column field="customerName" header="Beneficiario"></p-column>
     <p-column field="zoneName" header="Sector"></p-column>
     <p-column field="address" header="Dirección"></p-column>
-    <p-column field="currentSeasonalConnectionDebtId" header="Recibo">
+    <p-column field="seasonalConnectionDebtID" header="Recibo">
         <template pTemplate let-col let-measurestamp="rowData">
             <span>{{measurestamp[col.field] == 0? "N/C" : measurestamp[col.field] }}</span>
         </template>

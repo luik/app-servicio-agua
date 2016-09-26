@@ -4,6 +4,8 @@ export interface IMeasureStamp{
     value: number;
     connectionID: number;
     registerID: string;
+    seasonalConnectionDebtID: number;
+    seasonEntryID: number;
     customerName: string;
     zoneName: string;
     address: string;
