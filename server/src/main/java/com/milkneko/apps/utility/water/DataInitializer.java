@@ -58,7 +58,7 @@ public class DataInitializer{
         }
 
         initializeConfigData();
-        initializeTestRegisters();
+        //initializeTestRegisters();
         initializeSeasonEntries();
     }
 
@@ -272,10 +272,10 @@ public class DataInitializer{
                 measureStamp.setRegister(register);
                 measureStampRepository.save(measureStamp);
 
-                count++;
-                if(count > 50){
-                    break;
-                }
+//                count++;
+//                if(count > 50){
+//                    break;
+//                }
             }
 
             System.out.println(zoneName);

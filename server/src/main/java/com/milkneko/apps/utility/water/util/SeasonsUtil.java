@@ -1,5 +1,6 @@
 package com.milkneko.apps.utility.water.util;
 
+import com.milkneko.apps.utility.water.model.SeasonEntry;
 import com.milkneko.apps.utility.water.model.SeasonEntryKey;
 
 import java.sql.Date;
@@ -33,6 +34,10 @@ public class SeasonsUtil {
         int month = seasonIndex%12;
 
         return new SeasonEntryKey(year, month);
+    }
+
+    public static int getSeasonEntryIdx(SeasonEntry seasonEntry){
+        return seasonEntry.getYear()*12 + seasonEntry.getMonth();
     }
 
     public static String getMonthName(int _idx){

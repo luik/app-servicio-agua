@@ -23,6 +23,10 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
     private ServiceShutOffManager serviceShutOffManager;
     @Autowired
     private SeasonalConnectionPaymentManager seasonalConnectionPaymentManager;
+    @Autowired
+    private MeasureStampExcelPrinter measureStampExcelPrinter;
+    @Autowired
+    private MeasureStampManager measureStampManager;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WaterUtilityManagmentApplication.class, args);
@@ -42,7 +46,7 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
         }
 
         System.out.println("Generating service shutoff");
-        dataInitializer.generateSeasonalConnectionShutoff();
+        ///dataInitializer.generateSeasonalConnectionShutoff();
 
     }
 }
