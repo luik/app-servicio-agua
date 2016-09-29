@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import com.milkneko.apps.utility.water.response.ConnectionResponse;
 import com.milkneko.apps.utility.water.response.MeasureStampResponse;
 import com.milkneko.apps.utility.water.response.SeasonEntryResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class MeasureStampController {
@@ -57,26 +58,7 @@ public class MeasureStampController {
 
     @RequestMapping(value = "ws/save-measure-stamps", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> saveMeasureStamps(@RequestBody List<MeasureStampResponse> measureStampResponses){
-
-        for (MeasureStampResponse measureStampResponse: measureStampResponses) {
-            SeasonEntry seasonEntry = seasonEntryRepository.findOne(SeasonsUtil.createSeasonEntryKey(measureStampResponse.getSeasonEntryID()));
-
-            if(measureStampResponse.isPending()){
-                MeasureStamp measureStamp = new MeasureStamp(measureStampResponse.getDate(), measureStampResponse.getModifiedValue());
-                Connection connection = connectionRepository.findOne(measureStampResponse.getConnectionID());
-                measureStamp.setPrevMeasureStamp(connection.getRegister().getLastMeasureStamp());
-                measureStamp.setConnection(connection);
-                measureStamp.setRegister(connection.getRegister());
-                connection.getRegister().setLastMeasureStamp(measureStamp);
-                measureStamp.setSeasonEntry(seasonEntry);
-                measureStampRepository.save(measureStamp);
-            }
-            else{
-                MeasureStamp measureStamp = measureStampRepository.findOne(measureStampResponse.getId());
-                measureStamp.setValue(measureStampResponse.getModifiedValue());;
-                measureStampRepository.save(measureStamp);
-            }
-        }
+        measureStampManager.saveMeasureStamps(measureStampResponses);
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
@@ -88,6 +70,13 @@ public class MeasureStampController {
         List<MeasureStampResponse> measureStampResponses = measureStampManager.getMeasureStampOfSeason(seasonEntry);
 
         return getResponseOfMeasureStampsExcelBytes(seasonEntry.getYear(), seasonEntry.getMonth(), measureStampResponses);
+    }
+
+    @RequestMapping(value = "ws/season/upload-measure-stamps/excel/{seasonEntryId}", method = RequestMethod.POST)
+    public ResponseEntity<String> uploadMeasureStampsBySeason(@PathVariable("seasonEntryId") int seasonEntryId, @RequestParam("measurements") final MultipartFile file){
+        String message = measureStampManager.parseExcelFile(seasonEntryId, file);
+
+        return new ResponseEntity<String>(message, HttpStatus.OK);
     }
 
     private ResponseEntity<byte[]> getResponseOfMeasureStampsExcelBytes(int year, int month, List<MeasureStampResponse> measureStampResponses){

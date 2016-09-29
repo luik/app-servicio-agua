@@ -53,13 +53,13 @@ public class DataInitializer{
         List<Customer> customers = customerRepository.findAll();
         if(customers.isEmpty())
         {
+            initializeSeasonEntries();
+            initializeConfigData();
+
             System.out.println("DB empty fill with default data");
             initializeExcelData();
+            //initializeTestRegisters();
         }
-
-        initializeConfigData();
-        //initializeTestRegisters();
-        initializeSeasonEntries();
     }
 
     @Transactional
@@ -179,6 +179,8 @@ public class DataInitializer{
         Workbook actaEntregaWorkbook = WorkbookFactory.create(classloader.getResourceAsStream("static/ACTA_ENTREGA.xlsx"));
         int numberOfSheets = actaEntregaWorkbook.getNumberOfSheets();
 
+        SeasonEntry seasonEntry = seasonEntryRepository.findOne(SeasonsUtil.createSeasonEntryKey(1));
+
         ConnectionType connectionType1 = new ConnectionType(1, "SOCIAL", "", "0.5960", "0.2440", 2.78f, 4.16f, 24);
         ConnectionType connectionType2 = new ConnectionType(2, "DOMESTICO", "11;31", "0.5960;1.0370;2.3840", "0.2440;0.4260;0.9800", 2.78f, 4.16f, 24);
         ConnectionType connectionType3 = new ConnectionType(3, "ESTATAL", "101", "2.3840;3.3020", "0.9800;1.3560", 2.78f, 4.16f, 24);
@@ -270,9 +272,10 @@ public class DataInitializer{
 
                 measureStamp.setConnection(connection);
                 measureStamp.setRegister(register);
+                measureStamp.setSeasonEntry(seasonEntry);
                 measureStampRepository.save(measureStamp);
 
-//                count++;
+                count++;
 //                if(count > 50){
 //                    break;
 //                }

@@ -5,7 +5,6 @@ import com.milkneko.apps.utility.water.model.MeasureStamp;
 import java.sql.Date;
 
 public class MeasureStampResponse {
-
     public static MeasureStampResponse createFrom(MeasureStamp measureStamp){
         float prevMeasureValue;
         if(measureStamp.getPrevMeasureStamp() != null){
@@ -65,6 +64,15 @@ public class MeasureStampResponse {
         this.modifiedValue = modifiedValue;
         this.pending = pending;
         this.prevValue = prevValue;
+    }
+
+    public MeasureStampResponse(int id, int seasonId, boolean isPending, Date date, int connectionId, float measure) {
+        this.id = id;
+        this.seasonEntryID = seasonId;
+        this.pending = isPending;
+        this.date = date;
+        this.connectionID = connectionId;
+        this.modifiedValue = measure;
     }
 
     public int getId() {

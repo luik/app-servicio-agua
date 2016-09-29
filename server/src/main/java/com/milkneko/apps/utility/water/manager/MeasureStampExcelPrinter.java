@@ -50,21 +50,25 @@ public class MeasureStampExcelPrinter {
             Sheet sheet = newWorkbook.createSheet(zoneName);
 
             sheet.setColumnWidth(0, 2500);
-            sheet.setColumnWidth(1, 2500);
+            sheet.setColumnWidth(1, 1500);
             sheet.setColumnWidth(2, 2500);
-            sheet.setColumnWidth(3, 13000);
-            sheet.setColumnWidth(4, 13000);
-            sheet.setColumnWidth(5, 2500);
-            sheet.setColumnWidth(6, 2500);
+            sheet.setColumnWidth(3, 3500);
+            sheet.setColumnWidth(4, 3500);
+            sheet.setColumnWidth(5, 13000);
+            sheet.setColumnWidth(6, 13000);
+            sheet.setColumnWidth(7, 2500);
+            sheet.setColumnWidth(8, 2500);
 
             Row row = sheet.createRow(0);
-            row.createCell(0).setCellValue("Fecha lectura");
-            row.createCell(1).setCellValue("Número de conexión");
-            row.createCell(2).setCellValue("Número de medidor");
-            row.createCell(3).setCellValue("Beneficiario");
-            row.createCell(4).setCellValue("Dirección");
-            row.createCell(5).setCellValue("Lectura anterior");
-            row.createCell(6).setCellValue("Lectura actual");
+            row.createCell(0).setCellValue("ID");
+            row.createCell(1).setCellValue("");
+            row.createCell(2).setCellValue("Fecha lectura");
+            row.createCell(3).setCellValue("Número de conexión");
+            row.createCell(4).setCellValue("Número de medidor");
+            row.createCell(5).setCellValue("Beneficiario");
+            row.createCell(6).setCellValue("Dirección");
+            row.createCell(7).setCellValue("Lectura anterior");
+            row.createCell(8).setCellValue("Lectura actual");
 
             List<MeasureStampResponse> zoneMeasureStampResponses = zoneName2measureStampsMap.get(zoneName);
 
@@ -73,21 +77,25 @@ public class MeasureStampExcelPrinter {
 
                 MeasureStampResponse measureStampResponse = zoneMeasureStampResponses.get(i);
 
-                row.createCell(0).setCellValue(measureStampResponse.getDate());
-                row.createCell(1).setCellValue( String.format("%06d", measureStampResponse.getConnectionID()));
-                row.createCell(2).setCellValue(measureStampResponse.getRegisterID());
-                row.createCell(3).setCellValue(measureStampResponse.getCustomerName());
-                row.createCell(4).setCellValue(measureStampResponse.getAddress());
-                row.createCell(5).setCellValue(measureStampResponse.getPrevValue());
-                row.createCell(6).setCellValue(measureStampResponse.getValue());
+                row.createCell(0).setCellValue( String.format("%06d", measureStampResponse.getId()));
+                row.createCell(1).setCellValue(measureStampResponse.isPending());
+                row.createCell(2).setCellValue(measureStampResponse.getDate());
+                row.createCell(3).setCellValue( String.format("%06d", measureStampResponse.getConnectionID()));
+                row.createCell(4).setCellValue(measureStampResponse.getRegisterID());
+                row.createCell(5).setCellValue(measureStampResponse.getCustomerName());
+                row.createCell(6).setCellValue(measureStampResponse.getAddress());
+                row.createCell(7).setCellValue(measureStampResponse.getPrevValue());
+                row.createCell(8).setCellValue(measureStampResponse.getValue());
 
-                row.getCell(0).setCellStyle(cellDateStyle);
-                row.getCell(1).setCellType(CellType.STRING);
-                row.getCell(2).setCellType(CellType.STRING);
+                row.getCell(0).setCellType(CellType.STRING);
+                row.getCell(1).setCellType(CellType.BOOLEAN);
+                row.getCell(2).setCellStyle(cellDateStyle);
                 row.getCell(3).setCellType(CellType.STRING);
                 row.getCell(4).setCellType(CellType.STRING);
-                row.getCell(5).setCellType(CellType.NUMERIC);
-                row.getCell(6).setCellType(CellType.NUMERIC);
+                row.getCell(5).setCellType(CellType.STRING);
+                row.getCell(6).setCellType(CellType.STRING);
+                row.getCell(7).setCellType(CellType.NUMERIC);
+                row.getCell(8).setCellType(CellType.NUMERIC);
             }
         }
 

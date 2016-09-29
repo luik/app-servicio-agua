@@ -38,3 +38,14 @@
 
     <footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-floppy-o" style="float:left" (click)="save()" label="Guardar"></button></div></footer>
 </p-dataTable>
+
+<p-dialog header="Seleccionar archivo excel" [(visible)]="isUploadingMeasurementsExcel" showeffect="fade" [modal]="true" width="600" height="200">
+    <p-growl [value]="msgs"></p-growl>
+    <p-fileUpload name="measurements" url="{{uploadURL}}" (onUpload)="onUpload($event)" >
+    </p-fileUpload>
+</p-dialog>
+
+<p-dialog header="Message" [(visible)]="isNotifying" showeffect="fade" [modal]="true" width="600" height="200">
+    <p-growl [value]="uploadMessages"></p-growl>
+</p-dialog>
+

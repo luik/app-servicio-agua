@@ -37,15 +37,15 @@ public class WaterUtilityManagmentApplication implements CommandLineRunner{
         dataInitializer.initialize();
         dataInitializer.testData();
 
-        for(int seasonEntryIdx = 1; seasonEntryIdx <= 8; seasonEntryIdx++){
-            System.out.println("Initializing data for season " + seasonEntryIdx);
-
-            dataInitializer.generateSeasonalMeasurements(seasonEntryIdx);
-            dataInitializer.generateSeasonalConnectionDebts(seasonEntryIdx);
-            dataInitializer.generateSeasonalConnectionPayments(seasonEntryIdx);
-        }
-
-        System.out.println("Generating service shutoff");
+//        for(int seasonEntryIdx = 1; seasonEntryIdx <= 8; seasonEntryIdx++){
+//            System.out.println("Initializing data for season " + seasonEntryIdx);
+//
+//            dataInitializer.generateSeasonalMeasurements(seasonEntryIdx);
+//            dataInitializer.generateSeasonalConnectionDebts(seasonEntryIdx);
+//            dataInitializer.generateSeasonalConnectionPayments(seasonEntryIdx);
+//        }
+//
+//        System.out.println("Generating service shutoff");
         ///dataInitializer.generateSeasonalConnectionShutoff();
 
     }

@@ -30,11 +30,16 @@ import {ConfigListComponent} from "./config-list/config-list.component";
 import {ConfigService} from "./services/config.service";
 import {ServiceShutOffListComponent} from "./service-shut-off-list/service-shut-off-list.component";
 import {ServiceShutOffService} from "./services/service-shut-off.service";
+import {FileUploadModule} from "primeng/components/fileupload/fileupload";
+import {GrowlModule} from "primeng/components/growl/growl";
+import {ProgressBarModule} from "primeng/components/progressbar/progressbar";
+import {MessagesModule} from "primeng/components/messages/messages";
 
 @NgModule({
     imports:      [routing, HttpModule, BrowserModule, FormsModule, HttpModule,
         InputTextModule, DataTableModule, ButtonModule, DialogModule, DropdownModule, AutoCompleteModule,
-        CheckboxModule, InputSwitchModule, ToggleButtonModule, CalendarModule, MenuModule, MenubarModule
+        CheckboxModule, InputSwitchModule, ToggleButtonModule, CalendarModule, MenuModule, MenubarModule,
+        FileUploadModule, GrowlModule, ProgressBarModule, MessagesModule
     ],
     declarations: [AppComponent, CustomerListComponent, ConnectionListComponent, WelcomeComponent,
         SeasonEntryListComponent, MeasureStampListComponent, SeasonalConnectionDebtList,
